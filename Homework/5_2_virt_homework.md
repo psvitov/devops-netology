@@ -17,8 +17,41 @@
 Ansible — система управления конфигурациями. Главное его отличие от других подобных систем в том, что Ansible использует существующую инфраструктуру SSH, в то время как другие требуют установки специального PKI-окружения.
   
 <b>Какой, на ваш взгляд, метод работы систем конфигурации более надёжный push или pull?</b><p><p>
-на мой взгляд наиболее предпочтительный метод - push. Он позволяет запускать все сценарии и команды "из коробки", основное отличие от pull, в push конфигурация «проталкивается» с главной машины, когда с pull узлы «тянут» конфигурацию с главной машины.
+На мой взгляд наиболее предпочтительный метод - push. Он позволяет запускать все сценарии и команды "из коробки", основное отличие от pull, в push конфигурация «проталкивается» с главной машины, когда с pull узлы «тянут» конфигурацию с главной машины.<p><p>
   
+<h3>Задача 3</h3><p>
+<b>Установить на личный компьютер:</b><p><p>
 
+<b>VirtualBox</b><p>
   
+Добавляем репозиторий: <p>
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add - <p>
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add - <p>
+sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian (lsb_release -sc) contrib" >> /etc/apt/sources.list.d/virtualbox.list'<p><p>
+Обновляем репозиторий: <p>
+sudo apt update<p><p>
+
+Устанавливаем VirtualBox: <p>
+sudo apt install virtualbox<p><p>
+
+<b>Vagrant</b><p>
+
+Обновляем репозиторий: <p>
+sudo apt update<p><p>
   
+Устанавливаем Vagrant: <p>
+sudo apt install vagrant<p><p>
+  
+Проверяем версию: <p>
+vagrant --version<p><p>
+  
+<b>Ansible</b><p>
+  
+Обновляем репозиторий: <p>
+sudo apt update<p><p>
+  
+Устанавливаем Ansible: <p>
+sudo apt install ansible<p><p>
+  
+Проверяем версию: <p>
+ansible--version<p><p>  
