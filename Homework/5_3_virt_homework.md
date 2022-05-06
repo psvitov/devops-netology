@@ -55,7 +55,7 @@ Hey, Netology
 
 ### Команды:
 
-docker run -d -it --name centos-docker -v /home/data:/data centos
+docker run -d -it --name centos-docker -v /home/data:/data centos <p>
 docker run -d -it --name debian-docker -v /home/data:/data debian
 
 docker ps -a
