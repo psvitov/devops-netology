@@ -66,18 +66,25 @@ CONTAINER ID   IMAGE                   COMMAND                  CREATED         
 
 #### Добавляем первый файл в первом контейнере:
 docker exec -it centos-docker /bin/bash
+  
 echo "bla-bla-bla" > /data/first-file.md
+  
 exit
 
-#### добавляем файл на хостовой машине:
+#### Добавляем файл на хостовой машине:
 echo "Bla-Bla-Bla" > /home/data/second-file.md
 
 #### Листинг /data во втором контейнере:
 
 root@DevOps:/home/psvitov# docker exec -it debian-docker /bin/bash
+  
 root@5baa1df4d9f2:/# cd /data
+  
 root@5baa1df4d9f2:/data# ls -l
+  
 total 8
+  
 -rw-r--r-- 1 root root 12 May  6 17:22 first-file.md
+  
 -rw-r--r-- 1 root root 12 May  6 17:24 second-file.md
-root@5baa1df4d9f2:/data#
+ 
