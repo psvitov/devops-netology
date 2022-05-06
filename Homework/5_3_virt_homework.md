@@ -52,3 +52,32 @@ Hey, Netology
 - Подключитесь к первому контейнеру с помощью ```docker exec``` и создайте текстовый файл любого содержания в ```/data```;
 - Добавьте еще один файл в папку ```/data``` на хостовой машине;
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в ```/data``` контейнера.
+
+### Команды:
+
+docker run -d -it --name centos-docker -v /home/data:/data centos
+docker run -d -it --name debian-docker -v /home/data:/data debian
+
+docker ps -a
+
+CONTAINER ID   IMAGE                   COMMAND                  CREATED              STATUS                      PORTS     NAMES <p>
+5baa1df4d9f2   debian                  "bash"                   About a minute ago   Up About a minute                     debian-docker<p>
+6dea6cc44862   centos                  "/bin/bash"              4 minutes ago        Up 4 minutes                          centos-docker<p>
+
+#### Добавляем первый файл в первом контейнере:
+docker exec -it centos-docker /bin/bash
+echo "bla-bla-bla" > /data/first-file.md
+exit
+
+#### добавляем файл на хостовой машине:
+echo "Bla-Bla-Bla" > /home/data/second-file.md
+
+#### Листинг /data во втором контейнере:
+
+root@DevOps:/home/psvitov# docker exec -it debian-docker /bin/bash
+root@5baa1df4d9f2:/# cd /data
+root@5baa1df4d9f2:/data# ls -l
+total 8
+-rw-r--r-- 1 root root 12 May  6 17:22 first-file.md
+-rw-r--r-- 1 root root 12 May  6 17:24 second-file.md
+root@5baa1df4d9f2:/data#
