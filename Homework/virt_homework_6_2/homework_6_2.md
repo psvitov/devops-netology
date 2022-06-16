@@ -98,7 +98,7 @@
 - test_db=# update  clients set booking = 3 where id = 1;
 - test_db=# update  clients set booking = 4 where id = 2;
 - test_db=# update  clients set booking = 5 where id = 3;
-<p>
+
 - test_db=# SELECT * FROM clients;
 - test_db=# SELECT * FROM clients as c where exists (select id from orders as o where c.booking = o.id);
 <p>
@@ -115,18 +115,22 @@
 
 Скриншот выполнения - 6_2_9.png
   
-Seq Scan - чтение данных из таблицы последовательное
-cost=0.00..18.10 - затраты на получение первой строки..затраты на получение всех строк
-rows=810 width=72 - количество возвращаемых строк при выполнении операции Seq Scan и средний размер одной строки в байтах
+- Seq Scan - чтение данных из таблицы последовательное
+- cost=0.00..18.10 - затраты на получение первой строки..затраты на получение всех строк
+- rows=810 width=72 - количество возвращаемых строк при выполнении операции Seq Scan и средний размер одной строки в байтах
 
 ## Задача 6
 
 Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
-
 Остановите контейнер с PostgreSQL (но не удаляйте volumes).
-
 Поднимите новый пустой контейнер с PostgreSQL.
-
 Восстановите БД test_db в новом контейнере.
-
 Приведите список операций, который вы применяли для бэкапа данных и восстановления. 
+	
+### Ответ:
+	
+- bash-5.1# pg_dump -U postgres test_db -f /var/lib/docker/volumes/volume1/backup_test_db.sql
+- root@DevOps:~/psql# docker stop d684e2031d76
+- root@DevOps:~/psql# docker run --rm --name PSQL -e POSTGRES_PASSWORD=postgres -p 5452:5452 -v volume1:/var/lib/docker/volumes/volume1 -v volume2:/var/lib/docker/volumes/volume2 -d postgres:12-alpine
+- postgres=# CREATE DATABASE test_db;
+- bash-5.1# psql -U postgres test_db -f /var/lib/docker/volumes/volume1/backup_test_db.sql
