@@ -15,7 +15,7 @@
 - root@DevOps:~/psql# docker run --rm --name PSQL -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v volume1:/var/lib/docker/volumes/volume1 -v volume2:/var/lib/docker/volumes/volume2 -d postgres:12-alpine
 - root@DevOps:~/psql# docker exec -it d684e2031d76 bash
 - bash-5.1# psql -h localhost -p 5432 -U postgres -W <p>
-Скриншот 1.png
+Скриншот 6_2_1.png
 
 ## Задача 2
 
@@ -37,11 +37,11 @@
 - страна проживания (string, index)
 - заказ (foreign key orders)
 
-Приведите:
-- итоговый список БД после выполнения пунктов выше,
-- описание таблиц (describe)
-- SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
-- список пользователей с правами над таблицами test_db
+### Ответ:
+    
+- Список БД - скриншот 6_2_2.png
+- Описание таблиц - скриншоты 6_2_3.png, 6_2_4.png
+- SQL-запрос и список пользователей с правами над таблицами test_db - скриншоты 6_2_5.png, 6_2_6.png
 
 ## Задача 3
 
