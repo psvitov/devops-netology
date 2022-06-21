@@ -15,6 +15,8 @@
 
 Подключитесь к восстановленной БД и получите список таблиц из этой БД.
 
+**Приведите в ответе** количество записей с `price` > 300.
+
 ### Ответ:
 
 - root@DevOps:~#docker pull mysql:8
@@ -62,6 +64,8 @@ mysql> select count(*) from orders where price >300;
     |        1 |
     +----------+
     1 row in set (0.00 sec)
+    
+ Количество записей с price > 300: 1 запись.
 
 ![скрин 6_3_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_6_3/6_3_1.png)
 
