@@ -162,6 +162,7 @@ mysql> select count(*) from orders where price >300;
     | orders     | InnoDB | Dynamic    |          5 |       16384 |            0 |
     +------------+--------+------------+------------+-------------+--------------+
     1 row in set (0.01 sec)
+
 Устанавливаем `MyISAM`:
 >
     mysql> ALTER TABLE orders ENGINE = MyISAM;
@@ -265,4 +266,33 @@ mysql> select count(*) from orders where price >300;
 - Буффер кеширования 30% от ОЗУ
 - Размер файла логов операций 100 Мб
 
-Приведите в ответе измененный файл `my.cnf`.
+### Ответ:
+
+Измененый файл`my.cnf`:
+>
+    root@7f060a4edef8:/etc/mysql# cat my.cnf
+    [mysqld]
+    pid-file        = /var/run/mysqld/mysqld.pid
+    socket          = /var/run/mysqld/mysqld.sock
+    datadir         = /var/lib/mysql
+    secure-file-priv= NULL
+
+    #Скорость IO
+    innodb_flush_log_at_trx_commit = 0
+    
+    #Сжатие таблиц
+    innodb_file_format = Barracuda
+    
+    #Размер буффера с незакомиченными транзакциями
+    innodb_log_buffer_size = 1M
+    
+    #Буфер кеширования
+    key_buffer_size = 4096M
+    
+    #Размер файла логов операций
+    max_binlog_size = 100M
+    
+    # Custom config should go here
+    !includedir /etc/mysql/conf.d/
+    
+![скрин 6_3_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_6_3/6_3_3.png)
