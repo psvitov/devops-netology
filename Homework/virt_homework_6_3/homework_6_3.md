@@ -85,6 +85,55 @@ mysql> select count(*) from orders where price >300;
 Используя таблицу INFORMATION_SCHEMA.USER_ATTRIBUTES получите данные по пользователю `test` и 
 **приведите в ответе к задаче**.
 
+### Ответ:
+
+Создание пользователя:
+>
+    mysql> create user test@localhost identified by 'test-pass';
+    Query OK, 0 rows affected (0.07 sec)
+
+Срок истечения пароля:
+>
+    mysql> ALTER USER test@localhost
+        -> PASSWORD EXPIRE INTERVAL 180 DAY;
+    Query OK, 0 rows affected (0.05 sec)
+    
+Количество попыток авторизации:
+>
+    mysql> ALTER USER test@localhost
+        -> FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME 2;
+    Query OK, 0 rows affected (0.07 sec)
+ 
+Максимальное количество запросов в час:
+>
+    mysql> ALTER USER test@localhost
+        -> with
+        -> MAX_QUERIES_PER_HOUR 100;
+    Query OK, 0 rows affected (0.04 sec)
+    
+Аттрибуты пользователя:
+>
+    mysql> ALTER USER test@localhost 
+        -> ATTRIBUTE '{"fname":"James", "lname":"Pretty"}';
+    Query OK, 0 rows affected (0.04 sec)
+    
+Предоставление привилегий:
+>
+    mysql> GRANT Select ON test_db.orders TO 'test'@'localhost';
+    Query OK, 0 rows affected, 1 warning (0.08 sec)
+    
+Данные по пользователю 'test':
+>
+    mysql> SELECT * FROM INFORMATION_SCHEMA.USER_ATTRIBUTES WHERE USER='test';
+    +------+-----------+---------------------------------------+
+    | USER | HOST      | ATTRIBUTE                             |
+    +------+-----------+---------------------------------------+
+    | test | localhost | {"fname": "James", "lname": "Pretty"} |
+    +------+-----------+---------------------------------------+
+    1 row in set (0.00 sec)
+
+![скрин 6_3_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_6_3/6_3_2.png)
+
 ## Задача 3
 
 Установите профилирование `SET profiling = 1`.
