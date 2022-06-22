@@ -145,6 +145,115 @@ mysql> select count(*) from orders where price >300;
 - на `MyISAM`
 - на `InnoDB`
 
+### Ответ:
+
+Установка профилирования:
+>
+    mysql> SET profiling = 1;
+    Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Используемый `engine` в таблице БД - InnoDB:
+>
+    mysql> SELECT TABLE_NAME,ENGINE,ROW_FORMAT,TABLE_ROWS,DATA_LENGTH,INDEX_LENGTH FROM information_schema.TABLES
+    -> WHERE table_name = 'orders' and  TABLE_SCHEMA = 'test_db' ORDER BY ENGINE asc;
+    +------------+--------+------------+------------+-------------+--------------+
+    | TABLE_NAME | ENGINE | ROW_FORMAT | TABLE_ROWS | DATA_LENGTH | INDEX_LENGTH |
+    +------------+--------+------------+------------+-------------+--------------+
+    | orders     | InnoDB | Dynamic    |          5 |       16384 |            0 |
+    +------------+--------+------------+------------+-------------+--------------+
+    1 row in set (0.01 sec)
+Устанавливаем `MyISAM`:
+>
+    mysql> ALTER TABLE orders ENGINE = MyISAM;
+    Query OK, 5 rows affected (0.49 sec)
+    Records: 5  Duplicates: 0  Warnings: 0
+
+Время выполнения - `0.49 sec`
+
+Вывод команды `SHOW PROFILE;`:
+>
+    mysql> SHOW PROFILE;
+    +--------------------------------+----------+
+    | Status                         | Duration |
+    +--------------------------------+----------+
+    | starting                       | 0.000150 |
+    | Executing hook on transaction  | 0.000016 |
+    | starting                       | 0.000034 |
+    | checking permissions           | 0.000015 |
+    | checking permissions           | 0.000012 |
+    | init                           | 0.000024 |
+    | Opening tables                 | 0.000664 |
+    | setup                          | 0.000303 |
+    | creating table                 | 0.001807 |
+    | waiting for handler commit     | 0.000030 |
+    | waiting for handler commit     | 0.042674 |
+    | After create                   | 0.000313 |
+    | System lock                    | 0.000008 |
+    | copy to tmp table              | 0.006423 |
+    | waiting for handler commit     | 0.000007 |
+    | waiting for handler commit     | 0.000008 |
+    | waiting for handler commit     | 0.000019 |
+    | rename result table            | 0.000041 |
+    | waiting for handler commit     | 0.145009 |
+    | waiting for handler commit     | 0.000012 |
+    | waiting for handler commit     | 0.048874 |
+    | waiting for handler commit     | 0.000009 |
+    | waiting for handler commit     | 0.100553 |
+    | waiting for handler commit     | 0.000008 |
+    | waiting for handler commit     | 0.049243 |
+    | end                            | 0.075546 |
+    | query end                      | 0.024697 |
+    | closing tables                 | 0.000008 |
+    | waiting for handler commit     | 0.000014 |
+    | freeing items                  | 0.000171 |
+    | cleaning up                    | 0.000059 |
+    +--------------------------------+----------+
+
+Устанавливаем `InnoDB`:
+>
+    mysql> ALTER TABLE orders ENGINE = InnoDB;
+    Query OK, 5 rows affected (0.37 sec)
+    Records: 5  Duplicates: 0  Warnings: 0
+
+Время выполнения - `0.37 sec`
+
+Вывод команды `SHOW PROFILE;`:
+>
+    mysql> SHOW PROFILE;
+    +--------------------------------+----------+
+    | Status                         | Duration |
+    +--------------------------------+----------+
+    | starting                       | 0.000053 |
+    | Executing hook on transaction  | 0.000004 |
+    | starting                       | 0.000015 |
+    | checking permissions           | 0.000004 |
+    | checking permissions           | 0.000005 |
+    | init                           | 0.000009 |
+    | Opening tables                 | 0.000152 |
+    | setup                          | 0.000044 |
+    | creating table                 | 0.000059 |
+    | After create                   | 0.169497 |
+    | System lock                    | 0.000014 |
+    | copy to tmp table              | 0.000060 |
+    | rename result table            | 0.000614 |
+    | waiting for handler commit     | 0.000007 |
+    | waiting for handler commit     | 0.033241 |
+    | waiting for handler commit     | 0.000007 |
+    | waiting for handler commit     | 0.100625 |
+    | waiting for handler commit     | 0.000012 |
+    | waiting for handler commit     | 0.016823 |
+    | waiting for handler commit     | 0.000007 |
+    | waiting for handler commit     | 0.032818 |
+    | end                            | 0.001104 |
+    | query end                      | 0.015390 |
+    | closing tables                 | 0.000007 |
+    | waiting for handler commit     | 0.000017 |
+    | freeing items                  | 0.000017 |
+    | cleaning up                    | 0.000016 |
+    +--------------------------------+----------+
+
+
+
 ## Задача 4 
 
 Изучите файл `my.cnf` в директории /etc/mysql.
