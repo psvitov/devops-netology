@@ -216,11 +216,57 @@ root@DevOps:~# docker ps
 
 Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?
 
+### Ответ:
+
+Необходимо провести партицирование таблицы - метод разделения больших (исходя из количества записей, а не столбцов) таблиц на много маленьких.
+
+Необходимо перевести существующую таблицу в партицированную и после этого разбить на 2:
+
+> 
+    test_database=# alter table orders rename to orders_simple;
+    ALTER TABLE
+    test_database=# create table orders (id integer, title varchar(80), price integer) partition by range(price);
+    CREATE TABLE
+    test_database=# create table orders_less499 partition of orders for values from (0) to (499);
+    CREATE TABLE
+    test_database=# create table orders_more499 partition of orders for values from (499) to (999999999);
+    CREATE TABLE
+    test_database=# insert into orders (id, title, price) select * from orders_simple;
+    INSERT 0 8
+    test_database=# \dt
+                      List of relations
+     Schema |      Name      |       Type        |  Owner   
+    --------+----------------+-------------------+----------
+     public | orders         | partitioned table | postgres
+     public | orders_less499 | table             | postgres
+     public | orders_more499 | table             | postgres
+     public | orders_simple  | table             | postgres
+    (4 rows)
+
+Если бы вначале при создании большой таблицы заложили сразу несколько таблиц (так называемое секционирование таблиц), то этой проблемы можно было бы избежать.
+
 ## Задача 4
 
 Используя утилиту `pg_dump` создайте бекап БД `test_database`.
 
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?
 
----
+### Ответ:
 
+- Создание бекапа БД:
+
+> 
+    root@42767000ac46:/var/lib/docker/volumes/psqlvol# pg_dump -U postgres -d test_database >test__dump_1.sql
+    root@42767000ac46:/var/lib/docker/volumes/psqlvol# ls -l
+    total 8
+    -rw-r--r-- 1 root root 3569 Jun 23 16:43 test__dump_1.sql
+    -rw-rw-r-- 1 1001 1001 2082 Mar 24 07:36 test_dump.sql
+    root@42767000ac46:/var/lib/docker/volumes/psqlvol#
+- Доработка бекап-файла БД:
+
+Для добавления уникальности значения столбца `title` можно использовать первичный ключ через оператор `ALTER TABLE`:
+
+> 
+    test_database=# ALTER TABLE orders
+    ADD CONSTRAINT orders_price
+    PRIMARY KEY (orders_id);
