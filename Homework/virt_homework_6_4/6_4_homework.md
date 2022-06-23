@@ -75,8 +75,7 @@ root@DevOps:~# docker ps
 
 >   
     Connection
-     \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}
-                             connect to new database (currently "postgres")
+     \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}  connect to new database (currently "postgres")
                              
 - Вывод списка таблиц:
 
