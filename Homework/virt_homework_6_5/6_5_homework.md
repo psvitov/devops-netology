@@ -19,10 +19,37 @@
 - ответ `elasticsearch` на запрос пути `/` в json виде
 
 ### Ответ:
-- текст Dockerfile манифеста
-- ссылку на образ в репозитории dockerhub: `https://hub.docker.com/r/psvitov/elastic`
-- ответ `elasticsearch` на запрос пути `/` в json виде
-
+- текст Dockerfile манифеста: 
+>   
+    FROM centos:7
+    ENV PATH=/usr/lib:$PATH
+    #Добавляем пакет java
+    RUN yum install java-1.8.0-openjdk-devel -y
+    #Импортируем ключ
+    RUN rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    #Создаем текстовый файл elasticsearch.repo
+    RUN echo "[elasticsearch]" >>/etc/yum.repos.d/elasticsearch.repo &&\
+       echo "name=Elasticsearch repository for 7.x packages" >>/etc/yum.repos.d/elasticsearch.repo &&\
+       echo "baseurl=https://artifacts.elastic.co/packages/7.x/yum">>/etc/yum.repos.d/elasticsearch.repo &&\
+       echo "gpgcheck=1">>/etc/yum.repos.d/elasticsearch.repo &&\
+       echo "gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch">>/etc/yum.repos.d/elasticsearch.repo &&\
+       echo "enabled=0">>/etc/yum.repos.d/elasticsearch.repo &&\
+       echo "autorefresh=1">>/etc/yum.repos.d/elasticsearch.repo &&\
+       echo "type=rpm-md">>/etc/yum.repos.d/elasticsearch.repo
+    #Устанавливаем Elastic
+    RUN yum install -y --enablerepo=elasticsearch elasticsearch
+    #Настраиваем каталоги
+    RUN mkdir /usr/share/elasticsearch/snapshots &&\
+       chown elasticsearch:elasticsearch /usr/share/elasticsearch/snapshots
+    RUN mkdir /var/lib/logs \
+       && chown elasticsearch:elasticsearch /var/lib/logs \
+       && mkdir /var/lib/data \
+       && chown elasticsearch:elasticsearch /var/lib/data
+    USER elasticsearch
+    CMD ["/usr/sbin/init"]
+    CMD ["/usr/share/elasticsearch/bin/elasticsearch"]
+- ссылка на образ в репозитории dockerhub: `https://hub.docker.com/r/psvitov/elastic`
+- ответ `elasticsearch` на запрос пути `/` в json виде: [elastic.json](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_6_5/elastic.json)
 
 ## Задача 2
 
