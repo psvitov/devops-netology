@@ -311,7 +311,7 @@
     health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
     green  open   .geoip_databases Z1MrdX1CRzKmgLGvF82wKA   1   0         40            0       38mb           38mb
     green  open   test             JaQUZ8PZRoau4F5JTv7BFg   1   0          0            0       226b           226b
-    green  open   test-2           ZUyT0xXoQgWfYy1D7QEJyA   1   0          0            0       226b           226b
+    green  open   test-2           Bk6-egs6TQaKqR96oLpbOg   1   0          0            0       226b           226b
     bash-4.2$ 
 
 
