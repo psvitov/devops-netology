@@ -282,8 +282,37 @@
     
 ![скрин 6_5_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_6_5/6_5_2.png)
 
+- Удаление индекса `test` и создание индекса `test-2`
 
+> 
+    bash-4.2$ curl -X DELETE 'http://localhost:9200/test?pretty'
+    {
+      "acknowledged" : true
+    }
+    bash-4.2$ curl -X PUT localhost:9200/test-2 -H 'Content-Type: application/json' -d'{ "settings": {  "number_of_shards": 1,  "number_of_replicas": 0 }}'
+    bash-4.2$ curl -X GET 'http://localhost:9200/_cat/indices?v'
+    health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   .geoip_databases Z1MrdX1CRzKmgLGvF82wKA   1   0         40            0       38mb           38mb
+    green  open   test-2           ZUyT0xXoQgWfYy1D7QEJyA   1   0          0            0       226b           226b
+    bash-4.2$ 
 
+- Восстановление из снапшота:
+
+> 
+    bash-4.2$ curl -X POST localhost:9200/_snapshot/netology_backup/elasticsearch/_restore?pretty -H 'Content-Type:     application/json' -d'{"include_global_state":true}'
+    {
+      "accepted" : true
+    }
+
+- Список индексов:
+
+>   
+    bash-4.2$ curl -X GET 'http://localhost:9200/_cat/indices?v'
+    health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   .geoip_databases Z1MrdX1CRzKmgLGvF82wKA   1   0         40            0       38mb           38mb
+    green  open   test             JaQUZ8PZRoau4F5JTv7BFg   1   0          0            0       226b           226b
+    green  open   test-2           ZUyT0xXoQgWfYy1D7QEJyA   1   0          0            0       226b           226b
+    bash-4.2$ 
 
 
 
