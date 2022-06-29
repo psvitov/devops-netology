@@ -77,6 +77,136 @@
 
 ### Ответ: 
 
+- Добавление индексов в `elasticsearch`:
+
+> 
+    bash-4.2$ curl -X PUT localhost:9200/ind-1 -H 'Content-Type: application/json' -d' {"settings": {"number_of_shards": 1, "number_of_replicas": 0}}'
+    bash-4.2$ curl -X PUT localhost:9200/ind-2 -H 'Content-Type: application/json' -d' {"settings": {"number_of_shards": 2, "number_of_replicas": 1}}'
+    bash-4.2$ curl -X PUT localhost:9200/ind-3 -H 'Content-Type: application/json' -d' {"settings": {"number_of_shards": 4, "number_of_replicas": 2}}'
+    
+- Получение списка индексов:
+
+>   
+    bash-4.2$ curl 'localhost:9200/_cat/indices?v&pretty'
+    
+![скрин 6_5_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_6_5/6_5_1.png)
+ 
+- Статус индекса ind-1:
+
+>   
+    bash-4.2$ curl -X GET 'http://localhost:9200/_cluster/health/ind-1?pretty'
+    {
+     "cluster_name" : "elasticsearch",
+     "status" : "green",
+     "timed_out" : false,
+     "number_of_nodes" : 1,
+     "number_of_data_nodes" : 1,
+     "active_primary_shards" : 1,
+     "active_shards" : 1,
+     "relocating_shards" : 0,
+     "initializing_shards" : 0,
+     "unassigned_shards" : 0,
+     "delayed_unassigned_shards" : 0,
+     "number_of_pending_tasks" : 0,
+     "number_of_in_flight_fetch" : 0,
+     "task_max_waiting_in_queue_millis" : 0,
+     "active_shards_percent_as_number" : 100.0
+    }
+    
+- Статус индекса ind-2:
+
+>   
+    bash-4.2$ curl -X GET 'http://localhost:9200/_cluster/health/ind-2?pretty'
+    {
+     "cluster_name" : "elasticsearch",
+     "status" : "yellow",
+     "timed_out" : false,
+     "number_of_nodes" : 1,
+     "number_of_data_nodes" : 1,
+     "active_primary_shards" : 2,
+     "active_shards" : 2,
+     "relocating_shards" : 0,
+     "initializing_shards" : 0,
+     "unassigned_shards" : 2,
+     "delayed_unassigned_shards" : 0,
+     "number_of_pending_tasks" : 0,
+     "number_of_in_flight_fetch" : 0,
+     "task_max_waiting_in_queue_millis" : 0,
+     "active_shards_percent_as_number" : 50.0
+    }
+
+- Статус индекса ind-3:
+
+>   
+    bash-4.2$ curl -X GET 'http://localhost:9200/_cluster/health/ind-3?pretty'
+    {
+     "cluster_name" : "elasticsearch",
+     "status" : "yellow",
+     "timed_out" : false,
+     "number_of_nodes" : 1,
+     "number_of_data_nodes" : 1,
+     "active_primary_shards" : 4,
+     "active_shards" : 4,
+     "relocating_shards" : 0,
+     "initializing_shards" : 0,
+     "unassigned_shards" : 8,
+     "delayed_unassigned_shards" : 0,
+     "number_of_pending_tasks" : 0,
+     "number_of_in_flight_fetch" : 0,
+     "task_max_waiting_in_queue_millis" : 0,
+     "active_shards_percent_as_number" : 50.0
+    }
+
+- Статус кластера:
+
+>   
+    bash-4.2$ curl -XGET localhost:9200/_cluster/health/?pretty=true
+    {
+     "cluster_name" : "elasticsearch",
+     "status" : "yellow",
+     "timed_out" : false,
+     "number_of_nodes" : 1,
+     "number_of_data_nodes" : 1,
+     "active_primary_shards" : 10,
+     "active_shards" : 10,
+     "relocating_shards" : 0,
+     "initializing_shards" : 0,
+     "unassigned_shards" : 10,
+     "delayed_unassigned_shards" : 0,
+     "number_of_pending_tasks" : 0,
+     "number_of_in_flight_fetch" : 0,
+     "task_max_waiting_in_queue_millis" : 0,
+     "active_shards_percent_as_number" : 50.0
+    }
+
+- Состояние кластера: 
+>   
+    "status" : "yellow",
+
+Часть индексов и сам кластер находится в состоянии `yellow`, так как не хватает нод для полноценной работы самого кластера.
+
+- Удаление индексов: 
+
+>
+    bash-4.2$ curl -X DELETE 'http://localhost:9200/ind-1?pretty'
+    {
+     "acknowledged" : true
+    }
+    bash-4.2$ curl -X DELETE 'http://localhost:9200/ind-2?pretty'
+    {
+      "acknowledged" : true
+    }
+    bash-4.2$ curl -X DELETE 'http://localhost:9200/ind-3?pretty'
+    {
+      "acknowledged" : true
+    }
+    bash-4.2$ curl 'localhost:9200/_cat/indices?v&pretty'
+    health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   .geoip_databases yfManuTdQBezMAF1ob_ABw   1   0         40            0     37.9mb         37.9mb
+    bash-4.2$ 
+
+
+
 ## Задача 3
 
 Создайте директорию `{путь до корневой директории с elasticsearch в образе}/snapshots`.
