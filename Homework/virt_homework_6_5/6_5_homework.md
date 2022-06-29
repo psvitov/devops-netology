@@ -232,3 +232,59 @@
 
 Подсказки:
 - возможно вам понадобится доработать `elasticsearch.yml` в части директивы `path.repo` и перезапустить `elasticsearch`
+
+### Ответ:
+
+Проведена доработка `elasticsearch.yml`: добавлена строчка: 
+>   
+    path.repo: [ "/usr/share/elasticsearch/snapshots" ]
+
+- Создаем директорию как `snapshot repository` c именем `netology_backup`:
+
+> 
+    bash-4.2$ curl -XPOST localhost:9200/_snapshot/netology_backup?pretty -H 'Content-Type: application/json' -     d'{"type": "fs", "settings": { "location":"/usr/share/elasticsearch/snapshots" }}'
+    {
+      "acknowledged" : true
+    }
+    
+- Результат:
+
+> 
+    bash-4.2$ curl http://localhost:9200/_snapshot/netology_backup?pretty
+    {
+      "netology_backup" : {
+        "type" : "fs",
+       "settings" : {
+          "location" : "/usr/share/elasticsearch/snapshots"
+       }
+      }
+    }
+    
+- Создаем индекс `test`:
+
+> 
+    bash-4.2$ curl -X PUT localhost:9200/test -H 'Content-Type: application/json' -d'{ "settings": {    "number_of_shards": 1,  "number_of_replicas": 0 }}'
+    {"acknowledged":true,"shards_acknowledged":true,"index":"test"}
+   
+- Список индексов:
+
+> 
+    bash-4.2$ curl -X GET 'http://localhost:9200/_cat/indices?v'
+    health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   .geoip_databases Z1MrdX1CRzKmgLGvF82wKA   1   0         40            0       38mb           38mb
+    green  open   test             gfJzT3e_SRePncNzaaZ8Kg   1   0          0            0       226b           226b 
+    
+- Создание снапшота:
+
+> 
+    bash-4.2$ curl -X PUT localhost:9200/_snapshot/netology_backup/elasticsearch?wait_for_completion=true
+    {"snapshot":        {"snapshot":"elasticsearch","uuid":"n1Rr6vT5RDqd3Nqj0c3ziA","repository":"netology_backup","version_id":7170599,"ve rsion":"7.17.5","indices":[".ds-.logs-deprecation.elasticsearch-default-2022.06.29-000001",".ds-ilm-history-5-  2022.06.29-000001","test",".geoip_databases"],"data_streams":["ilm-history-5",".logs-deprecation.elasticsearch- default"],"include_global_state":true,"state":"SUCCESS","start_time":"2022-06-  29T18:00:26.514Z","start_time_in_millis":1656525626514,"end_time":"2022-06- 29T18:00:28.115Z","end_time_in_millis":1656525628115,"duration_in_millis":1601,"failures":[],"shards":{"total":4,"failed":0,"successful":4},"feature_states":[{"feature_name":"geoip","indices":[".geoip_databases"]}]}}  
+    
+![скрин 6_5_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_6_5/6_5_2.png)
+
+
+
+
+
+
+    
