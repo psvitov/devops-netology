@@ -47,6 +47,8 @@
 ---
 
 ### Ответ:
+
+---
 1. Ответы на 4 вопроса:
 
 - 1.1. В связи с тем, что техзадание нечеткое и предстоит часто вносить изменения, проводить тестирования и откаты, то незменяемая инфраструктура на первоначальном этапе не подойдет. Впоследствие, когда уже будет все отлажено, и количество клиентов увеличится, а количество релизов, тестирований и доработок уменьшится - можно перейти к неизменяемой инфраструктуре.
@@ -55,6 +57,9 @@
 - 1.4. При условии, что начать старт нужно сейчас и есть опыт использования Packer, Terraform, но мало опыта использования Ansible, использование средств для управления конфигурацией - слабое звено. Но так как ни Puppet ни Chief так же не используются, я бы все таки использовал Ansible, заодно можно попрактиковаться и подтянуть опыт, когда количество клиентов увеличится, и так же разрастется инфраструктура. 
 
 2. С учетом, что есть наработки с Packer и Terraform - их нужно использовать, и подтягивать Ansible. Связка `Packer` -> `Terraform` -> `Ansible` ускорит доработку и выпуск релизов.
+3. Рассмотреть хотим, но на данный момент, с учетом быстрого запуска проекта, отвлекаться не стоит. Когда проект продолжит развитие, то стоит пересмотреть новые подходы.
+
+---
 
 
 ## Задача 2. Установка терраформ. 
@@ -63,6 +68,21 @@
 
 Установите терраформ при помощи менеджера пакетов используемого в вашей операционной системе.
 В виде результата этой задачи приложите вывод команды `terraform --version`.
+
+---
+### Ответ:
+
+>
+    root@DevOps:~# terraform --version
+    Terraform v1.2.2
+    on linux_amd64
+    
+    Your version of Terraform is out of date! The latest version
+    is 1.2.4. You can update by downloading from https://www.terraform.io/downloads.html
+   
+![7_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_1/7_1_1.png)
+
+---
 
 ## Задача 3. Поддержка легаси кода. 
 
@@ -73,3 +93,51 @@
 
 В виде результата этой задачи приложите вывод `--version` двух версий терраформа доступных на вашем компьютере 
 или виртуальной машине.
+
+---
+### Ответ: 
+
+- Создаем каталоги для новых версий `Terraform`:
+
+> 
+    root@DevOps:~# mkdir terraform123
+    root@DevOps:~# mkdir terraform124
+- В каждую закачиваем свой релиз:
+
+> 
+    root@DevOps:~/terraform123# wget https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_386.zip
+    root@DevOps:~/terraform124# wget https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_386.zip
+    
+- Распаковываем и удаляем скачанный архив:
+
+> 
+    root@DevOps:~/terraform123# unzip terraform_1.2.3_linux_386.zip
+    root@DevOps:~/terraform123# rm terraform_1.2.3_linux_386.zip
+    root@DevOps:~/terraform124# unzip terraform_1.2.4_linux_386.zip
+    root@DevOps:~/terraform124# rm terraform_1.2.4_linux_386.zip
+    
+- Создаем симлинки для новых версий `Terraform`:
+
+> 
+    ln -s /root/terraform123/terraform /usr/bin/terraform123
+    ln -s /root/terraform124/terraform /usr/bin/terraform124
+    
+- Результат:
+
+> 
+    root@DevOps:~# terraform --version
+    Terraform v1.2.2
+    on linux_amd64
+    
+    Your version of Terraform is out of date! The latest version
+    is 1.2.4. You can update by downloading from https://www.terraform.io/downloads.html
+    root@DevOps:~# terraform123 --version
+    Terraform v1.2.3
+    on linux_386
+    
+    Your version of Terraform is out of date! The latest version
+    is 1.2.4. You can update by downloading from https://www.terraform.io/downloads.html
+    root@DevOps:~# terraform124 --version
+    Terraform v1.2.4
+    
+![7_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_1/7_1_2.png)
