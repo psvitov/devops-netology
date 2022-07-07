@@ -22,22 +22,17 @@
 > 
     variable "yc_token" {
         description = "OAuth-token Yandex.Cloud"
-        default = "AQAAAAAARMfEAATuwQ3i5zgf2kUokcys-7P6_1k"
-    }
-    
-    variable "yc_service_account_key_file" {
-        description = "Key file service account of folder terraform"
-    default = key.json
+        default = "AQAAAA*****EAATuwQ3i5zgf2kUokcys-7P6_1k"
     }
     
     variable "yc_cloud_id" {
         description = "ID Yandex.Cloud"
-        default = "b1g8fhcp9qmijeuurdt7"
+        default = "b1g8fhcp9qm*****rdt7"
     }
     
     variable "yc_folder_id" {
         description = "ID folder terraform"
-        default = "b1g9ofom2ntbfc8shnlh"
+        default = "b1g9ofom2nt*****hnlh"
     }
     
     variable "yc_region" {
