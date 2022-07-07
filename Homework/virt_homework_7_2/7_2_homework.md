@@ -79,13 +79,89 @@
 ### Ответ:
 ---
 
-1.
-2.
-3.
-4.
+1. Создание файлов `main.tf` и `versions.tf`:
+
+> 
+    root@DevOps://root/Homeworks/hw72/terraform# ls -l
+    итого 12
+    -rw------- 1 root root 2402 июл  7 20:06 key.json
+    -rw-r--r-- 1 root root  863 июл  7 21:33 main.tf
+    -rw-r--r-- 1 root root  412 июл  7 21:16 variables.tf
+    -rw-r--r-- 1 root root    0 июл  7 20:24 versions.tf
+
+2. Регистрация провайдера:
+
+> 
+    root@DevOps://root/Homeworks/hw72/terraform# cat ~/.terraformrc
+    provider_installation {
+      network_mirror {
+        url = "https://terraform-mirror.yandexcloud.net/"
+        include = ["registry.terraform.io/*/*"]
+      }
+      direct {
+        exclude = ["registry.terraform.io/*/*"]
+      }
+    }
+
+    root@DevOps://root/Homeworks/hw72/terraform#
+    
+3. В файле `main.tf` создаем ресурс:
+
+> 
+    terraform {
+      required_providers {
+        yandex = {
+          source = "yandex-cloud/yandex"
+          version = "0.61.0"
+        }
+      }
+      required_version = ">= 0.13"
+    }
+
+    provider "yandex" {
+      token     = var.yc_token
+      cloud_id  = var.yc_cloud_id
+      folder_id = var.yc_folder_id
+      zone      = var.yc_region
+    }
+
+    data "yandex_compute_image" "image" {
+      family = "centos-7"
+    }
+
+    resource "yandex_compute_instance" "vm" {
+      name        = "centos_7_test"
+      platform_id = "standard-v1"
+      zone        = var.yc_region
+      folder_id = var.yc_folder_id
+
+      resources {
+          cores  = 2
+          memory = 4
+        }
+    boot_disk {
+        initialize_params {
+          image_id = "image_id"
+          type = "network-hdd"
+          size = "40"
+          }
+        }
+      network_interface {
+        subnet_id = "subnet1"
+        nat       = "false"
+        }
+
+        metadata = {
+          ssh-keys = "centos:${file("~/.ssh/id_rsa.pub")}"
+        }
+    }
+
+[Файл main.tf](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/main.tf)
+
 5.
 6.
-7. Результат выполнения `terraform plan`:
+7.
+8. Результат выполнения `terraform plan`:
 
 > 
     root@DevOps://root/Homeworks/hw72/terraform# terraform plan
