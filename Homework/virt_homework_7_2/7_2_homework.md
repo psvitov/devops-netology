@@ -158,10 +158,15 @@
 
 [Файл main.tf](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/main.tf)
 
-5.
-6.
-7.
-8. Результат выполнения `terraform plan`:
+4. Результат выполнения `terraform init`:
+
+![7_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/7_2_4.png)
+
+5. Результат выполнения `terraform validate`:
+
+![7_2_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/7_2_5.png)
+
+6. Результат выполнения `terraform plan`:
 
 > 
     root@DevOps://root/Homeworks/hw72/terraform# terraform plan
@@ -177,13 +182,13 @@
       # yandex_compute_instance.vm will be created
       + resource "yandex_compute_instance" "vm" {
           + created_at                = (known after apply)
-          + folder_id                 = "b1g9ofom2ntbfc8shnlh"
+          + folder_id                 = "b1g9ofo*****fc8shnlh"
           + fqdn                      = (known after apply)
           + hostname                  = (known after apply)
           + id                        = (known after apply)
           + metadata                  = {
               + "ssh-keys" = <<-EOT
-                    centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkGrgH7wiBVjDd7jNHihtG+lwBqLZXOAPirf1QqO4BrmklardHiVZ+ifVucS7CKPxV4/ak7qU5DrNw2YfCIVjE/NuCSI9rWp19BKK276wrcUQBYOCzEsHuzEA307aP8n2qj3CHcePoVbOwMuKhIBORzVKXj84n5MVoqElnWdYppONhn5yJ3huudQnX8SrVhkqeqfQKEegKPZX8EoMNTh5l2cJZoIW4s3z+2JfedCVFbbGPxjJQH8/Ptb93m0wp5K+o8/DMZCB6EZGooEGevyqDVdReDHkR7i5igwGMOA7LQuUo5Z9eoIBBG58UDdXvKcFFvHVcoRIguWGlwQa7fkHF root@DevOps
+                    centos:ssh-rsa AAAAB3NzaC1yc2E*****AQABAAABAQCkGrgH7wiBVjDd7jNHihtG+lwBqLZXOAPirf1QqO4BrmklardHiVZ+ifVucS7CKPxV4/ak7qU5DrNw2YfCIVjE/NuCSI9rWp19BKK276wrcUQBYOCzEsHuzEA307aP8n2qj3CHcePoVbOwMuKhIBORzVK*****5MVoqElnWdYppONhn5yJ3huudQnX8SrVhkqeqfQKEegKPZX8EoMNTh5l2cJZoIW*****2JfedCVFbbGPxjJQH8/Ptb93m0wp5K+o8/DMZCB6EZGooEGevyqDVdReDHkR7i5igwGMOA7LQuUo5Z9eoIBBG58UDdXvKcFFvHVcoRIguWGlwQa7fkHF root@DevOps
                 EOT
             }
           + name                      = "centos_7_test"
@@ -244,4 +249,8 @@
 
     Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these
     actions if you run "terraform apply" now.
+
+![7_2_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/7_2_6.png)
+
+
 
