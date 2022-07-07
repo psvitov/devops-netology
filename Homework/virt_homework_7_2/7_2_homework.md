@@ -40,7 +40,7 @@
         default = "ru-central1-a"
     }
 
-![7_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/7_2_2.png)
+![7_2_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/7_2_3.png)
 
 
 ## Задача 2. Создание aws ec2 или yandex_compute_instance через терраформ. 
@@ -76,3 +76,96 @@
 1. Ссылку на репозиторий с исходной конфигурацией терраформа.  
  
 ---
+### Ответ:
+---
+
+1.
+2.
+3.
+4.
+5.
+6.
+7. Результат выполнения `terraform plan`:
+
+> 
+    root@DevOps://root/Homeworks/hw72/terraform# terraform plan
+    data.yandex_compute_image.image: Reading...
+    data.yandex_compute_image.image: Read complete after 2s [id=fd88d14a6790do254kj7]
+
+    Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
+    with the following symbols:
+      + create
+
+    Terraform will perform the following actions:
+
+      # yandex_compute_instance.vm will be created
+      + resource "yandex_compute_instance" "vm" {
+          + created_at                = (known after apply)
+          + folder_id                 = "b1g9ofom2ntbfc8shnlh"
+          + fqdn                      = (known after apply)
+          + hostname                  = (known after apply)
+          + id                        = (known after apply)
+          + metadata                  = {
+              + "ssh-keys" = <<-EOT
+                    centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkGrgH7wiBVjDd7jNHihtG+lwBqLZXOAPirf1QqO4BrmklardHiVZ+ifVucS7CKPxV4/ak7qU5DrNw2YfCIVjE/NuCSI9rWp19BKK276wrcUQBYOCzEsHuzEA307aP8n2qj3CHcePoVbOwMuKhIBORzVKXj84n5MVoqElnWdYppONhn5yJ3huudQnX8SrVhkqeqfQKEegKPZX8EoMNTh5l2cJZoIW4s3z+2JfedCVFbbGPxjJQH8/Ptb93m0wp5K+o8/DMZCB6EZGooEGevyqDVdReDHkR7i5igwGMOA7LQuUo5Z9eoIBBG58UDdXvKcFFvHVcoRIguWGlwQa7fkHF root@DevOps
+                EOT
+            }
+          + name                      = "centos_7_test"
+          + network_acceleration_type = "standard"
+          + platform_id               = "standard-v1"
+          + service_account_id        = (known after apply)
+          + status                    = (known after apply)
+          + zone                      = "ru-central1-a"
+
+          + boot_disk {
+              + auto_delete = true
+              + device_name = (known after apply)
+              + disk_id     = (known after apply)
+              + mode        = (known after apply)
+
+              + initialize_params {
+                  + description = (known after apply)
+                  + image_id    = "image_id"
+                  + name        = (known after apply)
+                  + size        = 40
+                  + snapshot_id = (known after apply)
+                  + type        = "network-hdd"
+                }
+            }
+
+          + network_interface {
+              + index              = (known after apply)
+              + ip_address         = (known after apply)
+              + ipv4               = true
+              + ipv6               = (known after apply)
+              + ipv6_address       = (known after apply)
+              + mac_address        = (known after apply)
+              + nat                = false
+              + nat_ip_address     = (known after apply)
+              + nat_ip_version     = (known after apply)
+              + security_group_ids = (known after apply)
+              + subnet_id          = "subnet1"
+            }
+
+          + placement_policy {
+              + placement_group_id = (known after apply)
+            }
+
+          + resources {
+              + core_fraction = 100
+              + cores         = 2
+              + memory        = 4
+            }
+
+          + scheduling_policy {
+              + preemptible = (known after apply)
+            }
+        }
+
+    Plan: 1 to add, 0 to change, 0 to destroy.
+
+    ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these
+    actions if you run "terraform apply" now.
+
