@@ -1,9 +1,5 @@
 # Домашнее задание к занятию "7.2. Облачные провайдеры и синтаксис Terraform."
 
-Зачастую разбираться в новых инструментах гораздо интересней понимая то, как они работают изнутри. 
-Поэтому в рамках первого *необязательного* задания предлагается завести свою учетную запись в AWS (Amazon Web Services) или Yandex.Cloud.
-Идеально будет познакомится с обоими облаками, потому что они отличаются. 
-
 ## Задача 1 (Вариант с Yandex.Cloud). 
 
 1. Подробная инструкция на русском языке содержится [здесь](https://cloud.yandex.ru/docs/solutions/infrastructure-management/terraform-quickstart).
@@ -19,8 +15,37 @@
 
 1. Регистрация в Yandex.Cloud была проведена в апреле, ЯО использовалось в одном из ДЗ.
 
+![7_2_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/7_2_1.png)
 
+2. создаем файл `variables.tf` для определения переменных:
 
+> 
+    variable "yc_token" {
+        description = "OAuth-token Yandex.Cloud"
+        default = "AQAAAAAARMfEAATuwQ3i5zgf2kUokcys-7P6_1k"
+    }
+    
+    variable "yc_service_account_key_file" {
+        description = "Key file service account of folder terraform"
+    default = key.json
+    }
+    
+    variable "yc_cloud_id" {
+        description = "ID Yandex.Cloud"
+        default = "b1g8fhcp9qmijeuurdt7"
+    }
+    
+    variable "yc_folder_id" {
+        description = "ID folder terraform"
+        default = "b1g9ofom2ntbfc8shnlh"
+    }
+    
+    variable "yc_region" {
+        description = "Region Zone"
+        default = "ru-central1-a"
+    }
+
+![7_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_2/7_2_2.png)
 
 
 ## Задача 2. Создание aws ec2 или yandex_compute_instance через терраформ. 
