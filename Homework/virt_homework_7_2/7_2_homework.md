@@ -254,5 +254,5 @@
 
 7. Инструменты для создания своих образов ami:
 - В AWS используется инструмент EC2 Image Builder [Ссылка](https://aws.amazon.com/ru/image-builder/)
-- В Yandex.Cloud можно загружать свой образ диска ВМ под управлением ОС Linux [Ссылкаъ(https://cloud.yandex.ru/docs/compute/operations/image-create/custom-image)
+- В Yandex.Cloud можно загружать свой образ диска ВМ под управлением ОС Linux [Ссылка](https://cloud.yandex.ru/docs/compute/operations/image-create/custom-image)
 
