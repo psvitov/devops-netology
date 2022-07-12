@@ -10,6 +10,68 @@
 [здесь](https://www.terraform.io/docs/backends/types/s3.html).
 1. Зарегистрируйте бэкэнд в терраформ проекте как описано по ссылке выше. 
 
+---
+### Ответ:
+---
+
+#### Cоздание backend в Yandex.Cloud
+
+1. Создаем бакет:
+
+> 
+   terraform {
+     required_providers {
+       yandex = {
+         source = "yandex-cloud/yandex"
+         version = "0.61.0"
+       }
+     }
+     required_version = ">= 0.13"
+   }
+
+   resource "yandex_storage_bucket" "test" {
+     access_key = "YCAJE*****PTm97SIzOSc09d7"
+     secret_key = "YCOP0*****knigY7qvIf4JZA2I8GN7lOOC-oaky5"
+     bucket = "psvitovbucketopp152"
+   }
+
+[Ссылка 1](https://cloud.yandex.ru/docs/iam/operations/sa/create-access-key)
+
+2. Настраиваем backend:
+
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+      version = "0.61.0"
+    }
+  }
+  required_version = ">= 0.13"
+
+  backend "s3" {
+      endpoint   = "storage.yandexcloud.net"
+      bucket     = "psvitovbucketopp152"
+      region     = "ru-central1"
+      key        = "terraform.tfstate"
+      access_key = "YCAJE*****PTm97SIzOSc09d7"
+      secret_key = "YCOP0*****knigY7qvIf4JZA2I8GN7lOOC-oaky5"
+
+      skip_region_validation      = true
+      skip_credentials_validation = true
+    }
+
+}
+
+provider "yandex" {
+  token     = var.yc_token
+  cloud_id  = var.yc_cloud_id
+  folder_id = var.yc_folder_id
+  zone      = var.yc_region
+}
+
+[Ссыллка 2](https://cloud.yandex.ru/docs/storage/operations/buckets/create)
+
+
 
 ## Задача 2. Инициализируем проект и создаем воркспейсы. 
 
