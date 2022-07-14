@@ -2,8 +2,6 @@
 
 ## Задача 1. Настроить terraform cloud (необязательно, но крайне желательно).
 
-В это задании предлагается познакомиться со средством командой работы над инфраструктурой предоставляемым
-разработчиками терраформа. 
 
 1. Зарегистрируйтесь на [https://app.terraform.io/](https://app.terraform.io/).
 (регистрация бесплатная и не требует использования платежных инструментов).
@@ -13,6 +11,21 @@
 1. Выполните plan и apply. 
 
 В качестве результата задания приложите снимок экрана с успешным применением конфигурации.
+
+---
+### Ответ:
+---
+
+1. Регистрация на `Terraform Cloud` и добавление `Workspaces`:
+
+![7_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_4/7_4_1.png)
+
+2. Запуск `Workspace` и результат работы:
+
+![7_4_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_4/7_4_2.png)
+![7_4_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_4/7_4_3.png)
+
+
 
 ## Задача 2. Написать серверный конфиг для атлантиса. 
 
