@@ -95,7 +95,7 @@
 
 ![7_5_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/7_5_3.png)
 
-3. Код решения задачи (модернизированный:
+3. Код решения задачи (модернизированный):
 
 [z5.go](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/z5.go)
 
