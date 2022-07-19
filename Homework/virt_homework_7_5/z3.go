@@ -11,6 +11,6 @@ func main() {
 	fmt.Scanf("%f", &length)
  	
 	foot := length * 3.281
-	fmt.Println(length, " метров равны ", foot, " футов")
+	fmt.Println(length, " метров равны ", math.Round(foot*100)/100, " футов")
  
 }
