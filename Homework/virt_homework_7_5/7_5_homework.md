@@ -83,6 +83,18 @@
 
 ![z3.go](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/z3.go)
 
+Результат выполнения:
+
+![7_5_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/7_5_2.png)
+
+2. Код решения задачи:
+
+![z4.go](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/z4.go)
+
+Результат выполнения:
+
+![7_5_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/7_5_3.png)
+
 ## Задача 4. Протестировать код (не обязательно).
 
 Создайте тесты для функций из предыдущего задания. 
