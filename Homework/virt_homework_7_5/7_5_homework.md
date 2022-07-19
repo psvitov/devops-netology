@@ -81,7 +81,7 @@
 
 1. Код решения задачи:
 
-![z3.go](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/z3.go)
+[z3.go](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/z3.go)
 
 Результат выполнения:
 
@@ -89,14 +89,18 @@
 
 2. Код решения задачи:
 
-![z4.go](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/z4.go)
+[z4.go](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/z4.go)
 
 Результат выполнения:
 
 ![7_5_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/7_5_3.png)
 
-## Задача 4. Протестировать код (не обязательно).
+3. Код решения задачи (модернизированный:
 
-Создайте тесты для функций из предыдущего задания. 
+[z5.go](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/z5.go)
+
+Результат выполнения (модернизированный):
+
+![7_5_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_5/7_5_4.png)
 
 ---
