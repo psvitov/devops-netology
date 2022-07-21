@@ -16,6 +16,8 @@
 ---
 ### Ответ:
 ---
+#### Пункт 1:
+
 
 1. Клонируем исходный код:
 
@@ -43,7 +45,32 @@
 
 4. Анализ данных показал, что данные хранятся в файле `./internal/provider/provider.go`
 5. Ссылка на `resource`: [Ссылка 1](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L913)
-6. ССылка на `data_source`: [Ссылка 2](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L415)
+6. Ссылка на `data_source`: [Ссылка 2](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L415)
+
+#### Пункт 2:
+
+1. Согласно [https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) параметр `name` конфликтует с `name_prefix`
+
+Поиск файлов:
+
+> 
+   root@DevOps:~/Homeworks/hw76/terraform-provider-aws# find -name queue.go
+   ./internal/service/connect/queue.go
+   ./internal/service/sqs/queue.go
+   ./internal/service/mediaconvert/queue.go
+
+Анализ файла `./internal/service/sqs/queue.go`:
+
+> 
+   root@DevOps:~/Homeworks/hw76/terraform-provider-aws# grep -r -n "name_prefix" ./internal/service/sqs/queue.go
+   87:			ConflictsWith: []string{"name_prefix"},
+   89:		"name_prefix": {
+   195:		name = create.NameWithSuffix(d.Get("name").(string), d.Get("name_prefix").(string), FIFOQueueNameSuffix)
+   197:		name = create.Name(d.Get("name").(string), d.Get("name_prefix").(string))
+   301:		d.Set("name_prefix", create.NamePrefixFromNameWithSuffix(name, FIFOQueueNameSuffix))
+   303:		d.Set("name_prefix", create.NamePrefixFromName(name))
+   417:			name = create.NameWithSuffix(diff.Get("name").(string), diff.Get("name_prefix").(string), FIFOQueueNameSuffix)
+   419:			name = create.Name(diff.Get("name").(string), diff.Get("name_prefix").(string))
 
 
 ## Задача 2. (Не обязательно) 
