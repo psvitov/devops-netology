@@ -28,20 +28,20 @@
 3. Ищем файл `provider.go`:
 
 >
-    root@DevOps:~/Homeworks/hw76/terraform-provider-aws# find -name provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/internal/fromproto/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/internal/toproto/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/internal/fromproto/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/internal/toproto/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/internal/logging/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-registry-address/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-log/tflog/provider.go
-    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-log/internal/logging/provider.go
-    ./internal/provider/fwprovider/provider.go
-    ./internal/provider/provider.go
+     root@DevOps:~/Homeworks/hw76/terraform-provider-aws# find -name provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/internal/fromproto/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/internal/toproto/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/internal/fromproto/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/internal/toproto/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/internal/logging/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-registry-address/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-log/tflog/provider.go
+     ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-log/internal/logging/provider.go
+     ./internal/provider/fwprovider/provider.go
+     ./internal/provider/provider.go
 
 4. Анализ данных показал, что данные хранятся в файле `./internal/provider/provider.go`
 5. Ссылка на `resource`: [Ссылка 1](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L913)
@@ -54,23 +54,37 @@
 Поиск файлов:
 
 > 
-   root@DevOps:~/Homeworks/hw76/terraform-provider-aws# find -name queue.go
-   ./internal/service/connect/queue.go
-   ./internal/service/sqs/queue.go
-   ./internal/service/mediaconvert/queue.go
+    root@DevOps:~/Homeworks/hw76/terraform-provider-aws# find -name queue.go
+    ./internal/service/connect/queue.go
+    ./internal/service/sqs/queue.go
+    ./internal/service/mediaconvert/queue.go
 
 Анализ файла `./internal/service/sqs/queue.go`:
 
 > 
-   root@DevOps:~/Homeworks/hw76/terraform-provider-aws# grep -r -n "name_prefix" ./internal/service/sqs/queue.go
-   87:			ConflictsWith: []string{"name_prefix"},
-   89:		"name_prefix": {
-   195:		name = create.NameWithSuffix(d.Get("name").(string), d.Get("name_prefix").(string), FIFOQueueNameSuffix)
-   197:		name = create.Name(d.Get("name").(string), d.Get("name_prefix").(string))
-   301:		d.Set("name_prefix", create.NamePrefixFromNameWithSuffix(name, FIFOQueueNameSuffix))
-   303:		d.Set("name_prefix", create.NamePrefixFromName(name))
-   417:			name = create.NameWithSuffix(diff.Get("name").(string), diff.Get("name_prefix").(string), FIFOQueueNameSuffix)
-   419:			name = create.Name(diff.Get("name").(string), diff.Get("name_prefix").(string))
+    root@DevOps:~/Homeworks/hw76/terraform-provider-aws# grep -r -n "name_prefix" ./internal/service/sqs/queue.go
+    87:ConflictsWith: []string{"name_prefix"},
+    89:"name_prefix": {
+    195:name = create.NameWithSuffix(d.Get("name").(string), d.Get("name_prefix").(string), FIFOQueueNameSuffix)
+    197:name = create.Name(d.Get("name").(string), d.Get("name_prefix").(string))
+    301:d.Set("name_prefix", create.NamePrefixFromNameWithSuffix(name, FIFOQueueNameSuffix))
+    303:d.Set("name_prefix", create.NamePrefixFromName(name))
+    417:name = create.NameWithSuffix(diff.Get("name").(string), diff.Get("name_prefix").(string), FIFOQueueNameSuffix)
+    419:name = create.Name(diff.Get("name").(string), diff.Get("name_prefix").(string))
+
+Ссылка на строку кода: [queue.go](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/service/sqs/queue.go#L82)
+
+Согласно [FAQ AWS](https://aws.amazon.com/ru/sqs/faqs/) длина имени ограничена 80 символами
+
+Поиск строки кода:
+
+> 
+    grep -r -n " 80 "
+    
+    ...
+    
+    internal/service/sfn/validate.go:10:	if len(value) > 80 {
+    internal/service/sfn/validate.go:11:		errors = append(errors, fmt.Errorf("%q cannot be longer than 80 characters", k))
 
 
 ## Задача 2. (Не обязательно) 
