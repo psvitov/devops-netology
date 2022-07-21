@@ -72,7 +72,7 @@
     417:name = create.NameWithSuffix(diff.Get("name").(string), diff.Get("name_prefix").(string), FIFOQueueNameSuffix)
     419:name = create.Name(diff.Get("name").(string), diff.Get("name_prefix").(string))
 
-Ссылка на строку кода: [queue.go](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/service/sqs/queue.go#L82)
+Ссылка на [строку кода](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/service/sqs/queue.go#L82)
 
 Согласно [FAQ AWS](https://aws.amazon.com/ru/sqs/faqs/) длина имени ограничена 80 символами
 
@@ -86,17 +86,10 @@
     internal/service/sfn/validate.go:10:	if len(value) > 80 {
     internal/service/sfn/validate.go:11:		errors = append(errors, fmt.Errorf("%q cannot be longer than 80 characters", k))
 
-
+Ссылка на [строку кода](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/service/sfn/validate.go#L10)
 
 Анализ файла так же показал, что регулярное выражение, которому должно подчиняться имя, может использовать прописные и строчные буквы, цифры и спецсимвол `_`
 
-## Задача 2. (Не обязательно) 
-В рамках вебинара и презентации мы разобрали как создать свой собственный провайдер на примере кофемашины. 
-Также вот официальная документация о создании провайдера: 
-[https://learn.hashicorp.com/collections/terraform/providers](https://learn.hashicorp.com/collections/terraform/providers).
-
-1. Проделайте все шаги создания провайдера.
-2. В виде результата приложение ссылку на исходный код.
-3. Попробуйте скомпилировать провайдер, если получится то приложите снимок экрана с командой и результатом компиляции.   
+Ссылка на [строку кода](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/service/sfn/validate.go#L14) 
 
 ---
