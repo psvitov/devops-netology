@@ -44,8 +44,8 @@
      ./internal/provider/provider.go
 
 4. Анализ данных показал, что данные хранятся в файле `./internal/provider/provider.go`
-5. Ссылка на `resource`: [Ссылка 1](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L913)
-6. Ссылка на `data_source`: [Ссылка 2](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L415)
+5. Ссылка на [`resource`](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L913)
+6. Ссылка на [`data_source`](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L415)
 
 #### Пункт 2:
 
@@ -86,6 +86,9 @@
     internal/service/sfn/validate.go:10:	if len(value) > 80 {
     internal/service/sfn/validate.go:11:		errors = append(errors, fmt.Errorf("%q cannot be longer than 80 characters", k))
 
+
+
+Анализ файла так же показал, что регулярное выражение, которому должно подчиняться имя, может использовать прописные и строчные буквы, цифры и спецсимвол `_`
 
 ## Задача 2. (Не обязательно) 
 В рамках вебинара и презентации мы разобрали как создать свой собственный провайдер на примере кофемашины. 
