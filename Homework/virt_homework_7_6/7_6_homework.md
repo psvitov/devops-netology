@@ -1,0 +1,58 @@
+# Домашнее задание к занятию "7.6. Написание собственных провайдеров для Terraform."
+
+## Задача 1. 
+Давайте потренируемся читать исходный код AWS провайдера, который можно склонировать от сюда: 
+[https://github.com/hashicorp/terraform-provider-aws.git](https://github.com/hashicorp/terraform-provider-aws.git).
+Просто найдите нужные ресурсы в исходном коде и ответы на вопросы станут понятны.  
+
+
+1. Найдите, где перечислены все доступные `resource` и `data_source`, приложите ссылку на эти строки в коде на 
+гитхабе.   
+2. Для создания очереди сообщений SQS используется ресурс `aws_sqs_queue` у которого есть параметр `name`. 
+    * С каким другим параметром конфликтует `name`? Приложите строчку кода, в которой это указано.
+    * Какая максимальная длина имени? 
+    * Какому регулярному выражению должно подчиняться имя? 
+
+---
+### Ответ:
+---
+
+1. Клонируем исходный код:
+
+> 
+    root@DevOps:~/Homeworks/hw76# git clone https://github.com/hashicorp/terraform-provider-aws.git
+    
+2. Согласно структуре провайдера доступные ресурсы и источники данных задаются в файле `provider.go` (презентация - стр. 17)
+3. Ищем файл `provider.go`:
+
+>
+    root@DevOps:~/Homeworks/hw76/terraform-provider-aws# find -name provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/internal/fromproto/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov5/internal/toproto/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/internal/fromproto/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/tfprotov6/internal/toproto/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-go/internal/logging/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-registry-address/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-log/tflog/provider.go
+    ./tools/providerlint/vendor/github.com/hashicorp/terraform-plugin-log/internal/logging/provider.go
+    ./internal/provider/fwprovider/provider.go
+    ./internal/provider/provider.go
+
+4. Анализ данных показал, что данные хранятся в файле `./internal/provider/provider.go`
+5. Ссылка на `resource`: [Ссылка 1](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L913)
+6. ССылка на `data_source`: [Ссылка 2](https://github.com/hashicorp/terraform-provider-aws/blob/c67e927dfe8c8d5614bcb78eaddd696d06830528/internal/provider/provider.go#L415)
+
+
+## Задача 2. (Не обязательно) 
+В рамках вебинара и презентации мы разобрали как создать свой собственный провайдер на примере кофемашины. 
+Также вот официальная документация о создании провайдера: 
+[https://learn.hashicorp.com/collections/terraform/providers](https://learn.hashicorp.com/collections/terraform/providers).
+
+1. Проделайте все шаги создания провайдера.
+2. В виде результата приложение ссылку на исходный код.
+3. Попробуйте скомпилировать провайдер, если получится то приложите снимок экрана с командой и результатом компиляции.   
+
+---
