@@ -36,7 +36,7 @@
 ### Ответ:
 ---
 
-1. Запускаем `playbook`
+1. Запускаем `playbook` на окружении `test.yml`:
 
 >   root@DevOps:~/Homeworks/hw81/playbook# ansible-playbook site.yml -i inventory/test.yml
 
@@ -46,11 +46,26 @@
 
 Значение `some_fact` для данного хоста: 12
 
-2. Файл с переменными, в котором здается найое значение находится в директории `~/playbook/group_vars/all/`
+2. Файл с переменными, в котором здается новое значение находится в директории `~/playbook/group_vars/all/`
 
 Замена на `all default fact` дает результат:
 
 ![8_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_4.png)
+
+3. Создано окружение из 2-х docker-контейнеров:
+
+![8_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_5.png)
+
+4. Запускаем `playbook` на окружении `prod.yml`:
+
+>   root@DevOps:~/Homeworks/hw81/playbook# ansible-playbook site.yml -i inventory/prod.yml
+
+Результат:
+
+![8_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_6.png)
+
+`some_fact` для `centos7` - el
+`some_fact` для `ubuntu`  - deb
 
 
 ## Необязательная часть
