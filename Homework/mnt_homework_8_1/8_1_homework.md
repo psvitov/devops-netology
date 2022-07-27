@@ -94,7 +94,7 @@
 
 ![8_1_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_12.png)
 
-12. Ссылка за измененый [`playbook`](https://github.com/psvitov/devops-netology/tree/main/Homework/mnt_homework_8_1/playbook)
+12. Ссылка за измененый [`playbook`](https://github.com/psvitov/mnt_homework_8_1)
 
 
 ## Необязательная часть
