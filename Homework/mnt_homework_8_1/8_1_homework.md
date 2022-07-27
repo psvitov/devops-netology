@@ -65,7 +65,36 @@
 ![8_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_6.png)
 
 `some_fact` для `centos7` - el
+
 `some_fact` для `ubuntu`  - deb
+
+5. Внесение изменений в файлы групп хостов:
+
+![8_1_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_7.png)
+
+6. Повторяем запуск `playbook` на окружении `prod.yml`:
+
+![8_1_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_8.png)
+
+7. Шифруем факты в `group_vars/deb` и `group_vars/el` с паролем `netology` и проводим проверку шифрования:
+
+![8_1_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_9.png)
+
+8. Повторяем запуск `playbook` на окружении `prod.yml`:
+
+![8_1_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_10.png)
+
+9. Так как все плагины в Ansible выполняются в контексте локального хоста, то подойдет плагин `local`
+
+10. Внесение изменений в файл `prod.yml':
+
+![8_1_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_11.png)
+
+11. Повторяем запуск `playbook` на окружении `prod.yml`:
+
+![8_1_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_12.png)
+
+
 
 
 ## Необязательная часть
@@ -80,3 +109,4 @@
 ---
 ### Ответ:
 ---
+ Сдам чуть позже
