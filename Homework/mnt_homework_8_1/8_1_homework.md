@@ -36,6 +36,23 @@
 ### Ответ:
 ---
 
+1. Запускаем `playbook`
+
+>   root@DevOps:~/Homeworks/hw81/playbook# ansible-playbook site.yml -i inventory/test.yml
+
+Результат:
+
+![8_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_3.png)
+
+Значение `some_fact` для данного хоста: 12
+
+2. Файл с переменными, в котором здается найое значение находится в директории `~/playbook/group_vars/all/`
+
+Замена на `all default fact` дает результат:
+
+![8_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_4.png)
+
+
 ## Необязательная часть
 
 1. При помощи `ansible-vault` расшифруйте все зашифрованные файлы с переменными.
