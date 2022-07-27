@@ -9,6 +9,15 @@
 ### Ответ
 ---
 
+1. Установленный `Ansible`:
+
+![8_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_1.png)
+
+2. Публичный репозиторий с загруженным `playbook`:
+
+![8_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_2.png)
+
+
 ## Основная часть
 1. Попробуйте запустить playbook на окружении из `test.yml`, зафиксируйте какое значение имеет факт `some_fact` для указанного хоста при выполнении playbook'a.
 2. Найдите файл с переменными (group_vars) в котором задаётся найденное в первом пункте значение и поменяйте его на 'all default fact'.
@@ -26,6 +35,38 @@
 ---
 ### Ответ:
 ---
+
+1. Запускаем `playbook` на окружении `test.yml`:
+
+>   root@DevOps:~/Homeworks/hw81/playbook# ansible-playbook site.yml -i inventory/test.yml
+
+Результат:
+
+![8_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_3.png)
+
+Значение `some_fact` для данного хоста: 12
+
+2. Файл с переменными, в котором здается новое значение находится в директории `~/playbook/group_vars/all/`
+
+Замена на `all default fact` дает результат:
+
+![8_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_4.png)
+
+3. Создано окружение из 2-х docker-контейнеров:
+
+![8_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_5.png)
+
+4. Запускаем `playbook` на окружении `prod.yml`:
+
+>   root@DevOps:~/Homeworks/hw81/playbook# ansible-playbook site.yml -i inventory/prod.yml
+
+Результат:
+
+![8_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_1/8_1_6.png)
+
+`some_fact` для `centos7` - el
+`some_fact` для `ubuntu`  - deb
+
 
 ## Необязательная часть
 
