@@ -17,6 +17,11 @@
 
 3. `Playbook` помещен в репозиторий:
 
+![8_2_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_1.png)
+
+4. Хосты подготовлены на `docker` контейнерах:
+
+![8_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_2.png)
 
 
 ## Основная часть
@@ -35,3 +40,59 @@
 ---
 ### Ответ:
 ---
+
+1. Файл `inventory/prod.yml`:
+
+> 
+    ---
+    clickhouse:
+      hosts:
+        centos-clickhouse:
+          ansible_connection: docker
+
+    vector:
+      hosts:
+        centos-vector:
+          ansible_connection: docker
+          
+2. Добавляем в `playbook` еще один `play`:
+
+> 
+      - name: Install Vector
+        hosts: vector
+        tasks:
+        - name: Get Vector distrib
+          ansible.builtin.get_url:
+            url: "https://packages.timber.io/vector/0.23.0/vector-0.23.0-aarch64-unknown-linux-gnu.tar.gz"
+            dest: "/tmp/vector-0.23.0-aarch64-unknown-linux-gnu.tar.gz"
+        - name: Create directory
+          ansible.builtin.file:
+              path: /var/lib/vector
+              state: directory
+              mode: 0755
+        - name: Extract Vector
+          unarchive:
+              copy: false
+              src: "/tmp/vector-0.23.0-aarch64-unknown-linux-gnu.tar.gz"
+              dest: /var/lib/vector
+        - name: Move Vector into your $PATH
+          ansible.builtin.command: "{{  item }}"
+          with_items:
+            - cd /var/lib/vector
+            - echo "export PATH=\"$(pwd)/vector/bin:\$PATH\"" >> $HOME/.profile
+            - source $HOME/.profile
+        - name: Start Vector
+          ansible.builtin.command: vector --config config/vector.toml
+
+3. Запускаем `ansible-lint site.yml` с ключом `-v`:
+
+![8_2_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_3.png)
+
+Ошибок не обнаружено.
+
+4. Запуск `playbook` с флагом `--check`:
+
+![8_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_4.png)
+
+
+
