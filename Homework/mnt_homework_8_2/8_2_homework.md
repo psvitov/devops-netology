@@ -95,4 +95,6 @@
 ![8_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_4.png)
 
 
+5. Запуск `playbook` на `prod.yml` окружении с флагом `--diff`:
 
+[8_2_diff](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_diff)
