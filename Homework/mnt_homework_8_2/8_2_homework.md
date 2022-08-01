@@ -102,3 +102,5 @@
 6. Повторный playbook с флагом --diff:
 
 [Second diff](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_2diff)
+
+7. Ссылка на фиксирующий [`коммит`](https://github.com/psvitov/mnt_homework_8_2) 
