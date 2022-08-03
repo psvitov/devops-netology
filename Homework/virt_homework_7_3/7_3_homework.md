@@ -83,14 +83,14 @@
     * если был создан бэкэнд в S3, то терраформ создат файл стейтов в S3 и запись в таблице 
 dynamodb.
     * иначе будет создан локальный файл со стейтами.  
-1. Создайте два воркспейса `stage` и `prod`.
-1. В уже созданный `aws_instance` добавьте зависимость типа инстанса от вокспейса, что бы в разных ворскспейсах 
+2. Создайте два воркспейса `stage` и `prod`.
+3. В уже созданный `aws_instance` добавьте зависимость типа инстанса от вокспейса, что бы в разных ворскспейсах 
 использовались разные `instance_type`.
-1. Добавим `count`. Для `stage` должен создаться один экземпляр `ec2`, а для `prod` два. 
-1. Создайте рядом еще один `aws_instance`, но теперь определите их количество при помощи `for_each`, а не `count`.
-1. Что бы при изменении типа инстанса не возникло ситуации, когда не будет ни одного инстанса добавьте параметр
+4. Добавим `count`. Для `stage` должен создаться один экземпляр `ec2`, а для `prod` два. 
+5. Создайте рядом еще один `aws_instance`, но теперь определите их количество при помощи `for_each`, а не `count`.
+6. Что бы при изменении типа инстанса не возникло ситуации, когда не будет ни одного инстанса добавьте параметр
 жизненного цикла `create_before_destroy = true` в один из рессурсов `aws_instance`.
-1. При желании поэкспериментируйте с другими параметрами и рессурсами.
+7. При желании поэкспериментируйте с другими параметрами и рессурсами.
 
 В виде результата работы пришлите:
 * Вывод команды `terraform workspace list`.
@@ -149,88 +149,73 @@ dynamodb.
        * prod
          stage
          
-4. Вывод `terraform plan`:
+4. В `main.tf` добавляем блоки `module` и `locals`:
 
->
-       root@DevOps:~/Homeworks/hw73/terraform# terraform plan
-       data.yandex_compute_image.image: Reading...
-       data.yandex_compute_image.image: Read complete after 2s [id=fd88d14a6790do254kj7]
+в блоке `module` описывается образ используемых ресурсов для создания виртуальной машины
 
-       Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
-       with the following symbols:
-         + create
+> 
+    module "test" {
+      source = "./modules"
+      instance_count = local.test_instance_count
+      subnet_id     = local.vpc_subnets
+      zone = var.yc_region
+      folder_id = var.yc_folder_id
+      image         = "centos-7"
+      platform_id   = "standard-v1"
+      name          = "test"
+      description   = "Test Terraform"
+      instance_role = "test instance"
+      users         = "centos"
+      cores         = local.test_cores
+      boot_disk     = "network-ssd"
+      disk_size     = local.test_disk_size
+      nat           = "true"
+      memory        = "4"
+      core_fraction = "20"  
+    }
 
-       Terraform will perform the following actions:
+В блоке `locals` описывается локальная конфигурация значений, используемых в `module`
 
-         # yandex_compute_instance.instance will be created
-         + resource "yandex_compute_instance" "instance" {
-             + created_at                = (known after apply)
-             + folder_id                 = "b1g9ofom2ntbfc8shnlh"
-             + fqdn                      = (known after apply)
-             + hostname                  = (known after apply)
-             + id                        = (known after apply)
-             + metadata                  = {
-                 + "ssh-keys" = <<-EOT
-                       centos:ssh-rsa AAAAB3NzaC1yc2EAAAA*****AAABAQCkGrgH7wiBVjDd7jNHihtG+lwBqLZXOAPirf1QqO4BrmklardHiVZ+ifVucS7CKPxV4/ak7qU5DrNw2YfCIVjE/NuCSI9rWp19BKK276wrcUQBYOCzEsHuzEA307aP8n2qj3CHcePoVbOwMuKhIBORzVKXj84n5MVoqElnWdYppONhn5yJ3huudQnX8SrVhkqeqfQKEegKPZX8EoMNTh5l2cJZoIW4s3z+2JfedCVFbbGPxjJQH8/Ptb93m0wp5K+o8/DMZCB6EZGooEGevyqDVdReDHkR7i5igwGMOA7LQuUo5Z9eoIBBG58UDdXvKcFFvHVcoRIguWGlwQa7fkHF root@DevOps
-                   EOT
-               }
-             + name                      = "centos-test"
-             + network_acceleration_type = "standard"
-             + platform_id               = "standard-v1"
-             + service_account_id        = (known after apply)
-             + status                    = (known after apply)
-             + zone                      = "ru-central1-a"
+> 
+    locals {
+      test_cores = {
+        stage = 1
+        prod = 1
+      }
+      test_disk_size = {
+        stage = 40
+        prod = 40
+      }
+      test_instance_count = {
+        stage = 1
+        prod = 2
+      }
+      vpc_subnets = {
+        stage = [
+          {
+            "v4_cidr_blocks": [
+              "10.0.0.1/24"
+            ],
+            "zone": var.yc_region
+          }
+        ]
+        prod = [
+          {
+            "v4_cidr_blocks": [
+              "10.0.0.1/24"
+            ],
+            "zone": var.yc_region
+          }      
+        ]
+      }
+    }
 
-             + boot_disk {
-                 + auto_delete = true
-                 + device_name = (known after apply)
-                 + disk_id     = (known after apply)
-                 + mode        = (known after apply)
+5. Создаем в папке modules файл с описанием `instance.tf`:
 
-                 + initialize_params {
-                     + description = (known after apply)
-                     + image_id    = "fd88d14a6790do254kj7"
-                     + name        = (known after apply)
-                     + size        = 40
-                     + snapshot_id = (known after apply)
-                     + type        = "network-hdd"
-                   }
-               }
+[instance.tf](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_3/instance.tf)
 
-             + network_interface {
-                 + index              = (known after apply)
-                 + ip_address         = (known after apply)
-                 + ipv4               = true
-                 + ipv6               = (known after apply)
-                 + ipv6_address       = (known after apply)
-                 + mac_address        = (known after apply)
-                 + nat                = false
-                 + nat_ip_address     = (known after apply)
-                 + nat_ip_version     = (known after apply)
-                 + security_group_ids = (known after apply)
-                 + subnet_id          = "default"
-               }
+`terraform init` проходит без ошибки, `terraform plan` выдает ошибку:
 
-             + placement_policy {
-                 + placement_group_id = (known after apply)
-               }
-
-             + resources {
-                 + core_fraction = 100
-                 + cores         = 2
-                 + memory        = 4
-               }
-
-             + scheduling_policy {
-                 + preemptible = (known after apply)
-               }
-           }
-
-       Plan: 1 to add, 0 to change, 0 to destroy.
-
-       ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
-       Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these
-       actions if you run "terraform apply" now.
-       
 ![7_3_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_7_3/7_3_2.png)
+
+
