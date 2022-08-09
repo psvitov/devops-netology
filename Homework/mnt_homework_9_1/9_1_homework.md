@@ -9,7 +9,9 @@
 ### Ответ:
 ---
 
+Регистрация, настройка и создание досок `kanban` и `scrum`:
 
+![9_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_1.png)
 
 ## Основная часть
 В рамках основной части необходимо создать собственные workflow для двух типов задач: bug и остальные типы задач. Задачи типа bug должны проходить следующий жизненный цикл:
@@ -36,3 +38,26 @@
 ---
 ### Ответ:
 ---
+
+1. Создаем 2 проекта - `kanban-project` и `scrum-project`:
+
+![9_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_2.png)
+
+2. Добавляем необходимые статусы:
+
+![9_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_3.png)
+
+3. Добавляем `workflow` и активируем их:
+
+![9_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_4.png)
+
+4. Добавляем в схемы необходимые статусы и переходы:
+
+![9_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_5.png)
+
+![9_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_6.png)
+
+5. Создаем задачи типа `bug`, `epic` и 2 задачи типа `task` с привязкой к задаче `epic`:
+
+![9_1_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_7.png)
+
