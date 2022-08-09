@@ -61,3 +61,31 @@
 
 ![9_1_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_7.png)
 
+6. Проводим `bug` и `task-test2` до статуса `Done` и после возвращаем в статус `Open`:
+
+![9_1_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_8.png)
+
+![9_1_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_9.png)
+
+![9_1_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_10.png)
+
+![9_1_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_11.png)
+
+7. Планируем новый `sprint`:
+
+![9_1_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_12.png)
+
+8. Доводим задачи до состояния `closed`:
+
+![9_1_13.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_13.png)
+
+![9_1_14.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_14.png)
+
+9. Закрываем `sprint`:
+
+![9_1_15.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_15.png)
+
+10. Выгруженные схемы `workflow`:
+
+- [bug workflow](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/bug%20workflow.xml)
+- [other workflow](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/other%20workfows.xml)
