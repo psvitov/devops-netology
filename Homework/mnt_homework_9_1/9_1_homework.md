@@ -11,7 +11,7 @@
 
 Регистрация, настройка и создание досок `kanban` и `scrum`:
 
-![9_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_1.png)
+![9_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_1/9_1_2.png)
 
 ## Основная часть
 В рамках основной части необходимо создать собственные workflow для двух типов задач: bug и остальные типы задач. Задачи типа bug должны проходить следующий жизненный цикл:
