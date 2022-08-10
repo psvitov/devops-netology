@@ -112,7 +112,7 @@
 
 2. При установке `Vector-0.23.0` возникали ошибки:
 
-![8_2_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_7.png)
+![8_2_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_8.png)
 
 Причем, даже при попытке ручной установки в `docker-контенере` или на ВМ данная ошибка вопросизводилась.
 Такой ошибки не было при установке вручную или через `ansible` на Ubuntu/Debian.
