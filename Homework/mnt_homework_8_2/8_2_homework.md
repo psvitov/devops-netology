@@ -100,7 +100,7 @@
 
 ![8_2_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_7.png)
 
-В `task` установки clickhouse была добавлена задача стартовать clickhouse-server:
+В `play` установки clickhouse была добавлена `task`для старта clickhouse-server:
 
 >
     - name: Start clickhouse-server
