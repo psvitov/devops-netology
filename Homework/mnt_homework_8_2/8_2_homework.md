@@ -19,7 +19,7 @@
 
 ![8_2_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_1.png)
 
-4. Хосты подготовлены на `docker` контейнерах:
+4. Хосты подготовлены на `Yandex Cloud`:
 
 ![8_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_2/8_2_2.png)
 
@@ -41,48 +41,33 @@
 ### Ответ:
 ---
 
-1. Файл `inventory/prod.yml`:
+1. формируем файл `inventory/prod.yml`:
 
 > 
     ---
     clickhouse:
       hosts:
-        centos-clickhouse:
-          ansible_connection: docker
-
+        srv-clickhouse:
+          ansible_host: 51.250.92.85
     vector:
       hosts:
-        centos-vector:
-          ansible_connection: docker
+        srv-vector:
+          ansible_host: 51.250.90.71
           
-2. Добавляем в `playbook` еще один `play`:
+2. Добавляем в `playbook` еще один `play` для установки `Vector`:
 
 > 
-      - name: Install Vector
-        hosts: vector
-        tasks:
-        - name: Get Vector distrib
+    - name: Install Vector
+      hosts: vector
+      tasks:
+        - name: Download Vector
           ansible.builtin.get_url:
-            url: "https://packages.timber.io/vector/0.23.0/vector-0.23.0-aarch64-unknown-linux-gnu.tar.gz"
-            dest: "/tmp/vector-0.23.0-aarch64-unknown-linux-gnu.tar.gz"
-        - name: Create directory
-          ansible.builtin.file:
-              path: /var/lib/vector
-              state: directory
-              mode: 0755
-        - name: Extract Vector
-          unarchive:
-              copy: false
-              src: "/tmp/vector-0.23.0-aarch64-unknown-linux-gnu.tar.gz"
-              dest: /var/lib/vector
-        - name: Move Vector into your $PATH
-          ansible.builtin.command: "{{  item }}"
-          with_items:
-            - cd /var/lib/vector
-            - echo "export PATH=\"$(pwd)/vector/bin:\$PATH\"" >> $HOME/.profile
-            - source $HOME/.profile
-        - name: Start Vector
-          ansible.builtin.command: vector --config config/vector.toml
+            url: "https://packages.timber.io/vector/0.21.0/vector-0.21.0-1.x86_64.rpm"
+            dest: "./vector-0.21.0-1.x86_64.rpm"
+        - name: Install Vector
+          become: true
+          ansible.builtin.yum:
+            name: "vector-0.21.0-1.x86_64.rpm"
 
 3. Запускаем `ansible-lint site.yml` с ключом `-v`:
 
