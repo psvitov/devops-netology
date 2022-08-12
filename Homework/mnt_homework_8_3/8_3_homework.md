@@ -10,6 +10,12 @@
 ### Ответ:
 ---
 
+Подготовлены 3 ВМ на `Yandex Cloud`:
+
+![8_3_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_3/8_3_1.PNG)
+
+
+
 
 ## Основная часть
 
