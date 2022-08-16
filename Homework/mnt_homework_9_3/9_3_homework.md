@@ -98,7 +98,7 @@
 
 ![9_3_13.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_13.png)
 
-4. Ссылка на `[maven-metadata.xml](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/maven-metadata.xml)`
+4. Ссылка на [maven-metadata.xml](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/maven-metadata.xml)
 
 ### Знакомство с Maven
 
@@ -110,6 +110,14 @@
 4. Проверяем `mvn --version`
 5. Забираем директорию [mvn](./mvn) с pom
 
+---
+### Ответ:
+---
+
+1. Устанавливаем `Maven` производим настройки и проверяем доступность:
+
+![9_3_14.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_14.png)
+
 ### Основная часть
 
 1. Меняем в `pom.xml` блок с зависимостями под наш артефакт из первого пункта задания для Nexus (java с версией 8_282)
@@ -120,3 +128,17 @@
 ---
 ### Ответ:
 ---
+
+1. Меняем `pom.xml` под артефакт `java 8_282`:
+
+![9_3_15.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_15.png)
+
+2. Результат запуска команды `mvn package`:
+
+![9_3_16.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_16.png)
+
+3. Проверяем директорию `~/.m2/repository/`:
+
+![9_3_17.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_17.png)
+
+4. Ссылка на исправленный файл [pom.xml](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/pom.xml)
