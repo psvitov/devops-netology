@@ -15,6 +15,19 @@
 ### Ответ:
 ---
 
+1. Создаем 2 ВМ: 
+
+![9_3_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_1.png)
+
+2. Прописываем IP-адреса в `hosts.yml`, добавляем ключ и запускаем `playbook`:
+
+![9_3_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_2.png)
+
+3. Проверяем готовность Sonarqube и Nexus:
+
+![9_3_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_3.png)
+
+![9_3_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_4.png)
 
 ## Знакомоство с SonarQube
 
@@ -33,6 +46,26 @@
 ---
 ### Ответ:
 ---
+
+1. Создаем новый проект:
+
+![9_3_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_5.png)
+
+2. Добавляем `bin` в переменную PATH и проверяем `sonar-scanner`:
+
+![9_3_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_6.png)
+
+3. Запускаем анализатор и смотрим результаты анализа:
+
+![9_3_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_7.png)
+
+![9_3_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_8.png)
+
+4. Исправляем код, запускаем проверку снова и смотрим результаты:
+
+![9_3_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_9.png)
+
+![9_3_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_10.png)
 
 
 ## Знакомство с Nexus
@@ -53,6 +86,19 @@
 ### Ответ:
 ---
 
+1. Загружаем в репозиторий первый артефакт:
+
+![9_3_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_11.png)
+
+2. Загружаем в репозиторий второй артефакт:
+
+![9_3_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_12.png)
+
+3. Проверяем загруженные файлы:
+
+![9_3_13.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/9_3_13.png)
+
+4. Ссылка на `[maven-metadata.xml](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_3/maven-metadata.xml)`
 
 ### Знакомство с Maven
 
