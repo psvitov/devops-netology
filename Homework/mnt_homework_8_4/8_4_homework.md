@@ -77,12 +77,21 @@
 
 ![8_4_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_9.png)
 
+5. Выкладываем созданные роли в репозитории, созданные при подготовке:
 
+`vector-role`:
 
+![8_4_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_10.png)
 
+`lighthouse-role`:
 
+![8_4_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_11.png)
 
+6. Добавление описания ролей в `README.md`:
 
+![8_4_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_12.png)
+
+![8_4_13.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_13.png)
 
 
 
