@@ -9,9 +9,14 @@
 ### Ответ:
 ---
 
-1. Создано 2 новых репозитория `vector-role` и `lighthouse-role` и репозиторий с `playbook`:
+1. Ознакомился с `lighthouse`.
+2. Создано 2 новых репозитория `vector-role` и `lighthouse-role` и репозиторий с `playbook`:
 
+![8_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_1.png)
 
+3. Публичный ключ добавлен:
+
+![8_4_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_2.png)
 
 
 
@@ -43,3 +48,47 @@
 ---
 ### Ответ:
 ---
+
+1. Создаем файл `requirements.yml` и добавляем необходимое содержимое:
+
+![8_4_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_3.png)
+
+2. Создаем папку `roles` и скачиваем туда роль при помощи `ansible-galaxy`:
+
+![8_4_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_4.png)
+
+3. Создаем роль `vector-role`:
+
+![8_4_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_5.png)
+
+Добавляем в файл `vars/main.yml` переменные:
+
+![8_4_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_6.png)
+
+Добавляем `tasks` в файл `tasks/main.yml`:
+
+![8_4_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_7.png)
+
+4. Создаем роль `lighthouse-role`:
+
+![8_4_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_8.png)
+
+Добавляем `tasks` в файл `tasks/main.yml`:
+
+![8_4_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_9.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
