@@ -93,11 +93,16 @@
 
 ![8_4_13.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_13.png)
 
+7. Добавляем вновь созданные `roles` в `requirements.yml` в playbook:
 
+![8_4_14.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_14.png)
 
+8. Пересобираем `playbook` на использование ролей:
 
+![8_4_15.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_4/8_4_15.png)
 
+9. Ссылки на репозитории:
 
-
-
-
+- [playbook](https://github.com/psvitov/mnt_homework_8_4)
+- [vector-role](https://github.com/psvitov/vector-role)
+- [lighthouse-role](https://github.com/psvitov/lighthouse-role)
