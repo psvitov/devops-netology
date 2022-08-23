@@ -13,8 +13,15 @@
 
 1. Подготовлены 2 ВМ:
 
+![9_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_1.png)
 
+2. Устанавливаем jenkins при помощи playbook'a:
 
+![9_4_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_2.png)
+
+3. Проверка работоспособности и первоначальная настройка:
+
+![9_4_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_3.png)
 
 ## Основная часть
 
