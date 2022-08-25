@@ -8,6 +8,15 @@
 ### Ответ:
 ---
 
+1. Устанавливаем `molecule` и проверяем:
+
+![8_5_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_1.png)
+
+2. Скачиваем и проверяем docker-образ:
+
+![8_5_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_2.png)
+
+
 ## Основная часть
 
 Наша основная цель - настроить тестирование наших ролей. Задача: сделать сценарии тестирования для vector. Ожидаемый результат: все сценарии успешно проходят тестирование ролей.
@@ -23,6 +32,28 @@
 ---
 ### Ответ:
 ---
+
+1.
+
+2. Создаем сценарий тестирования для роли `vector-role`:
+
+![8_5_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_4.png)
+
+3. Добавляем дистрибутивы в файл `molecule.yml`:
+
+> 
+    platforms:
+      - name: centos:7
+        image: docker.io/pycontribs/centos:7
+        pre_build_image: true
+      - name: centos:8
+        image: docker.io/pycontribs/centos:8      
+        pre_build_image: true
+      - name: ubuntu
+        image: docker.io/pycontribs/ubuntu:latest
+        pre_build_image: true
+
+
 
 ### Tox
 
