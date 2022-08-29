@@ -33,7 +33,9 @@
 ### Ответ:
 ---
 
-1.
+1. проверяем работу `molecule` в директории clickhouse:
+
+![8_5_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_3.png)
 
 2. Создаем сценарий тестирования для роли `vector-role`:
 
@@ -43,17 +45,21 @@
 
 > 
     platforms:
-      - name: centos:7
-        image: docker.io/pycontribs/centos:7
+      - name: centos_7
+        image: centos:7
         pre_build_image: true
-      - name: centos:8
-        image: docker.io/pycontribs/centos:8      
+      - name: centos_8
+        image: centos:8_update
         pre_build_image: true
       - name: ubuntu
-        image: docker.io/pycontribs/ubuntu:latest
+        image: ubuntu:python
         pre_build_image: true
+        
+Проверяем работу `molecule test`:
 
+![8_5_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_5.png)
 
+Полный результат работы в файле: [molecule_test.md](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/molecule_test.md)
 
 ### Tox
 
