@@ -33,7 +33,7 @@
 ### Ответ:
 ---
 
-1. проверяем работу `molecule` в директории clickhouse:
+1. Проверяем работу `molecule` в директории clickhouse:
 
 ![8_5_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_3.png)
 
@@ -60,6 +60,13 @@
 ![8_5_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_5.png)
 
 Полный результат работы в файле: [molecule_test.md](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/molecule_test.md)
+
+4. Добавляем assert в verify.yml и запускаем `molecule test` снова:
+
+![8_5_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_6.png)
+
+5. Ссылка на коммит с рабочим сценарием: [molecule](https://github.com/psvitov/mnt_homework_8_5/tree/v0.0.3)
+
 
 ### Tox
 
