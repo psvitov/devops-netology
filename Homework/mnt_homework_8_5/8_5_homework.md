@@ -84,13 +84,33 @@
 ### Ответ:
 ---
 
-## Необязательная часть
+1. Файлы добавлены, контейнер запущен:
 
-1. Проделайте схожие манипуляции для создания роли lighthouse.
-2. Создайте сценарий внутри любой из своих ролей, который умеет поднимать весь стек при помощи всех ролей.
-3. Убедитесь в работоспособности своего стека. Создайте отдельный verify.yml, который будет проверять работоспособность интеграции всех инструментов между ними.
-4. Выложите свои roles в репозитории. В ответ приведите ссылки.
+![8_5_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_7.png)
 
----
-### Ответ:
----
+2. Исправляем tox.ini для проверки своей роли `default`, запускаем `tox`, команда завершается ошибками, так как в образе не установлен `docker`
+
+![8_5_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_8.png)
+
+3. Меняем драйвер на `podman` и облегчаем сценарий
+
+> 
+    [tox]
+    minversion = 1.8
+    basepython = python3.6
+    envlist = py{37,39}-ansible{210}
+    skipsdist = true
+
+    [testenv]
+    passenv = *
+    deps =
+        -r tox-requirements.txt
+        ansible210: ansible<3.0
+    commands =
+        {posargs:molecule test -s default --destroy always}
+        
+4. Запуск tox прошел по сценарию molecule, но завершился ошибками. Вероятнее всего, при работе с molecule использовались docker-образы собственной сборки(ubuntu не имеет в контейнере python, в контейнере centos:8 необходимо было поправить работу репозитория, так как не отрабатывал dnf):
+
+![8_5_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_5/8_5_9.png)
+
+5. Ссылка на коммит с рабочим сценарием: [tox](https://github.com/psvitov/mnt_homework_8_5/tree/v0.0.4)
