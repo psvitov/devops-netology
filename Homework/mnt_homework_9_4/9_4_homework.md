@@ -54,7 +54,7 @@
 
 Результат запуска: [Declarative Pipeline Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/declarative_pipeline_job.txt)
 
-3. Переносим `Declarative Pipeline Job` в репозиторий в файл [`Jenkinsfile`](https://github.com/psvitov/mnt_homework_8_5/tree/v0.0.5)
+3. Переносим `Declarative Pipeline Job` в репозиторий в файл [`Jenkinsfile`](https://github.com/psvitov/mnt_homework_8_5/blob/v0.0.5/Jenkinsfile)
 
 ![9_4_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_8.png)
 
