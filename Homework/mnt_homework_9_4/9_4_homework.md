@@ -44,13 +44,42 @@
 
 ![9_4_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_5.png)
 
-Результат запуска: [Freestyle Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/freestyle_job.md)
+Результат запуска: [Freestyle Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/freestyle_job.txt)
+
+2. Создаем `Declarative Pipeline Job`, настраиваем сборку и запускаем:
+
+![9_4_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_6.png)
+
+![9_4_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_7.png)
+
+Результат запуска: [Declarative Pipeline Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/declarative_pipeline_job.txt)
+
+3. Переносим `Declarative Pipeline Job` в репозиторий в файл [`Jenkinsfile`](https://github.com/psvitov/mnt_homework_8_5/tree/v0.0.5)
+
+![9_4_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_8.png)
+
+4. Создаем `Multibranch Pipeline` на запуск `Jenkinsfile` из репозитория:
+
+![9_4_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_9.png)
+
+Результат запуска: [Multibranch Pipeline Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/multibranch.txt)
+
+5. Создаем Scripted Pipeline, вносим необходимые изменения и проверяем арботоспособность:
+
+![9_4_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_10.png)
+
+![9_4_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_11.png)
+
+![9_4_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_12.png)
+
+Так как в `example-playbook/inventory/prod.yml` указан хост к которому нет доступа, то задание вываливается с ошибкой.
+
+6. Добавляем `ScriptedJenkinsfile` в репозиторий.
+
+Ссылки на коммиты репозитория:
+
+[`Declarative Pipeline`](https://github.com/psvitov/mnt_homework_8_5/tree/v0.0.5)
+[`Scripted Pipeline`](https://github.com/psvitov/mnt_homework_8_5/tree/v0.0.6)
 
 
 
-## Необязательная часть
-
-1. Создать скрипт на groovy, который будет собирать все Job, которые завершились хотя бы раз неуспешно. Добавить скрипт в репозиторий с решением с названием `AllJobFailure.groovy`.
-2. Создать Scripted Pipeline таким образом, чтобы он мог сначала запустить через Ya.Cloud CLI необходимое количество инстансов, прописать их в инвентори плейбука и после этого запускать плейбук. Тем самым, мы должны по нажатию кнопки получить готовую к использованию систему.
-
----
