@@ -46,6 +46,8 @@
 
 Результат запуска: [Freestyle Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/freestyle_job.txt)
 
+Так как на `jenkins-agent` нет необходимых docker-контейнеров, которые использовались при выполнении ДЗ 8_5, задача вываливается с ошибкой.
+
 2. Создаем `Declarative Pipeline Job`, настраиваем сборку и запускаем:
 
 ![9_4_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_6.png)
@@ -53,6 +55,8 @@
 ![9_4_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_7.png)
 
 Результат запуска: [Declarative Pipeline Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/declarative_pipeline_job.txt)
+
+Так как на `jenkins-agent` нет необходимых docker-контейнеров, которые использовались при выполнении ДЗ 8_5, задача вываливается с ошибкой.
 
 3. Переносим `Declarative Pipeline Job` в репозиторий в файл [`Jenkinsfile`](https://github.com/psvitov/mnt_homework_8_5/blob/v0.0.5/Jenkinsfile)
 
@@ -63,6 +67,8 @@
 ![9_4_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_9.png)
 
 Результат запуска: [Multibranch Pipeline Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/multibranch.txt)
+
+Так как на `jenkins-agent` нет необходимых docker-контейнеров, которые использовались при выполнении ДЗ 8_5, задача вываливается с ошибкой.
 
 5. Создаем Scripted Pipeline, вносим необходимые изменения и проверяем арботоспособность:
 
