@@ -38,7 +38,13 @@
 ### Ответ:
 ---
 
+1. Создаем `Freestyle Job`, настраиваем сборку и запускаем:
 
+![9_4_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_4.png)
+
+![9_4_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/9_4_5.png)
+
+Результат запуска: [Freestyle Job](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/freestyle_job.md)
 
 
 
