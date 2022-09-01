@@ -87,5 +87,14 @@
 [`Declarative Pipeline`](https://github.com/psvitov/mnt_homework_8_5/tree/v0.0.5)
 [`Scripted Pipeline`](https://github.com/psvitov/mnt_homework_8_5/tree/v0.0.6)
 
+---
+## Работа над ошибками
+---
 
+Доработал jenkins-agent
 
+1. Результат выполнения Freestyle Job через [`docker`](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/freestyle_job_v2.txt)
+
+2. Результат выполнения Freestyle Job через [`podman`](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/freestyle_job_podman.txt)
+
+3. Результат выполнения Declarative Pipeline Job через [`podman`](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_4/declarative_pipeline_job_v2.txt)
