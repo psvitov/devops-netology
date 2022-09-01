@@ -1,0 +1,254 @@
+Started by user Pavel Svitov
+Running as SYSTEM
+Building remotely on agent-01 (centos ansible) in workspace /opt/jenkins_agent/workspace/freestyle-molecule
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /opt/jenkins_agent/workspace/freestyle-molecule/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/psvitov/mnt_homework_8_5.git # timeout=10
+Fetching upstream changes from https://github.com/psvitov/mnt_homework_8_5.git
+ > git --version # timeout=10
+ > git --version # 'git version 1.8.3.1'
+ > git fetch --tags --progress https://github.com/psvitov/mnt_homework_8_5.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 4d49423665ab9317110078795c91d10c82e4a2e5 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 4d49423665ab9317110078795c91d10c82e4a2e5 # timeout=10
+Commit message: "Update molecule.yml"
+ > git rev-list --no-walk 4d49423665ab9317110078795c91d10c82e4a2e5 # timeout=10
+[freestyle-molecule] $ /bin/sh -xe /tmp/jenkins682651821707772327.sh
++ cd /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/
++ molecule test
+INFO     default scenario test matrix: dependency, lint, cleanup, destroy, syntax, create, prepare, converge, idempotence, side_effect, verify, cleanup, destroy
+INFO     Performing prerun...
+INFO     Set ANSIBLE_LIBRARY=/home/jenkins/.cache/ansible-compat/f5bcd7/modules:/home/jenkins/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+INFO     Set ANSIBLE_COLLECTIONS_PATH=/home/jenkins/.cache/ansible-compat/f5bcd7/collections:/home/jenkins/.ansible/collections:/usr/share/ansible/collections
+INFO     Set ANSIBLE_ROLES_PATH=/home/jenkins/.cache/ansible-compat/f5bcd7/roles:/home/jenkins/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running default > dependency
+WARNING  Skipping, missing the requirements file.
+WARNING  Skipping, missing the requirements file.
+INFO     Running default > lint
+INFO     Lint is disabled.
+INFO     Running default > cleanup
+WARNING  Skipping, cleanup playbook not configured.
+INFO     Running default > destroy
+INFO     Sanity checks: 'docker'
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+changed: [localhost] => (item=centos_7)
+changed: [localhost] => (item=centos_8)
+changed: [localhost] => (item=ubuntu)
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+ok: [localhost] => (item=centos_7)
+ok: [localhost] => (item=centos_8)
+ok: [localhost] => (item=ubuntu)
+
+TASK [Delete docker networks(s)] ***********************************************
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running default > syntax
+
+playbook: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/molecule/default/converge.yml
+INFO     Running default > create
+
+PLAY [Create] ******************************************************************
+
+TASK [Log into a Docker registry] **********************************************
+skipping: [localhost] => (item=None)
+skipping: [localhost] => (item=None)
+skipping: [localhost] => (item=None)
+skipping: [localhost]
+
+TASK [Check presence of custom Dockerfiles] ************************************
+ok: [localhost] => (item={'image': 'centos:7', 'name': 'centos_7', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True})
+
+TASK [Create Dockerfiles from image names] *************************************
+skipping: [localhost] => (item={'image': 'centos:7', 'name': 'centos_7', 'pre_build_image': True})
+skipping: [localhost] => (item={'image': 'psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True})
+skipping: [localhost] => (item={'image': 'psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True})
+
+TASK [Discover local Docker images] ********************************************
+ok: [localhost] => (item={'changed': False, 'skipped': True, 'skip_reason': 'Conditional result was False', 'item': {'image': 'centos:7', 'name': 'centos_7', 'pre_build_image': True}, 'ansible_loop_var': 'item', 'i': 0, 'ansible_index_var': 'i'})
+ok: [localhost] => (item={'changed': False, 'skipped': True, 'skip_reason': 'Conditional result was False', 'item': {'image': 'psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True}, 'ansible_loop_var': 'item', 'i': 1, 'ansible_index_var': 'i'})
+ok: [localhost] => (item={'changed': False, 'skipped': True, 'skip_reason': 'Conditional result was False', 'item': {'image': 'psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True}, 'ansible_loop_var': 'item', 'i': 2, 'ansible_index_var': 'i'})
+
+TASK [Build an Ansible compatible image (new)] *********************************
+skipping: [localhost] => (item=molecule_local/centos:7)
+skipping: [localhost] => (item=molecule_local/psvitov/centos8_update)
+skipping: [localhost] => (item=molecule_local/psvitov/ubuntu_python)
+
+TASK [Create docker network(s)] ************************************************
+
+TASK [Determine the CMD directives] ********************************************
+ok: [localhost] => (item={'image': 'centos:7', 'name': 'centos_7', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True})
+
+TASK [Create molecule instance(s)] *********************************************
+changed: [localhost] => (item=centos_7)
+changed: [localhost] => (item=centos_8)
+changed: [localhost] => (item=ubuntu)
+
+TASK [Wait for instance(s) creation to complete] *******************************
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (300 retries left).
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '699304116715.5775', 'results_file': '/home/jenkins/.ansible_async/699304116715.5775', 'changed': True, 'item': {'image': 'centos:7', 'name': 'centos_7', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '213807957576.5799', 'results_file': '/home/jenkins/.ansible_async/213807957576.5799', 'changed': True, 'item': {'image': 'psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '534615646426.5830', 'results_file': '/home/jenkins/.ansible_async/534615646426.5830', 'changed': True, 'item': {'image': 'psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=5    changed=2    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0
+
+INFO     Running default > prepare
+WARNING  Skipping, prepare playbook not configured.
+INFO     Running default > converge
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ubuntu]
+ok: [centos_8]
+ok: [centos_7]
+
+TASK [Include vector-role] *****************************************************
+
+TASK [vector-role : Download Vector] *******************************************
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/yum.yml for centos_7
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/dnf.yml for centos_8
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/apt.yml for ubuntu
+
+TASK [vector-role : Download Vector] *******************************************
+changed: [centos_7]
+
+TASK [vector-role : Download Vector] *******************************************
+changed: [centos_8]
+
+TASK [vector-role : Download Vector] *******************************************
+changed: [ubuntu]
+
+TASK [vector-role : Install Vector] ********************************************
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/yum.yml for centos_7
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/dnf.yml for centos_8
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/apt.yml for ubuntu
+
+TASK [vector-role : Install Vector] ********************************************
+changed: [centos_7]
+
+TASK [vector-role : Install Vector] ********************************************
+changed: [centos_8]
+
+TASK [vector-role : Install Vector] ********************************************
+changed: [ubuntu]
+
+PLAY RECAP *********************************************************************
+centos_7                   : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+centos_8                   : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ubuntu                     : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Running default > idempotence
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ubuntu]
+ok: [centos_8]
+ok: [centos_7]
+
+TASK [Include vector-role] *****************************************************
+
+TASK [vector-role : Download Vector] *******************************************
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/yum.yml for centos_7
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/dnf.yml for centos_8
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/apt.yml for ubuntu
+
+TASK [vector-role : Download Vector] *******************************************
+ok: [centos_7]
+
+TASK [vector-role : Download Vector] *******************************************
+ok: [centos_8]
+
+TASK [vector-role : Download Vector] *******************************************
+ok: [ubuntu]
+
+TASK [vector-role : Install Vector] ********************************************
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/yum.yml for centos_7
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/dnf.yml for centos_8
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/apt.yml for ubuntu
+
+TASK [vector-role : Install Vector] ********************************************
+ok: [centos_7]
+
+TASK [vector-role : Install Vector] ********************************************
+ok: [centos_8]
+
+TASK [vector-role : Install Vector] ********************************************
+ok: [ubuntu]
+
+PLAY RECAP *********************************************************************
+centos_7                   : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+centos_8                   : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ubuntu                     : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Idempotence completed successfully.
+INFO     Running default > side_effect
+WARNING  Skipping, side effect playbook not configured.
+INFO     Running default > verify
+INFO     Running Ansible Verifier
+
+PLAY [Verify] ******************************************************************
+
+TASK [Vctor verify] ************************************************************
+changed: [centos_8]
+changed: [centos_7]
+changed: [ubuntu]
+
+TASK [Vector - package is installed] *******************************************
+ok: [centos_7] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+ok: [centos_8] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+ok: [ubuntu] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+centos_7                   : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+centos_8                   : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ubuntu                     : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Verifier completed successfully.
+INFO     Running default > cleanup
+WARNING  Skipping, cleanup playbook not configured.
+INFO     Running default > destroy
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+changed: [localhost] => (item=centos_7)
+changed: [localhost] => (item=centos_8)
+changed: [localhost] => (item=ubuntu)
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+changed: [localhost] => (item=centos_7)
+changed: [localhost] => (item=centos_8)
+changed: [localhost] => (item=ubuntu)
+
+TASK [Delete docker networks(s)] ***********************************************
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+Finished: SUCCESS
