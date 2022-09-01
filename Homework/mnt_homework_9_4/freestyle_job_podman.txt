@@ -1,0 +1,97 @@
+Started by user Pavel Svitov
+Running as SYSTEM
+Building remotely on agent-01 (centos ansible) in workspace /opt/jenkins_agent/workspace/freestyle-molecule
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /opt/jenkins_agent/workspace/freestyle-molecule/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/psvitov/mnt_homework_8_5.git # timeout=10
+Fetching upstream changes from https://github.com/psvitov/mnt_homework_8_5.git
+ > git --version # timeout=10
+ > git --version # 'git version 1.8.3.1'
+ > git fetch --tags --progress https://github.com/psvitov/mnt_homework_8_5.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision cbc919c652d64758be7bcd4d6e5fb13e29e619ba (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f cbc919c652d64758be7bcd4d6e5fb13e29e619ba # timeout=10
+Commit message: "Update molecule.yml"
+ > git rev-list --no-walk cbc919c652d64758be7bcd4d6e5fb13e29e619ba # timeout=10
+[freestyle-molecule] $ /bin/sh -xe /tmp/jenkins310050199648191472.sh
++ cd /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/
++ molecule --version
+molecule 4.0.1 using python 3.9 
+    ansible:2.13.3
+    delegated:4.0.1 from molecule
+    docker:1.1.0 from molecule_docker requiring collections: community.docker>=1.9.1
+    podman:2.0.2 from molecule_podman requiring collections: containers.podman>=1.7.0 ansible.posix>=1.3.0
++ molecule test
+INFO     default scenario test matrix: dependency, lint, cleanup, destroy, syntax, create, prepare, converge, idempotence, side_effect, verify, cleanup, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Set ANSIBLE_LIBRARY=/home/jenkins/.cache/ansible-compat/f5bcd7/modules:/home/jenkins/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+INFO     Set ANSIBLE_COLLECTIONS_PATH=/home/jenkins/.cache/ansible-compat/f5bcd7/collections:/home/jenkins/.ansible/collections:/usr/share/ansible/collections
+INFO     Set ANSIBLE_ROLES_PATH=/home/jenkins/.cache/ansible-compat/f5bcd7/roles:/home/jenkins/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Using /home/jenkins/.cache/ansible-compat/f5bcd7/roles/psvitov.vector_role symlink to current repository in order to enable Ansible to find the role using its expected full name.
+INFO     Running default > dependency
+WARNING  Skipping, missing the requirements file.
+WARNING  Skipping, missing the requirements file.
+INFO     Running default > lint
+INFO     Lint is disabled.
+INFO     Running default > cleanup
+WARNING  Skipping, cleanup playbook not configured.
+INFO     Running default > destroy
+INFO     Sanity checks: 'podman'
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+changed: [localhost] => (item={'image': 'docker.io/pycontribs/centos:7', 'name': 'centos_7', 'pre_build_image': True})
+changed: [localhost] => (item={'image': 'docker.io/psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True})
+changed: [localhost] => (item={'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True})
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '928462093862.16675', 'results_file': '/home/jenkins/.ansible_async/928462093862.16675', 'changed': True, 'item': {'image': 'docker.io/pycontribs/centos:7', 'name': 'centos_7', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '306543479491.16699', 'results_file': '/home/jenkins/.ansible_async/306543479491.16699', 'changed': True, 'item': {'image': 'docker.io/psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '778600559018.16726', 'results_file': '/home/jenkins/.ansible_async/778600559018.16726', 'changed': True, 'item': {'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Running default > syntax
+
+playbook: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/molecule/default/converge.yml
+INFO     Running default > create
+
+PLAY [Create] ******************************************************************
+
+TASK [get podman executable path] **********************************************
+fatal: [localhost]: FAILED! => {"changed": false, "cmd": ["which", "podman"], "delta": "0:00:00.003405", "end": "2022-09-01 18:53:13.036998", "msg": "non-zero return code", "rc": 1, "start": "2022-09-01 18:53:13.033593", "stderr": "which: no podman in (/usr/local/bin:/usr/bin:/home/jenkins/.local/bin)", "stderr_lines": ["which: no podman in (/usr/local/bin:/usr/bin:/home/jenkins/.local/bin)"], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
+
+WARNING  Retrying execution failure 2 of: ansible-playbook --inventory /home/jenkins/.cache/molecule/vector-role/default/inventory --skip-tags molecule-notest,notest /home/jenkins/.local/lib/python3.9/site-packages/molecule_podman/playbooks/create.yml
+CRITICAL Ansible return code was 2, command was: ['ansible-playbook', '--inventory', '/home/jenkins/.cache/molecule/vector-role/default/inventory', '--skip-tags', 'molecule-notest,notest', '/home/jenkins/.local/lib/python3.9/site-packages/molecule_podman/playbooks/create.yml']
+WARNING  An error occurred during the test sequence action: 'create'. Cleaning up.
+INFO     Running default > cleanup
+WARNING  Skipping, cleanup playbook not configured.
+INFO     Running default > destroy
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+changed: [localhost] => (item={'image': 'docker.io/pycontribs/centos:7', 'name': 'centos_7', 'pre_build_image': True})
+changed: [localhost] => (item={'image': 'docker.io/psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True})
+changed: [localhost] => (item={'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True})
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '835488915587.16877', 'results_file': '/home/jenkins/.ansible_async/835488915587.16877', 'changed': True, 'item': {'image': 'docker.io/pycontribs/centos:7', 'name': 'centos_7', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '98636905189.16901', 'results_file': '/home/jenkins/.ansible_async/98636905189.16901', 'changed': True, 'item': {'image': 'docker.io/psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '522882815645.16928', 'results_file': '/home/jenkins/.ansible_async/522882815645.16928', 'changed': True, 'item': {'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE
