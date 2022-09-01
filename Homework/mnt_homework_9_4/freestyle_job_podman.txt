@@ -17,7 +17,7 @@ Checking out Revision cbc919c652d64758be7bcd4d6e5fb13e29e619ba (refs/remotes/ori
  > git checkout -f cbc919c652d64758be7bcd4d6e5fb13e29e619ba # timeout=10
 Commit message: "Update molecule.yml"
  > git rev-list --no-walk cbc919c652d64758be7bcd4d6e5fb13e29e619ba # timeout=10
-[freestyle-molecule] $ /bin/sh -xe /tmp/jenkins310050199648191472.sh
+[freestyle-molecule] $ /bin/sh -xe /tmp/jenkins5970970775550806795.sh
 + cd /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/
 + molecule --version
 molecule 4.0.1 using python 3.9 
@@ -50,9 +50,9 @@ changed: [localhost] => (item={'image': 'docker.io/psvitov/centos8_update', 'nam
 changed: [localhost] => (item={'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True})
 
 TASK [Wait for instance(s) deletion to complete] *******************************
-changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '928462093862.16675', 'results_file': '/home/jenkins/.ansible_async/928462093862.16675', 'changed': True, 'item': {'image': 'docker.io/pycontribs/centos:7', 'name': 'centos_7', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
-changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '306543479491.16699', 'results_file': '/home/jenkins/.ansible_async/306543479491.16699', 'changed': True, 'item': {'image': 'docker.io/psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
-changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '778600559018.16726', 'results_file': '/home/jenkins/.ansible_async/778600559018.16726', 'changed': True, 'item': {'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '943874994108.20061', 'results_file': '/home/jenkins/.ansible_async/943874994108.20061', 'changed': True, 'item': {'image': 'docker.io/pycontribs/centos:7', 'name': 'centos_7', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '179970225979.20085', 'results_file': '/home/jenkins/.ansible_async/179970225979.20085', 'changed': True, 'item': {'image': 'docker.io/psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '96928580633.20132', 'results_file': '/home/jenkins/.ansible_async/96928580633.20132', 'changed': True, 'item': {'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
 
 PLAY RECAP *********************************************************************
 localhost                  : ok=2    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
@@ -65,14 +65,276 @@ INFO     Running default > create
 PLAY [Create] ******************************************************************
 
 TASK [get podman executable path] **********************************************
-fatal: [localhost]: FAILED! => {"changed": false, "cmd": ["which", "podman"], "delta": "0:00:00.003405", "end": "2022-09-01 18:53:13.036998", "msg": "non-zero return code", "rc": 1, "start": "2022-09-01 18:53:13.033593", "stderr": "which: no podman in (/usr/local/bin:/usr/bin:/home/jenkins/.local/bin)", "stderr_lines": ["which: no podman in (/usr/local/bin:/usr/bin:/home/jenkins/.local/bin)"], "stdout": "", "stdout_lines": []}
+ok: [localhost]
+
+TASK [save path to executable as fact] *****************************************
+ok: [localhost]
+
+TASK [Log into a container registry] *******************************************
+skipping: [localhost] => (item="centos_7 registry username: None specified")
+skipping: [localhost] => (item="centos_8 registry username: None specified")
+skipping: [localhost] => (item="ubuntu registry username: None specified")
+
+TASK [Check presence of custom Dockerfiles] ************************************
+ok: [localhost] => (item=Dockerfile: None specified)
+ok: [localhost] => (item=Dockerfile: None specified)
+ok: [localhost] => (item=Dockerfile: None specified)
+
+TASK [Create Dockerfiles from image names] *************************************
+skipping: [localhost] => (item="Dockerfile: None specified; Image: docker.io/pycontribs/centos:7")
+skipping: [localhost] => (item="Dockerfile: None specified; Image: docker.io/psvitov/centos8_update")
+skipping: [localhost] => (item="Dockerfile: None specified; Image: docker.io/psvitov/ubuntu_python")
+
+TASK [Discover local Podman images] ********************************************
+ok: [localhost] => (item=centos_7)
+ok: [localhost] => (item=centos_8)
+ok: [localhost] => (item=ubuntu)
+
+TASK [Build an Ansible compatible image] ***************************************
+skipping: [localhost] => (item=docker.io/pycontribs/centos:7)
+skipping: [localhost] => (item=docker.io/psvitov/centos8_update)
+skipping: [localhost] => (item=docker.io/psvitov/ubuntu_python)
+
+TASK [Determine the CMD directives] ********************************************
+ok: [localhost] => (item="centos_7 command: None specified")
+ok: [localhost] => (item="centos_8 command: None specified")
+ok: [localhost] => (item="ubuntu command: None specified")
+
+TASK [Remove possible pre-existing containers] *********************************
+changed: [localhost]
+
+TASK [Discover local podman networks] ******************************************
+skipping: [localhost] => (item=centos_7: None specified)
+skipping: [localhost] => (item=centos_8: None specified)
+skipping: [localhost] => (item=ubuntu: None specified)
+
+TASK [Create podman network dedicated to this scenario] ************************
+skipping: [localhost]
+
+TASK [Create molecule instance(s)] *********************************************
+changed: [localhost] => (item=centos_7)
+changed: [localhost] => (item=centos_8)
+changed: [localhost] => (item=ubuntu)
+
+TASK [Wait for instance(s) creation to complete] *******************************
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (300 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (299 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (298 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (297 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (296 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (295 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (294 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (293 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (292 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (291 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (290 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (289 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (288 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (287 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (286 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (285 retries left).
+changed: [localhost] => (item=centos_7)
+changed: [localhost] => (item=centos_8)
+changed: [localhost] => (item=ubuntu)
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
+localhost                  : ok=8    changed=3    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
 
-WARNING  Retrying execution failure 2 of: ansible-playbook --inventory /home/jenkins/.cache/molecule/vector-role/default/inventory --skip-tags molecule-notest,notest /home/jenkins/.local/lib/python3.9/site-packages/molecule_podman/playbooks/create.yml
-CRITICAL Ansible return code was 2, command was: ['ansible-playbook', '--inventory', '/home/jenkins/.cache/molecule/vector-role/default/inventory', '--skip-tags', 'molecule-notest,notest', '/home/jenkins/.local/lib/python3.9/site-packages/molecule_podman/playbooks/create.yml']
-WARNING  An error occurred during the test sequence action: 'create'. Cleaning up.
+INFO     Running default > prepare
+WARNING  Skipping, prepare playbook not configured.
+INFO     Running default > converge
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [centos_8]
+ok: [centos_7]
+ok: [ubuntu]
+
+TASK [Include vector-role] *****************************************************
+
+TASK [vector-role : Download Vector] *******************************************
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/yum.yml for centos_7
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/dnf.yml for centos_8
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/apt.yml for ubuntu
+
+TASK [vector-role : Download Vector] *******************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+changed: [centos_7]
+
+TASK [vector-role : Download Vector] *******************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+changed: [centos_8]
+
+TASK [vector-role : Download Vector] *******************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+changed: [ubuntu]
+
+TASK [vector-role : Install Vector] ********************************************
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/yum.yml for centos_7
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/dnf.yml for centos_8
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/apt.yml for ubuntu
+
+TASK [vector-role : Install Vector] ********************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+changed: [centos_7]
+
+TASK [vector-role : Install Vector] ********************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+changed: [centos_8]
+
+TASK [vector-role : Install Vector] ********************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+changed: [ubuntu]
+
+PLAY RECAP *********************************************************************
+centos_7                   : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+centos_8                   : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ubuntu                     : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Running default > idempotence
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [centos_7]
+ok: [ubuntu]
+ok: [centos_8]
+
+TASK [Include vector-role] *****************************************************
+
+TASK [vector-role : Download Vector] *******************************************
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/yum.yml for centos_7
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/dnf.yml for centos_8
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/download/apt.yml for ubuntu
+
+TASK [vector-role : Download Vector] *******************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [centos_7]
+
+TASK [vector-role : Download Vector] *******************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [centos_8]
+
+TASK [vector-role : Download Vector] *******************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [ubuntu]
+
+TASK [vector-role : Install Vector] ********************************************
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/yum.yml for centos_7
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/dnf.yml for centos_8
+included: /opt/jenkins_agent/workspace/freestyle-molecule/roles/vector-role/tasks/install/apt.yml for ubuntu
+
+TASK [vector-role : Install Vector] ********************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [centos_7]
+
+TASK [vector-role : Install Vector] ********************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [centos_8]
+
+TASK [vector-role : Install Vector] ********************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [ubuntu]
+
+PLAY RECAP *********************************************************************
+centos_7                   : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+centos_8                   : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ubuntu                     : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Idempotence completed successfully.
+INFO     Running default > side_effect
+WARNING  Skipping, side effect playbook not configured.
+INFO     Running default > verify
+INFO     Running Ansible Verifier
+
+PLAY [Verify] ******************************************************************
+
+TASK [Vctor verify] ************************************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+changed: [centos_7]
+changed: [centos_8]
+changed: [ubuntu]
+
+TASK [Vector - package is installed] *******************************************
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [centos_7] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+ok: [centos_8] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+[WARNING]: The "podman" connection plugin has an improperly configured remote
+target value, forcing "inventory_hostname" templated value instead of the
+string
+ok: [ubuntu] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+centos_7                   : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+centos_8                   : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ubuntu                     : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Verifier completed successfully.
 INFO     Running default > cleanup
 WARNING  Skipping, cleanup playbook not configured.
 INFO     Running default > destroy
@@ -85,13 +347,14 @@ changed: [localhost] => (item={'image': 'docker.io/psvitov/centos8_update', 'nam
 changed: [localhost] => (item={'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True})
 
 TASK [Wait for instance(s) deletion to complete] *******************************
-changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '835488915587.16877', 'results_file': '/home/jenkins/.ansible_async/835488915587.16877', 'changed': True, 'item': {'image': 'docker.io/pycontribs/centos:7', 'name': 'centos_7', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
-changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '98636905189.16901', 'results_file': '/home/jenkins/.ansible_async/98636905189.16901', 'changed': True, 'item': {'image': 'docker.io/psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
-changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '522882815645.16928', 'results_file': '/home/jenkins/.ansible_async/522882815645.16928', 'changed': True, 'item': {'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+FAILED - RETRYING: [localhost]: Wait for instance(s) deletion to complete (300 retries left).
+FAILED - RETRYING: [localhost]: Wait for instance(s) deletion to complete (299 retries left).
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '909259023883.25973', 'results_file': '/home/jenkins/.ansible_async/909259023883.25973', 'changed': True, 'item': {'image': 'docker.io/pycontribs/centos:7', 'name': 'centos_7', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '69231890405.25998', 'results_file': '/home/jenkins/.ansible_async/69231890405.25998', 'changed': True, 'item': {'image': 'docker.io/psvitov/centos8_update', 'name': 'centos_8', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '388879698139.26047', 'results_file': '/home/jenkins/.ansible_async/388879698139.26047', 'changed': True, 'item': {'image': 'docker.io/psvitov/ubuntu_python', 'name': 'ubuntu', 'pre_build_image': True}, 'ansible_loop_var': 'item'})
 
 PLAY RECAP *********************************************************************
 localhost                  : ok=2    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 INFO     Pruning extra files from scenario ephemeral directory
-Build step 'Execute shell' marked build as failure
-Finished: FAILURE
+Finished: SUCCESS
