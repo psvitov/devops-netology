@@ -17,10 +17,15 @@
 
 1. Создаем публичный репозиторий:
 
-![8_6_1.png](
+![8_6_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_1.png)
 
+2. Скачиваем репозиторий `ansible`, создаем вирутальное окружение и активруем его:
 
+![8_6_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_2.png)
 
+3. Устанавливаем зависимости и запускаем настройку окружения:
+
+![8_6_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_3.png)
 ## Основная часть
 
 Наша цель - написать собственный module, который мы можем использовать в своей role, через playbook. 
