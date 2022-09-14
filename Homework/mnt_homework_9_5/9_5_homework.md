@@ -69,3 +69,38 @@
 3. В pom.xml меняем ссылку на репозиторий nexus
 
 ![9_5_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_9.PNG)
+
+4. Запускаем сборку и проверяем `Nexus`:
+
+![9_5_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_10.PNG)
+
+![9_5_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_11.PNG)
+
+
+P.S: Первый `build` запустился с ошибкой, так как неправильно указал IP в `pom.xml`. После исправления `build` автоматически стартовал и выполнился успешно, последующие запуски были проверочные, запускались с ошибкой "400 Repository does not allow updating assets: maven-releases"
+
+
+5. Создаем новую ветку в репозитории - `feature/add_reply`:
+
+[`feature/add_reply`](https://github.com/psvitov/example-teamcity/tree/feature/add_reply)
+
+6. Добавляем новый метод тестирования:
+
+- Welcomer.java
+
+>
+    public String sayHunter(){
+            return "You are good hunter";
+        }   
+
+- WelcomerTest.java
+
+>
+    @Test
+        public void welcomerSaysHunter() {
+            assertThat(welcomer.sayHunter(), containsString("hunter"));
+        }
+
+
+
+
