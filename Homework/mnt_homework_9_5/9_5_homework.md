@@ -15,6 +15,19 @@
 
 1. Создаем 2 виртуальные машины:
 
+![9_5_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_1.PNG)
+
+2. Проверяем доступность и настройку `Teamcity`:
+
+![9_5_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_2.PNG)
+
+![9_5_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_3.PNG)
+
+3. Создаем еще одну ВМ для `Nexus` и проверяем работу:
+
+![9_5_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_4.PNG)
+
+![9_5_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_5.PNG)
 
 
 ## Основная часть
@@ -42,3 +55,17 @@
 ---
 ### Ответ:
 ---
+
+1. Создаем новый проект на основе `fork` и проводим `autodetect` конфигурации:
+
+![9_5_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_6.PNG)
+
+2. Меняем условия сборки, редактируем базовый шаг и добавляем шаг `Deploy` предварительно добавив файл settings.xml:
+
+![9_5_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_7.PNG)
+
+![9_5_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_8.PNG)
+
+3. В pom.xml меняем ссылку на репозиторий nexus
+
+![9_5_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_9.PNG)
