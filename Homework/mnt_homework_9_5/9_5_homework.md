@@ -72,9 +72,9 @@
 
 4. Запускаем сборку и проверяем `Nexus`:
 
-![9_5_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_10.PNG)
+![9_5_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_10.png)
 
-![9_5_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_11.PNG)
+![9_5_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_11.png)
 
 
 P.S: Первый `build` запустился с ошибкой, так как неправильно указал IP в `pom.xml`. После исправления `build` автоматически стартовал и выполнился успешно, последующие запуски были проверочные, запускались с ошибкой "400 Repository does not allow updating assets: maven-releases" потому что версия 0.0.2 в репозитории уже существует.
@@ -101,13 +101,13 @@ P.S: Первый `build` запустился с ошибкой, так как 
 
 После внесения изменений `build` отработал автоматически:
 
-![9_5_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_12.PNG)
+![9_5_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_12.png)
 
 7. С помощью `merge` cливаем произвольную ветку `feature/add_reply` в `master`
 
 8. Настраиваем конфигурацию на сбор артефактов `jar`, проверяем работу:
 
-![9_5_13.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_13.PNG)
+![9_5_13.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_13.png)
 
 
 9. Ссылка на репозиторий [mnt_homework_9_5](https://github.com/psvitov/example-teamcity)
