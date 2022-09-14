@@ -77,12 +77,10 @@
 ![9_5_11.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_11.PNG)
 
 
-P.S: Первый `build` запустился с ошибкой, так как неправильно указал IP в `pom.xml`. После исправления `build` автоматически стартовал и выполнился успешно, последующие запуски были проверочные, запускались с ошибкой "400 Repository does not allow updating assets: maven-releases"
+P.S: Первый `build` запустился с ошибкой, так как неправильно указал IP в `pom.xml`. После исправления `build` автоматически стартовал и выполнился успешно, последующие запуски были проверочные, запускались с ошибкой "400 Repository does not allow updating assets: maven-releases" потому что версия 0.0.2 в репозитории уже существует.
 
 
 5. Создаем новую ветку в репозитории - `feature/add_reply`:
-
-[`feature/add_reply`](https://github.com/psvitov/example-teamcity/tree/feature/add_reply)
 
 6. Добавляем новый метод тестирования:
 
@@ -101,6 +99,17 @@ P.S: Первый `build` запустился с ошибкой, так как 
             assertThat(welcomer.sayHunter(), containsString("hunter"));
         }
 
+После внесения изменений `build` отработал автоматически:
 
+![9_5_12.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_12.PNG)
+
+7. С помощью `merge` cливаем произвольную ветку `feature/add_reply` в `master`
+
+8. Настраиваем конфигурацию на сбор артефактов `jar`, проверяем работу:
+
+![9_5_13.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_5/9_5_13.PNG)
+
+
+9. Ссылка на репозиторий [mnt_homework_9_5](https://github.com/psvitov/example-teamcity)
 
 
