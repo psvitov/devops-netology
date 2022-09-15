@@ -129,13 +129,13 @@ deploy:
 
 2. В репозитории в созданной ветке производим изменения, запускаем `commit` и проверяем работу `pipeline`:
 
-[9_6_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_6/9_6_5.png)
+![9_6_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_6/9_6_5.png)
 
 3. Проводим `merge` веток и  проверяем что работа прошла успешно:
 
-[9_6_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_6/9_6_6.png)
+![9_6_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_6/9_6_6.png)
 
-с
+![9_6_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_6/9_6_7.png)
 
 
 ### Tester
@@ -151,7 +151,7 @@ deploy:
 1. Проверка проведена в поднятом докер-контейнере с образом `python-api:latest`
 2. `issue` закрыт с комментарием об успешности прохождения:
 
-[9_6_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_6/9_6_8.png)
+![9_6_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_9_6/9_6_8.png)
 
 Ссылка на репозиторий `GitLab`: [GitLab Repo](https://mnt-test.gitlab.yandexcloud.net/psvitov/gitlab-test.git)
 
