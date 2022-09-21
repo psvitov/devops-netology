@@ -275,6 +275,11 @@ Prometheus, Zabbix
     - утилизации пространства на дисках
     - аптайм
     
+---
+### Ответ:
+---
+
+    
 Добавление метрик в новый дашбоард:
 
 ![10_2_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_2/10_2_7.png)
