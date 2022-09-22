@@ -245,9 +245,11 @@ if __name__ == '__main__':
 
 8. Создаем `playbook` для использования новой роли, заполняем документацию и выкладываем в репозиторий
 
-[mnt_homework_8_6 v1.0.0](https://github.com/psvitov/mnt_homework_8_6/tree/v1.0.0)
+9. Создаем .tar.gz коллекции, создаем директорию и переносим туда `single task playbook` и архив c коллекцией.
 
-9. 
+10. Устанавливаем коллекцию из локального архива, запускаем и проверяем `playbook`
+
+11. Ссылка на репозиторий: [mnt_homework_8_6 v1.0.0](https://github.com/psvitov/mnt_homework_8_6/tree/v1.0.0)
 
 
 
