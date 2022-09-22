@@ -26,6 +26,8 @@
 3. Устанавливаем зависимости и запускаем настройку окружения:
 
 ![8_6_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_3.png)
+
+
 ## Основная часть
 
 Наша цель - написать собственный module, который мы можем использовать в своей role, через playbook. 
@@ -187,13 +189,65 @@ if __name__ == '__main__':
 16. Запустите playbook, убедитесь, что он работает.
 17. В ответ необходимо прислать ссылку на репозиторий с collection
 
-## Необязательная часть
-
-1. Реализуйте свой собственный модуль для создания хостов в Yandex Cloud.
-2. Модуль может (и должен) иметь зависимость от `yc`, основной функционал: создание ВМ с нужным сайзингом на основе нужной ОС. Дополнительные модули по созданию кластеров Clickhouse, MySQL и прочего реализовывать не надо, достаточно простейшего создания ВМ.
-3. Модуль может формировать динамическое inventory, но данная часть не является обязательной, достаточно, чтобы он делал хосты с указанной спецификацией в YAML.
-4. Протестируйте модуль на идемпотентность, исполнимость. При успехе - добавьте данный модуль в свою коллекцию.
-5. Измените playbook так, чтобы он умел создавать инфраструктуру под inventory, а после устанавливал весь ваш стек Observability на нужные хосты и настраивал его.
-6. В итоге, ваша коллекция обязательно должна содержать: clickhouse-role(если есть своя), lighthouse-role, vector-role, два модуля: my_own_module и модуль управления Yandex Cloud хостами и playbook, который демонстрирует создание Observability стека.
-
 ---
+### Ответ:
+---
+
+1. В виртуальном окружении создаем файл `mnt_homework.py`:
+
+![8_6_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_4.png)
+
+2. Заполняем его содержимым и вносим необходимые правки:
+
+[mnt_homework.py](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/mnt_homework.py)
+
+Создаем файл `payload.json` 
+
+```
+{
+    "ANSIBLE_MODULE_ARGS": {
+        "path": "/tmp/test_file.txt",
+        "content": "Netology is a great school"
+    }
+}
+
+```
+
+3. Проверяем работу созданного модуля локально: 
+
+![8_6_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_5.png)
+
+4. Пишем `single task playbook` запускаем его, проверяем идемпотентность:
+
+```
+---
+- hosts: localhost
+  tasks:
+    - name: RUN mnt_homework module
+      mnt_homework:
+        path: "/tmp/file.txt"
+        content: "default content"
+```
+
+![8_6_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_6.png)
+
+5. Выходим из окружения, создаем новую коллекцию:
+
+![8_6_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_7.png)
+
+6. Переносим модуль в созданную коллекцию:
+
+![8_6_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_8.png)
+
+7. Преобразуем `single task playbook` в `single task role` и перенесем в коллецию:
+
+![8_6_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_8_6/8_6_9.png)
+
+8. Создаем `playbook` для использования новой роли, заполняем документацию и выкладываем в репозиторий
+
+[mnt_homework_8_6 v1.0.0](https://github.com/psvitov/mnt_homework_8_6/tree/v1.0.0)
+
+9. 
+
+
+
