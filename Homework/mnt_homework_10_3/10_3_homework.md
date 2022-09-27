@@ -17,9 +17,13 @@
 
 1. Запускаем связку `prometheus-grafana`, заходим в веб-интерфейс:
 
+![10_3_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_1.png)
 
+![10_3_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_2.png)
 
-2. 
+2. Подключаем `prometheus` как источник данных, тестируем соединение:
+
+![10_3_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_3.png)
 
 
 ## Задание 2
@@ -39,7 +43,39 @@
 ### Ответ:
 ---
 
+1. Создаем `Dashboard` и добавляем панели:
 
+- Утилизация CPU
+
+```
+100 - (avg by (instance) (rate(node_cpu_seconds_total{job="nodeexporter",mode="idle"}[1m])) * 100) 
+```
+
+- CPULA 1/5/15
+
+```
+node_load1
+
+node_load5
+
+node_load15
+```
+
+- Количество свободной оперативной памяти
+
+```
+node_memory_Inactive_bytes/node_memory_MemAvailable_bytes*100
+```
+
+- Количество места на файловой системе
+
+```
+node_filesystem_avail_bytes{fstype!~"tmpfs|fuse.lxcfs|squashfs"} / node_filesystem_size_bytes{fstype!~"tmpfs|fuse.lxcfs|squashfs"}*100  
+```
+
+Скриншот получившегося `Dashboard` с добавленными панелями:
+
+![10_3_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_4.png)
 
 
 
@@ -52,9 +88,19 @@
 ### Ответ:
 ---
 
+Создаем алерты для каждой панели:
 
+![10_3_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_5.png)
 
+![10_3_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_6.png)
 
+![10_3_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_7.png)
+
+![10_3_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_8.png)
+
+Скриншот получившегося `Dashboard` с панелями и добавленными алертами:
+
+![10_3_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/10_3_9.png)
 
 
 ## Задание 4
@@ -70,28 +116,4 @@
 ### Ответ:
 ---
 
-
-
-
-
-
-## Задание повышенной сложности
-
-**В части задания 1** не используйте директорию [help](./help) для сборки проекта, самостоятельно разверните grafana, где в 
-роли источника данных будет выступать prometheus, а сборщиком данных node-exporter:
-- grafana
-- prometheus-server
-- prometheus node-exporter
-
-За дополнительными материалами, вы можете обратиться в официальную документацию grafana и prometheus.
-
-В решении к домашнему заданию приведите также все конфигурации/скрипты/манифесты, которые вы 
-использовали в процессе решения задания.
-
-**В части задания 3** вы должны самостоятельно завести удобный для вас канал нотификации, например Telegram или Email
-и отправить туда тестовые события.
-
-В решении приведите скриншоты тестовых событий из каналов нотификаций.
-
-
----
+Ссылка на листинг json-содержимого `Dashboard`: [dashboard.json](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_3/dashboard.json)
