@@ -27,7 +27,9 @@ Filebeat следует сконфигурировать для отправки
 ### Ответ:
 ---
 
+1. Устанавливаем через файл `docker-compose.yml` все необходимые контейнеры:
 
+![10_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/mnt_homework_10_4/10_4_1.png)
 
 
 
