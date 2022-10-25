@@ -31,6 +31,15 @@
 ### Ответ:
 ---
 
+1. Создаем `Deployment` и проверяем:
+
+![12_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_3.png)
+
+2. Создаем сервис и проверяем:
+
+![12_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_4.png)
+
+
 
 ## Задача 3: Установить kubectl
 
