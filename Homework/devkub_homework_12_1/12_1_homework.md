@@ -47,6 +47,9 @@
 
 ![12_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_6.png)
 
+Работа дашбоарда:
+
+![12_1_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_7.png)
 
 
 ## Задача 3: Установить kubectl
@@ -59,13 +62,8 @@
 ### Ответ:
 ---
 
+1. Установка и проверка `kubectl`, подключение к `Minikube`:
 
-## Задача 4 (*): собрать через ansible (необязательное)
+![12_1_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_8.png)
 
-Профессионалы не делают одну и ту же задачу два раза. Давайте закрепим полученные навыки, автоматизировав выполнение заданий  ansible-скриптами. При выполнении задания обратите внимание на доступные модули для k8s под ansible.
- - собрать роль для установки minikube на aws сервисе (с установкой ingress)
- - собрать роль для запуска в кластере hello world
-  
----
-### Ответ:
----
+
