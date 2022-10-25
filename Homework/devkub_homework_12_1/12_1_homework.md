@@ -66,4 +66,8 @@
 
 ![12_1_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_8.png)
 
+2. Работа приложения через `port-forward`:
+
+![12_1_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_9.png)
+![12_1_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_10.png)
 
