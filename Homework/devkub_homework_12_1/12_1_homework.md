@@ -12,7 +12,13 @@
 
 Разворачивание проводится на локальной машине:
 
-1. Устанавливаем `Minikube`, все зависимости
+1. Устанавливаем `Minikube`, все зависимости и проверяем версию:
+
+![12_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_1.png)
+
+2. Запускаем `Minikube` и проверяем работоспособность:
+
+![12_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_2.png)
 
 
 ## Задача 2: Запуск Hello World
