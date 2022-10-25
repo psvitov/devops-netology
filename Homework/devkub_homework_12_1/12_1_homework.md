@@ -39,6 +39,14 @@
 
 ![12_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_4.png)
 
+3. проверяем работу тестового приложения:
+
+![12_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_5.png)
+
+4. Устанавливаем аддоны `ingress` и `dashboard`:
+
+![12_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_1/12_1_6.png)
+
 
 
 ## Задача 3: Установить kubectl
