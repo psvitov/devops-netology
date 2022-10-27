@@ -17,7 +17,36 @@
 ### Ответ:
 ---
 
+1. Создадим новый `deployment` через `yml-файл`, где укажем необходимое количество реплик:
 
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+2. Так же запустим пример из предыдущего задания, добавив 2 реплики:
+
+```
+kubectl create deployment hello-node --replicas=2 --image=k8s.gcr.io/echoserver:1.4
+```
 
 ## Задание 2: Просмотр логов для разработки
 Разработчикам крайне важно получать обратную связь от штатно работающего приложения и, еще важнее, об ошибках в его работе. 
