@@ -66,7 +66,7 @@ kubectl create deployment hello-node --replicas=2 --image=k8s.gcr.io/echoserver:
 ### Ответ:
 ---
 
-1. Создаем пользователя `devops`, роль `reader-pod`, привязываем роль к пользователюЮ генерируем токен и проверяем:
+1. Создаем пользователя `devops`, роль `reader-pod`, привязываем роль к пользователю, генерируем токен и проверяем:
 
 ![12_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_2/12_2_2.png)
 
