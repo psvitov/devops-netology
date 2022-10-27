@@ -48,6 +48,11 @@ spec:
 kubectl create deployment hello-node --replicas=2 --image=k8s.gcr.io/echoserver:1.4
 ```
 
+3. Результат запросов `kubectl get deployments`, `kubectl get pods`:
+
+![12_2_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_2/12_2_1.png)
+
+
 ## Задание 2: Просмотр логов для разработки
 Разработчикам крайне важно получать обратную связь от штатно работающего приложения и, еще важнее, об ошибках в его работе. 
 Требуется создать пользователя и выдать ему доступ на чтение конфигурации и логов подов в app-namespace.
@@ -61,8 +66,17 @@ kubectl create deployment hello-node --replicas=2 --image=k8s.gcr.io/echoserver:
 ### Ответ:
 ---
 
+1. Создаем пользователя `devops`, роль `reader-pod`, привязываем роль к пользователюЮ генерируем токен и проверяем:
 
+![12_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_2/12_2_2.png)
 
+2. Добавляем токен в локальный конфиг:
+
+![12_2_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_2/12_2_3.png)
+
+3. Проверяем доступность:
+
+![12_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_2/12_2_4.png)
 
 
 ## Задание 3: Изменение количества реплик 
@@ -72,7 +86,22 @@ kubectl create deployment hello-node --replicas=2 --image=k8s.gcr.io/echoserver:
  * в deployment из задания 1 изменено количество реплик на 5
  * проверить что все поды перешли в статус running (kubectl get pods)
 
-
 ---
 ### Ответ:
 ---
+
+1. `Deployment`, созданный с помощью файла увеличим командой:
+
+```
+kubectl scale --replicas=5 -f hello_world.yml
+```
+
+2. `Deployment` из предыдущего задания увеличим командой:
+
+```
+kubectl scale --replicas=5 deployment/hello-node
+```
+
+3. Результат:
+
+![12_2_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_2/12_2_5.png)
