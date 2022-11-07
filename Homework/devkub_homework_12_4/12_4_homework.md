@@ -19,4 +19,24 @@
 
 - создадим на мастер-ноде ключ ssh  и скопируем его на все рабочие ноды;
 - на мастер-ноде установим `pip`, `git` и скопируем репозиторий `kubespray`;
-- 
+- устанавливаем все зависимости из файла `requirements.txt`
+
+3. Настраиваем `inventory.ini` для подготовки кластера:
+
+![12_4_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_4/12_4_2.png)
+
+4. Вносим изменения в файлы конфигурации кластера:
+
+`group_vars/k8s_cluster/k8s-cluster.yml`:
+
+```
+cluster_name: ru-central1.internal
+container_manager: containerd
+```
+5. Запуск `kubespray`:
+
+`ansible-playbook -u root -i ~/k8s/inventory/sample/inventory.ini cluster.yml -b --diff`
+
+Результат работы:
+
+![12_4_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_12_4/12_4_3.png)
