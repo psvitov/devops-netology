@@ -1,0 +1,55 @@
+# Config Back
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prod-app
+    tier: back
+  name: prod-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prod-app
+      tier: back
+  template:
+    metadata:
+      labels:
+	app: prod-app
+        tier: back
+    spec:
+      containers:
+      - env:
+	- name: DATABASE_HOST
+          value: postgres
+        - name: DATABASE_NAME
+          value: news
+        - name: DATABASE_PASSWORD
+          value: postgres
+        - name: DATABASE_USER
+          value: postgres
+        - name: DATABASE_PORT
+          value: "5432"
+        image: centos7:latest
+        name: prod-backend
+        ports:
+	- containerPort: 8080
+      restartPolicy: Always
+# Config Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: prod-app
+    tier: back
+  name: prod-backend
+spec:
+  type: NodePort
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: prod-app
+    tier: back
