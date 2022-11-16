@@ -134,8 +134,6 @@ spec:
 
 ![13_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/13_1_2.png)
 
-![13_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/13_1_3.png)
-
 4. Ссылки на конфиг-файлы: 
 
 - [k8s-stage.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/k8s-stage.yml)
