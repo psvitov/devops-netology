@@ -1,0 +1,40 @@
+# Configure Frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prod-app
+      tier: front
+  template:
+    metadata:
+      labels:
+	app: prod-app
+        tier: front
+    spec:
+      containers:
+      - name: client
+        image: nginx:1.14.2
+        ports:
+	- containerPort: 8080
+        env:
+	- name: PRODUCT_BACK_SERVER_URL
+          value: prod-backend
+# Configure Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: prod-svc
+spec:
+    type: NodePort
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+    selector:
+	app: prod-app
+        tier: front
