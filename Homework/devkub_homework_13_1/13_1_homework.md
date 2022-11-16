@@ -41,7 +41,7 @@ spec:
         ports:
         - containerPort: 80
       - name: backend
-        image: centos7
+        image: centos7:latest
         command: ["sleep", "50000"]
 ---
 # Configure Service
@@ -58,7 +58,6 @@ spec:
     nodePort: 8000
   selector:
     app: k8s
-[root@master-host kubespray]#
 ```
 
 2. Создаем `statefulset` через `k8s-psql.yml`:
@@ -131,10 +130,16 @@ spec:
     path: /home/nfs
 ```
 
-3. 
+3. Результаты вывода команды kubectl со списком запущенных объектов каждого типа (pods, deployments, statefulset, service):
 
+![13_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/13_1_2.png)
 
+![13_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/13_1_3.png)
 
+4. Ссылки на конфиг-файлы: 
+
+- [k8s-stage.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/k8s-stage.yml)
+- [k8s-psql.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/k8s-psql.yml)
 
 
 ## Задание 2: подготовить конфиг для production окружения
@@ -148,10 +153,16 @@ spec:
 ### Ответ:
 ---
 
-## Задание 3 (*): добавить endpoint на внешний ресурс api
-Приложению потребовалось внешнее api, и для его использования лучше добавить endpoint в кластер, направленный на это api. Требования:
-* добавлен endpoint до внешнего api (например, геокодер).
----
-### Ответ:
----
+1. Создаем каждый компонент в отдельном `pod` и `deployment`:
 
+![13_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/13_1_4.png)
+
+2. Результаты вывода команды kubectl со списком запущенных объектов каждого типа (pods, deployments, statefulset, service):
+
+![13_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/13_1_5.png)
+
+3. Ссылки на конфиг-файлы: 
+
+- [k8s-frontend.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/k8s-frontend.yml)
+- [k8s-backend.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/k8s-backend.yml)
+- [k8s-prod-psql.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_1/k8s-prod-psql.yml)
