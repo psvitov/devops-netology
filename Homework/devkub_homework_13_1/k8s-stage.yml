@@ -1,0 +1,40 @@
+# Configure Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-stage
+  labels:
+    app: k8s-app
+spec:
+  selector:
+    matchLabels:
+      app: k8s-app
+  template:
+    metadata:
+      labels:
+        app: k8s-app
+    spec:
+    # Configure Pod
+      containers:
+      - name: frontend
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+      - name: backend
+        image: centos7
+        command: ["sleep", "50000"]
+---
+# Configure Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-svc
+  labels:
+    app: k8s
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30080
+  selector:
+    app: k8s
