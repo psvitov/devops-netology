@@ -21,7 +21,7 @@ spec:
         ports:
         - containerPort: 80
       - name: backend
-        image: centos7
+        image: centos7:latest
         command: ["sleep", "50000"]
 ---
 # Configure Service
