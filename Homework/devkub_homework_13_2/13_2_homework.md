@@ -18,17 +18,17 @@
 
 ![13_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_2/13_2_2.png)
 
-2. Создадим и запишем данные в файл на контейнере `frontend-nginx`:
+2. Создадим и запишем данные в файл на контейнере `backend-nginx`:
 
 ```
-kubectl exec stage-vol -c frontend-nginx -- sh -c 'echo "Netology Kubernetes TEST" > /tmp/cache/volume_test.txt'
+kubectl exec stage-vol -c backend-nginx -- sh -c 'echo "Netology Kubernetes TEST" > /tmp/cache/volume_test.txt'
 ```
 
-3. Прочитаем данные из каталога и файла на контейнере `backend-nginx`:
+3. Прочитаем данные из каталога и файла на контейнере `frontend-nginx`:
 
 ```
-kubectl exec stage-vol -c backend-nginx -- ls -la /tmp/static
-kubectl exec stage-vol -c backend-nginx -- sh -c 'cat /tmp/static/volume_test.txt'
+kubectl exec stage-vol -c frontend-nginx -- ls -la /tmp/static
+kubectl exec stage-vol -c frontend-nginx -- sh -c 'cat /tmp/static/volume_test.txt'
 ```
 
 4. Результат проверки:
