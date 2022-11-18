@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: prod-f
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: front-app
+            tier: front
+    template:
+        metadata:
+            labels:
+                app: front-app
+                tier: front
+        spec:
+          containers:
+          - name: frontend
+            image: nginx
+            volumeMounts:
+            - name: data
+              mountPath: /mnt/nfs   
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: shared
