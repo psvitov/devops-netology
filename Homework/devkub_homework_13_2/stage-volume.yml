@@ -11,7 +11,8 @@ spec:
         - mountPath: "/tmp/static"
           name: static
     - name: backend-nginx
-      image: nginx
+      image: busybox
+      command: ["sleep", "3600"]
       volumeMounts:
         - mountPath: "/tmp/cache"
           name: static
