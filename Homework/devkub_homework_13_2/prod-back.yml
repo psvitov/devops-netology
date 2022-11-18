@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: prod-b
+spec:
+    replicas: 3
+    selector:
+        matchLabels:
+            app: prod-app
+            tier: back
+    template:
+        metadata:
+            labels:
+                app: prod-app
+                tier: back
+        spec:
+          containers:
+          - name: backend
+            image: busybox
+            command: ["sleep", "36000"]
+            volumeMounts:
+            - name: data
+              mountPath: /mnt/nfs   
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: shared
