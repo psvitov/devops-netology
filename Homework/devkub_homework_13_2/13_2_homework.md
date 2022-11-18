@@ -21,13 +21,14 @@
 2. Создадим и запишем данные в файл на контейнере `frontend-nginx`:
 
 ```
-kubectl exec stage-vol -c backend-nginx -- sh -c 'echo "Netology Kubernetes TEST" > /tmp/cache/volume_test.txt'
+kubectl exec stage-vol -c frontend-nginx -- sh -c 'echo "Netology Kubernetes TEST" > /tmp/cache/volume_test.txt'
 ```
 
-3. Прочитаем данные из файла на контейнере `backend-nginx`:
+3. Прочитаем данные из каталога и файла на контейнере `backend-nginx`:
 
 ```
-kubectl exec stage-vol -c frontend-nginx -- ls -la /tmp/static
+kubectl exec stage-vol -c backend-nginx -- ls -la /tmp/static
+kubectl exec stage-vol -c backend-nginx -- sh -c 'cat /tmp/static/volume_test.txt'
 ```
 
 4. Результат проверки:
@@ -54,11 +55,24 @@ kubectl exec stage-vol -c frontend-nginx -- ls -la /tmp/static
 
 ![13_2_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_2/13_2_5.png)
 
-3. Результат проверки:
+3. Создадим и запишем данные в файл на поде `backend`:
+
+```
+kubectl exec prod-b-d76d676f8-vztsg -- sh -c 'echo "Netology Kubernetes PVC TEST" > /mnt/nfs/pvc_test.txt'
+```
+
+4. Прочитаем данные из каталога и файла на поде `frontend`:
+
+```
+kubectl exec prod-f-76b85b7dbc-nj22h -- ls -la /mnt/nfs
+kubectl exec prod-f-76b85b7dbc-nj22h -- sh -c 'cat /mnt/nfs/pvc_test.txt'
+```
+
+5. Результат проверки:
 
 ![13_2_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_2/13_2_6.png)
 
-4. Ссылки на манифесты:
+6. Ссылки на манифесты:
 - [prod-pvc.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_2/prod-pvc.yml)
 - [prod-front.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_2/prod-front.yml)
 - [prod-back.yml](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_2/prod-back.yml)
