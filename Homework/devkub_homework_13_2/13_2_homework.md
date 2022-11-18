@@ -2,7 +2,7 @@
 
 Предварительная подготовка произведена:
 
-![13_2_1.png]()
+![13_2_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_2/13_2_1.png)
 
 
 
