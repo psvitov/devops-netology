@@ -1,0 +1,20 @@
+# Config Pod with volume
+apiVersion: v1
+kind: Pod
+metadata:
+  name: stage-vol
+spec:
+  containers:
+    - name: frontend-nginx
+      image: nginx
+      volumeMounts:
+        - mountPath: "/tmp/static"
+          name: static
+    - name: backend-nginx
+      image: nginx
+      volumeMounts:
+        - mountPath: "/tmp/cache"
+          name: static
+  volumes:
+    - name: static
+      emptyDir: {}
