@@ -73,7 +73,7 @@ Forwarding from [::1]:36625 -> 8080
 
 ![13_3_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_7.png)
 
-3. Уменьшаем количесов подов бекенда и фронтенда до 1:
+3. Уменьшаем количество подов бекенда и фронтенда до 1:
 
 ![13_3_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_8.png)
 
