@@ -64,6 +64,11 @@ Forwarding from [::1]:36625 -> 8080
 
 ![13_3_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_6.png)
 
+![13_3_61.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_61.png)
+
+![13_3_62.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_62.png)
+
+
 2. Так как в кластере используется всего одна нода, то все поды оказались на `node-01`:
 
 ![13_3_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_7.png)
