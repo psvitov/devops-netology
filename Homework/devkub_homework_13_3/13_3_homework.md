@@ -10,7 +10,45 @@
 ### Ответ:
 ---
 
+Воспользуемся предыдущим ДЗ с созданными ресурсами:
 
+![13_3_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_1.png)
+
+1. Применим `port-forward` к фронтенду:
+
+```
+[root@master-host devops]# kubectl port-forward deployment/prod-f :80
+Forwarding from 127.0.0.1:46036 -> 80
+Forwarding from [::1]:46036 -> 80
+```
+
+2. Запрос:
+
+![13_3_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_2.png)
+
+
+3. Ответ:
+
+![13_3_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_3.png)
+
+4. Применим `port-forward` к бекэнду:
+
+```
+[root@master-host devops]# kubectl port-forward deployment/prod-b :8080
+Forwarding from 127.0.0.1:36625 -> 8080
+Forwarding from [::1]:36625 -> 8080
+```
+
+5. Так как в качестве бекэнда использовался образ `busybox`, в нем нет `nginx` запросы `cirl` и `wget` отваливаются с ошибками, но сами запросы перенаправляются:
+
+6. Запрос:
+
+![13_3_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_4.png)
+
+
+7. Ответ:
+
+![13_3_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_5.png)
 
 
 
@@ -21,5 +59,20 @@
 ---
 ### Ответ:
 ---
+
+1. Увелиим количество подов бекенда до 5, фронтенда до 3-х:
+
+![13_3_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_6.png)
+
+2. Так как в кластере используется всего одна нода, то все поды оказались на `node-01`:
+
+![13_3_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_7.png)
+
+3. Уменьшаем количесов подов бекенда и фронтенда до 1:
+
+![13_3_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/devkub_homework_13_3/13_3_8.png)
+
+
+
 
 
