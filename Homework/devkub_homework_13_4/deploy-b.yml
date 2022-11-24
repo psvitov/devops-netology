@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.backName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app }}
+      tier: {{ .Values.tierb }}
+  template:
+    metadata:
+      labels:
+	app: {{ .Values.app }}
+        tier: {{ .Values.tierb }}
+    spec:
+      containers:
+        - name: {{ .Values.PodNameBack }}
+          image: "{{ .Values.BackImage.repository }}"
+          command: ["sleep", "36000"]
+          volumeMounts:
+          - name: {{ .Values.volumeName }}
+            mountPath: {{ .Values.volumeMount }}
+      volumes:
+	- name: {{ .Values.volumeName }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.claimName }}
