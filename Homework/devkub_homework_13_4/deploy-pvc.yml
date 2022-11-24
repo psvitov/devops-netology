@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.claimName }}
+spec:
+  storageClassName: "{{ .Values.storageCN }}"
+  accessModes:
+    - {{ .Values.accessModes }}
+  resources:
+    requests:
+      storage: {{ .Values.storage }}
