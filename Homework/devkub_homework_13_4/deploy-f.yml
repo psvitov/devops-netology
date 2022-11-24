@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app }}
+      tier: {{ .Values.tierf }}
+  template:
+    metadata:
+      labels:
+	app: {{ .Values.app }}
+        tier: {{ .Values.tierf }}
+    spec:
+      containers:
+        - name: {{ .Values.PodNameFront }}
+          image: "{{ .Values.FrontImage.repository }}:{{ .Values.FrontImage.tag | default .Chart.AppVersion }}"
+          volumeMounts:
+          - name: {{ .Values.volumeName }}
+            mountPath: {{ .Values.volumeMount }}
+      volumes:
+	- name: {{ .Values.volumeName }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.claimName }}
