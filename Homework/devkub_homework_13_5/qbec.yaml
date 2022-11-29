@@ -1,0 +1,13 @@
+apiVersion: qbec.io/v1alpha1
+kind: App
+metadata:
+  name: kube
+spec:
+  environments:
+    stage:
+      defaultNamespace: qbec-stage
+      server: https://127.0.0.1:6443
+    prod:
+      defaultNamespace: qbec-prod
+      server: https://127.0.0.1:6443
+  vars: {}
