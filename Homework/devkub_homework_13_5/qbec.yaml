@@ -4,8 +4,8 @@ metadata:
   name: kube
 spec:
   environments:
-    stage:
-      defaultNamespace: qbec-stage
+    default:
+      defaultNamespace: default
       server: https://127.0.0.1:6443
     prod:
       defaultNamespace: qbec-prod
