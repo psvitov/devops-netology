@@ -32,6 +32,7 @@ local prefix = 'stage';
             {
               name: prefix + '-back',
               image: 'busybox',
+	      command: ["sleep", "36000"],
             },
           ],
 	},
