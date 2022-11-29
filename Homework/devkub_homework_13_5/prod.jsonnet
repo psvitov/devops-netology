@@ -34,6 +34,7 @@ local prefix = 'prod';
             {
               name: prefix + '-back',
               image: params.bimage,
+	      command: ["sleep", "36000"],
             },
           ],
 	},
