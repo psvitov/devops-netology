@@ -57,3 +57,15 @@
 ---
 
 
+| Текст  | Текст  | Текст  | Текст  | Текст  | Текст  | Текст  |
+| :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+| Текст  | Текст  | Текст  | Текст  | Текст  | Текст  | Текст  |
+| Текст  | Текст  | Текст  | Текст  | Текст  | Текст  | Текст  |
+| Текст  | Текст  | Текст  | Текст  | Текст  | Текст  | Текст  |
+| Текст  | Текст  | Текст  | Текст  | Текст  | Текст  | Текст  |
+| Текст  | Текст  | Текст  | Текст  | Текст  | Текст  | Текст  |
+| Текст  | Текст  | Текст  | Текст  | Текст  | Текст  | Текст  |
+
+https://www.google.com/search?q=%D0%B1%D1%80%D0%BE%D0%BA%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D0%B9+%D1%81%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5&rlz=1C1GCEU_ruRU989RU989&sxsrf=ALiCzsZEiuLIVYPWcdCzKQjh_yFWGRuI1A%3A1669898696441&ei=yKGIY9PLGumxrgTPv5iQCQ&oq=%D0%91%D1%80%D0%BE%D0%BA%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D0%B9&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQARgEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgQIABAeOgoIABBHENYEELADSgQIQRgASgQIRhgAUJIXWJIXYN4paAFwAXgAgAFqiAFqkgEDMC4xmAEAoAEByAEIwAEB&sclient=gws-wiz-serp
+https://habr.com/ru/post/573358/
+https://www.okbsapr.ru/library/publications/shkola_kzi_chadov_mikhalchenko_2019/
