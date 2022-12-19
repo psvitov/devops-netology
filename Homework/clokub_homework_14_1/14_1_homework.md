@@ -80,7 +80,7 @@ kubectl apply -f domain-cert.yml
 
 
 
-## Задача 2 (*): Работа с секретами внутри модуля
+## Задача 2: Работа с секретами внутри модуля
 
 Выберите любимый образ контейнера, подключите секреты и проверьте их доступность
 как в виде переменных окружения, так и в виде примонтированного тома.
@@ -161,6 +161,10 @@ spec:
       secretName: domain-cert
 ```
 
+5. Результат:
 
+![14_1_9.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_9.png)
+
+![14_1_10.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_10.png)
 
 
