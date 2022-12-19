@@ -93,39 +93,73 @@ kubectl apply -f domain-cert.yml
 
 ![14_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_6.png)
 
-2. Развернем под из манифеста с подключенным секретом в виде примонтированного тома: 
+2. Создадим секрет в новом `namespace`:
+
+![14_1_7.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_7.png)
+
+3. Развернем `pod` из манифеста с подключенным секретом в виде примонтированного тома: 
 
 ```
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-    name: frontend
+  name: front
 spec:
-    replicas: 3
-    selector:
-	matchLabels:
-            app: prod-app
-            tier: front
-    template:
-	metadata:
-            labels:
-                app: prod-app
-                tier: front
-        spec:
-          containers:
-          - name: frontend-nginx
-            image: nginx
-            volumeMounts:
-            - name: secret
-              mountPath: "/home/devops/14_1/certs/"
-              readOnly: true
-          volumes:
-            - name: secret
-              secret:
-                secretname: mysecret
+  containers:
+  - name: front-nginx
+    image: nginx
+    volumeMounts:
+    - name: secret
+      mountPath: "/home/devops/14_1/certs"
+      readOnly: true
+  volumes:
+  - name: secret
+    secret:
+      secretName: domain-cert
 ```
 
+![14_1_8.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_8.png)
+
+Подключимся к поду и проверим:
+
+```
+[root@master01 14_1]# kubectl exec -it front -- /bin/bash
+root@front:/# cd /var/run/secrets
+root@front:/var/run/secrets# ls -la
+total 0
+drwxr-xr-x. 3 root root 27 Dec 19 16:58 .
+drwxr-xr-x. 1 root root 38 Dec 19 16:58 ..
+drwxr-xr-x. 3 root root 28 Dec 19 16:58 kubernetes.io
+root@front:/var/run/secrets#
+```
+
+4. Создадим на основе пердыдущего манифеста новый манифест, но добавив секрет в виде переменных окружения:
+
+```
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: front2
+spec:
+  containers:
+  - name: front2-nginx
+    image: nginx
+    env:
+    - name: SECRET_USERNAME
+      value: "netology_admin"
+    - name: SECRET_PASSWORD
+      value: "P@ssw0rd!"
+    volumeMounts:
+    - name: secret
+      mountPath: "/home/devops/14_1/certs"
+      readOnly: true
+  volumes:
+  - name: secret
+    secret:
+      secretName: domain-cert
+```
 
 
 
