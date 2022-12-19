@@ -70,7 +70,7 @@ kubectl apply -f domain-cert.yml
 
 ![14_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_3.png)
 
-3. выгрузим секрет в файлы форматов `YAML` и `JSON`:
+3. Выгрузим секрет в файлы форматов `YAML` и `JSON`:
 
 ![14_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_4.png)
 
