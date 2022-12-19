@@ -60,9 +60,23 @@ kubectl apply -f domain-cert.yml
 
 Возьмем за основу кластер `Kubernetes`, используемый в предыдущем модуле:
 
+![14_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_1.png)
 
+1. Создадим секрет, посмотрим список созданных секретов, созданный секрет и его подробности:
 
+![14_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_2.png)
 
+2. Получим информацию в форматах `YAML` и `JSON`:
+
+![14_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_3.png)
+
+3. выгрузим секрет в файлы форматов `YAML` и `JSON`:
+
+![14_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_4.png)
+
+4. Удалим секрет и восстановим из  форматов `YAML` и `JSON`:
+
+![14_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_5.png)
 
 
 
