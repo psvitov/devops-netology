@@ -86,3 +86,47 @@ kubectl apply -f domain-cert.yml
 как в виде переменных окружения, так и в виде примонтированного тома.
 
 ---
+### Ответ:
+---
+
+1. Создадим отдельное `namespace` для контейнера, установим его по умолчанию:
+
+![14_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_1/14_1_6.png)
+
+2. Развернем под из манифеста с подключенным секретом в виде примонтированного тома: 
+
+```
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: frontend
+spec:
+    replicas: 3
+    selector:
+	matchLabels:
+            app: prod-app
+            tier: front
+    template:
+	metadata:
+            labels:
+                app: prod-app
+                tier: front
+        spec:
+          containers:
+          - name: frontend-nginx
+            image: nginx
+            volumeMounts:
+            - name: secret
+              mountPath: "/home/devops/14_1/certs/"
+              readOnly: true
+          volumes:
+            - name: secret
+              secret:
+                secretname: mysecret
+```
+
+
+
+
+
