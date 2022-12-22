@@ -91,5 +91,5 @@ client.secrets.kv.v2.read_secret_version(
 )
 ```
 
-![14_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_2/14_2_4.png)
+![14_2_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_2/14_2_5.png)
 
