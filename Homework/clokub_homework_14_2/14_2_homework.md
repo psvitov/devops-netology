@@ -56,20 +56,40 @@ client.secrets.kv.v2.read_secret_version(
 ### Ответ:
 ---
 
+Возьмем за основу кластер Kubernetes, используемый в предыдущем модуле:
 
+![14_2_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_2/14_2_1.png)
 
+1. Создаем отдельный каталог `14_2`, копируем туда файл `vault-pod.yml`, запускаем командой `kubectl apply -f vault-pod.yml`, проверяем созданный `pod`:
 
+![14_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_2/14_2_2.png)
 
+2. Получаем внутренний IP-адрес пода, запускаем второй модуль и устанавливаем `pip`:
 
+![14_2_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_2/14_2_3.png)
 
+3. Устанавливаем `hvac`:
+![14_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_2/14_2_4.png)
 
+4. Запустим в интерпретаторе `python3` измененный код:
 
+```
+import hvac
+client = hvac.Client(
+    url='http://10.233.126.69:8200',
+    token='aiphohTaa0eeHei'
+)
+client.is_authenticated()
 
-## Задача 2 (*): Работа с секретами внутри модуля
+client.secrets.kv.v2.create_or_update_secret(
+    path='hvac',
+    secret=dict(netology='Big secret!!!'),
+)
 
-* На основе образа fedora создать модуль;
-* Создать секрет, в котором будет указан токен;
-* Подключить секрет к модулю;
-* Запустить модуль и проверить доступность сервиса Vault.
+client.secrets.kv.v2.read_secret_version(
+    path='hvac',
+)
+```
 
----
+![14_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_2/14_2_4.png)
+
