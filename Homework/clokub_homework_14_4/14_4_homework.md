@@ -50,7 +50,9 @@ kubectl apply -f netology.yml
 
 1. Возьмем за основу кластер Kubernetes, используемый в предыдущем модуле:
 
-![14_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_4/14_4_homework.md)
+![14_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_4/14_4_1.png)
+
+2. 
 
 
 
