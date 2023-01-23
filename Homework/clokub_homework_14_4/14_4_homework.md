@@ -52,8 +52,22 @@ kubectl apply -f netology.yml
 
 ![14_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_4/14_4_1.png)
 
-2. 
+2. Создадим сервис-аккаунт и просмотрим список всех сервис-аккаунтов:
 
+![14_4_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_4/14_4_2.png)
+
+3. Получим информацию о сервис-аккаунтах в формате `YAML` и `JSON`:
+
+![14_4_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_4/14_4_3.png)
+
+4. Выгрузим сервис-акаунты в файлы `YAML` и `JSON`:
+
+![14_4_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_4/14_4_4.png)
+![14_4_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_4/14_4_5.png)
+
+5. Удалим сервис-аккаунт и восстановим его из сохраненного файла:
+
+![14_4_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_14_4/14_4_6.png)
 
 
 
