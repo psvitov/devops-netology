@@ -48,7 +48,7 @@ variable "yc_region" {
 ```
 
 2. Заранее определим зону `ru-central1-a` в файле `variables.tf`
-3. В файле /.terraformrc укажем источник, из которого будет устанавливаться провайдер:
+3. В файле `/.terraformrc` укажем источник, из которого будет устанавливаться провайдер:
 
 ```
 provider_installation {
@@ -81,6 +81,34 @@ provider "yandex" {
   zone      = var.yc_region
 }
 ```
+5. Создадим пустой каталог (VPC):
+
+```
+resource "yandex_resourcemanager_folder" "folder1" {
+  cloud_id    = var.yc_cloud_id
+  name        = "cloud-network"
+  description = "Cloud Networks"
+}
+```
+6. Создадим сеть и публичную подсеть:
+
+```
+resource "yandex_vpc_network" "cloud-net" {
+  name = "cloudnetwork"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+}
+
+resource "yandex_vpc_subnet" "cloud-subnet" {
+  v4_cidr_blocks = ["192.168.10.0/24"]
+  zone           = var.yc_region
+  name           = "public"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.cloud-net.id}"
+}
+```
+
+
+
 
 
 
