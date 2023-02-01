@@ -27,3 +27,64 @@ Resource terraform для ЯО
 ---
 ### Ответ:
 ---
+
+1. Для определения переменных создадим файл `variables.tf` с содержимым:
+
+```
+variable "yc_token" {
+    description = "OAuth-token Yandex.Cloud"
+    default = "AQAAAAAARMfE********************-7P6_1k"
+}
+
+variable "yc_cloud_id" {
+    description = "ID Yandex.Cloud"
+    default = "b1g************t7"
+}
+
+variable "yc_region" {
+    description = "Region Zone"
+    default = "ru-central1-a"
+}
+```
+
+2. Заранее определим зону `ru-central1-a` в файле `variables.tf`
+3. В файле /.terraformrc укажем источник, из которого будет устанавливаться провайдер:
+
+```
+provider_installation {
+  network_mirror {
+    url = "https://terraform-mirror.yandexcloud.net/"
+    include = ["registry.terraform.io/*/*"]
+  }
+  direct {
+    exclude = ["registry.terraform.io/*/*"]
+  }
+}
+```
+
+4. Создадим основной конфигурационный файл `main.tf`, добавим начальное содержимое:
+
+```
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+      version = "0.61.0"
+    }
+  }
+  required_version = ">= 0.13"
+}
+
+provider "yandex" {
+  token     = var.yc_token
+  cloud_id  = var.yc_cloud_id
+  zone      = var.yc_region
+}
+```
+
+
+
+
+
+
+
