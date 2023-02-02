@@ -113,7 +113,7 @@ resource "yandex_compute_instance" "nat" {
   name        = "nat-instance"
   platform_id = "standard-v1"
   folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
-  zone        = "var.yc_region"
+  zone        = var.yc_region
 
   resources {
     cores  = 2
@@ -138,6 +138,98 @@ resource "yandex_compute_instance" "nat" {
   }
 }
 ```
+
+8. Создадим в публичной подсети ВМ с публичным IP:
+
+```
+resource "yandex_compute_instance" "public-vm" {
+  name        = "public-vm1"
+  platform_id = "standard-v1"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  zone        = var.yc_region
+
+  resources {
+    cores  = 2
+    memory = 2
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "fd8jvcoeij6u9se84dt5"
+      type = "network-hdd"
+      size = "20"
+    }
+  }
+
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.cloud-subnet.id}"
+    nat = "true"
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  }
+}
+```
+9. Создадим приватную подсеть:
+
+```
+resource "yandex_vpc_subnet" "private-subnet" {
+  v4_cidr_blocks = ["192.168.20.0/24"]
+  zone           = var.yc_region
+  name           = "private"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.cloud-net.id}"
+}
+```
+10. Создаем `route table`:
+
+```
+resource "yandex_vpc_route_table" "lab-rt-a" {
+  name = "route-private"
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id = "${yandex_vpc_network.cloud-net.id}"
+  static_route {
+    destination_prefix = "192.168.20.0/24"
+    next_hop_address   = "192.168.10.254"
+  }
+}
+```
+
+11. Создадим в приватной подсети ВМ с внутренним IP:
+
+```
+esource "yandex_compute_instance" "private-vm" {
+  name        = "private-vm1"
+  platform_id = "standard-v1"
+  folder_id   = "${yandex_resourcemanager_folder.folder1.id}"
+  zone        = var.yc_region
+
+  resources {
+    cores  = 2
+    memory = 2
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "fd8jvcoeij6u9se84dt5"
+      type = "network-hdd"
+      size = "20"
+    }
+  }
+
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.private-subnet.id}"
+    nat = "false"
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  }
+}
+
+```
+
 
 
 
