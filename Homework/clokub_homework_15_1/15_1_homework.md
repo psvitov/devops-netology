@@ -106,7 +106,38 @@ resource "yandex_vpc_subnet" "cloud-subnet" {
   network_id     = "${yandex_vpc_network.cloud-net.id}"
 }
 ```
+7. Создадим ВМ `NAT-instance`:
 
+```
+resource "yandex_compute_instance" "nat" {
+  name        = "nat-instance"
+  platform_id = "standard-v1"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  zone        = "var.yc_region"
+
+  resources {
+    cores  = 2
+    memory = 2
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "fd8o8aph4t4pdisf1fio"
+      type = "network-hdd"
+      size = "10"
+    }
+  }
+
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.cloud-subnet.id}"
+    ip_address = ["192.168.10.254"]
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  }
+}
+```
 
 
 
