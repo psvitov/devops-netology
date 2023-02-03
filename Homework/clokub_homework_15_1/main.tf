@@ -16,7 +16,7 @@ provider "yandex" {
 
 resource "yandex_resourcemanager_folder" "folder1" {
   cloud_id    = var.yc_cloud_id
-  name        = "cloud-netw"
+  name        = "cloud-network"
   description = "Cloud Networks"
 }
 
