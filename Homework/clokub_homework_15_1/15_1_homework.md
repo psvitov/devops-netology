@@ -185,7 +185,7 @@ resource "yandex_vpc_subnet" "private-subnet" {
 10. Создаем `route table`:
 
 ```
-resource "yandex_vpc_route_table" "lab-rt-a" {
+resource "yandex_vpc_route_table" "rt" {
   name = "route-private"
   folder_id = "${yandex_resourcemanager_folder.folder1.id}"
   network_id = "${yandex_vpc_network.cloud-net.id}"
