@@ -242,7 +242,7 @@ resource "yandex_compute_instance" "private-vm" {
 
 ![15_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_1/15_1_1.png)
 
-12. Подключаемся к публчиной ВМ и проверяем интернет:
+12. Подключаемся к публичной ВМ и проверяем интернет:
 
 ![15_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_1/15_1_2.png)
 
