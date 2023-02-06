@@ -235,6 +235,8 @@ resource "yandex_compute_instance" "private-vm" {
   }
 }
 ```
+Итоговый файл [main.tf](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_1/main.tf)
+
 
 11. После запуска команд `terraform init`, `terraform validate`, terraform plan`, terraform apply` получаем необходимые ресурсы:
 
