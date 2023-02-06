@@ -246,7 +246,9 @@ resource "yandex_compute_instance" "private-vm" {
 
 ![15_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_1/15_1_2.png)
 
+13. Проверка работы интернета на приватной ВМ неудачна, вероятнее всего связано в некорректной работой таблицы маршрутизации, хотя публичная ВМ пингует и приватную ВМ и NAT-инстанс:
 
+![15_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_1/15_1_3.png)
 
 
 
