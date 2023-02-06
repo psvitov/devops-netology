@@ -90,11 +90,16 @@ resource "yandex_resourcemanager_folder" "folder1" {
   description = "Cloud Networks"
 }
 ```
-6. Создадим сеть и публичную подсеть:
+6. Создадим  2 сети и 2 подсети:
 
 ```
 resource "yandex_vpc_network" "cloud-net" {
   name = "cloudnetwork"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+}
+
+resource "yandex_vpc_network" "private-net" {
+  name = "privatenetwork"
   folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
 }
 
@@ -105,7 +110,21 @@ resource "yandex_vpc_subnet" "cloud-subnet" {
   folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
   network_id     = "${yandex_vpc_network.cloud-net.id}"
 }
+
+resource "yandex_vpc_subnet" "private-subnet" {
+  v4_cidr_blocks = ["192.168.20.0/24"]
+  zone           = var.yc_region
+  name           = "private"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.private-net.id}"
 ```
+Причина создания 2-х сетей и 2-х подсетей по одной в каждой из них: ЯО не работает с маршрутизацией в рамках одной сети:
+
+"В настоящее время нельзя использовать префиксы из диапазонов адресов, выделенных для подсетей внутри виртуальной сети. Поддерживаются только префиксы назначения вне виртуальной сети, например, префиксы подсетей другой сети Yandex Cloud или вашей локальной сети."
+
+[Статическая маршрутизация](https://cloud.yandex.ru/docs/vpc/concepts/static-routes)
+
+
 7. Создадим ВМ `NAT-instance`:
 
 ```
@@ -130,11 +149,12 @@ resource "yandex_compute_instance" "nat" {
 
   network_interface {
     subnet_id = "${yandex_vpc_subnet.cloud-subnet.id}"
-    ip_address = ["192.168.10.254"]
+    ip_address = "192.168.10.254"
   }
 
-  metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.private-subnet.id}"
+    ip_address = "192.168.20.254"
   }
 }
 ```
@@ -145,7 +165,7 @@ resource "yandex_compute_instance" "nat" {
 resource "yandex_compute_instance" "public-vm" {
   name        = "public-vm1"
   platform_id = "standard-v1"
-  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  folder_id   = "${yandex_resourcemanager_folder.folder1.id}"
   zone        = var.yc_region
 
   resources {
@@ -167,28 +187,19 @@ resource "yandex_compute_instance" "public-vm" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    user-data = "${file("~/15_1/meta.txt")}"
   }
 }
 ```
-9. Создадим приватную подсеть:
+
+9. Создаем `route table`:
 
 ```
-resource "yandex_vpc_subnet" "private-subnet" {
-  v4_cidr_blocks = ["192.168.20.0/24"]
-  zone           = var.yc_region
-  name           = "private"
-  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
-  network_id     = "${yandex_vpc_network.cloud-net.id}"
-}
-```
-10. Создаем `route table`:
-
-```
-resource "yandex_vpc_route_table" "rt" {
+resource "yandex_vpc_route_table" "route-table" {
   name = "route-private"
   folder_id = "${yandex_resourcemanager_folder.folder1.id}"
   network_id = "${yandex_vpc_network.cloud-net.id}"
+
   static_route {
     destination_prefix = "192.168.20.0/24"
     next_hop_address   = "192.168.10.254"
@@ -196,10 +207,10 @@ resource "yandex_vpc_route_table" "rt" {
 }
 ```
 
-11. Создадим в приватной подсети ВМ с внутренним IP:
+10. Создадим в приватной подсети ВМ с внутренним IP:
 
 ```
-esource "yandex_compute_instance" "private-vm" {
+resource "yandex_compute_instance" "private-vm" {
   name        = "private-vm1"
   platform_id = "standard-v1"
   folder_id   = "${yandex_resourcemanager_folder.folder1.id}"
@@ -222,15 +233,16 @@ esource "yandex_compute_instance" "private-vm" {
     subnet_id = "${yandex_vpc_subnet.private-subnet.id}"
     nat = "false"
   }
-
-  metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
-  }
 }
-
 ```
 
+11. После запуска команд `terraform init`, `terraform validate`, terraform plan`, terraform apply` получаем необходимые ресурсы:
 
+![15_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_1/15_1_1.png)
+
+12. Подключаемся к публчиной ВМ и проверяем интернет:
+
+![15_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_1/15_1_2.png)
 
 
 
