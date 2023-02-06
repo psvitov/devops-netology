@@ -25,12 +25,25 @@ resource "yandex_vpc_network" "cloud-net" {
   folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
 }
 
+resource "yandex_vpc_network" "private-net" {
+  name = "privatenetwork"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+}
+
 resource "yandex_vpc_subnet" "cloud-subnet" {
   v4_cidr_blocks = ["192.168.10.0/24"]
   zone           = var.yc_region
   name           = "public"
   folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
   network_id     = "${yandex_vpc_network.cloud-net.id}"
+}
+
+resource "yandex_vpc_subnet" "private-subnet" {
+  v4_cidr_blocks = ["192.168.20.0/24"]
+  zone           = var.yc_region
+  name           = "private"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.private-net.id}"
 }
 
 resource "yandex_compute_instance" "nat" {
@@ -57,15 +70,16 @@ resource "yandex_compute_instance" "nat" {
     ip_address = "192.168.10.254"
   }
 
-  metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.private-subnet.id}"
+    ip_address = "192.168.20.254"
   }
 }
 
 resource "yandex_compute_instance" "public-vm" {
   name        = "public-vm1"
   platform_id = "standard-v1"
-  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  folder_id   = "${yandex_resourcemanager_folder.folder1.id}"
   zone        = var.yc_region
 
   resources {
@@ -87,21 +101,16 @@ resource "yandex_compute_instance" "public-vm" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    user-data = "${file("/home/devops/Homeworks/15_1/meta.txt")}"
   }
-resource "yandex_vpc_subnet" "private-subnet" {
-  v4_cidr_blocks = ["192.168.20.0/24"]
-  zone           = var.yc_region
-  name           = "private"
-  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
-  network_id     = "${yandex_vpc_network.cloud-net.id}"
 }
 
-resource "yandex_vpc_route_table" "rt" {
+
+resource "yandex_vpc_route_table" "route-table" {
   name = "route-private"
   folder_id = "${yandex_resourcemanager_folder.folder1.id}"
   network_id = "${yandex_vpc_network.cloud-net.id}"
-
+ 
   static_route {
     destination_prefix = "192.168.20.0/24"
     next_hop_address   = "192.168.10.254"
@@ -130,9 +139,5 @@ resource "yandex_compute_instance" "private-vm" {
   network_interface {
     subnet_id = "${yandex_vpc_subnet.private-subnet.id}"
     nat = "false"
-  }
-
-  metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
 }
