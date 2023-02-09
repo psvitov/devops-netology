@@ -283,7 +283,7 @@ resource "yandex_lb_network_load_balancer" "lb" {
 
 ![15_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_2/15_2_4.png)
 
-17. Отключаем одну ВМ и проверяем работу балансировщика:
+17. Отключаем две ВМ и проверяем работу балансировщика:
 
 ![15_2_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_2/15_2_5.png)
 ![15_2_6.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_2/15_2_6.png)
