@@ -28,10 +28,97 @@
 ### Ответ:
 ---
 
-1. 
+1. Возьмем за основу домашнее задание лекции "Организация сети"
+2. Для определения переменных создадим файл `variables.tf` с содержимым:
 
+```
+variable "yc_token" {
+    description = "OAuth-token Yandex.Cloud"
+    default = "AQAAAAAARMfE********************-7P6_1k"
+}
 
+variable "yc_cloud_id" {
+    description = "ID Yandex.Cloud"
+    default = "b1g************t7"
+}
 
+variable "yc_region" {
+    description = "Region Zone"
+    default = "ru-central1-a"
+}
+```
+
+3. Заранее определим зону `ru-central1-a` в файле `variables.tf`
+4. В файле `/.terraformrc` укажем источник, из которого будет устанавливаться провайдер:
+
+```
+provider_installation {
+  network_mirror {
+    url = "https://terraform-mirror.yandexcloud.net/"
+    include = ["registry.terraform.io/*/*"]
+  }
+  direct {
+    exclude = ["registry.terraform.io/*/*"]
+  }
+}
+```
+
+5. Создадим основной конфигурационный файл `main.tf`, добавим начальное содержимое:
+
+```
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+      version = "0.61.0"
+    }
+  }
+  required_version = ">= 0.13"
+}
+
+provider "yandex" {
+  token     = var.yc_token
+  cloud_id  = var.yc_cloud_id
+  zone      = var.yc_region
+}
+```
+6. Создадим пустой каталог (VPC):
+
+```
+resource "yandex_resourcemanager_folder" "folder1" {
+  cloud_id    = var.yc_cloud_id
+  name        = "balancer"
+  description = "Load Balancer"
+}
+```
+
+7. Создадим сервисный аккаунт с ролью `editor`:
+
+```
+resource "yandex_iam_service_account" "sa" {
+  name = "s-account"
+}
+
+resource "yandex_resourcemanager_folder_iam_member" "editor" {
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  role      = "editor"
+  member    = "serviceAccount:${yandex_iam_service_account.sa.id}"
+}
+```
+8. Создадим статический ключ доступа и бакет, с использованием этого статического ключа:
+
+```
+resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
+  service_account_id = yandex_iam_service_account.sa.id
+  description        = "static access key for object storage"
+}
+
+resource "yandex_storage_bucket" "bucket-lb" {
+  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
+  bucket     = "psvitov-090223"
+}
+```
 
 
 
