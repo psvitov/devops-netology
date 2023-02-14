@@ -15,7 +15,7 @@
 ### Ответ:
 ---
 
-1. Возьмем за основу домашнее задание лекции "Организация сети"
+1. Возьмем за основу домашнее задание лекции "Вычислительные мощности"
 
 2. Для определения переменных создадим файл variables.tf с содержимым:
 
@@ -110,6 +110,91 @@ resource "yandex_storage_bucket" "bucket-sec" {
   bucket     = "secure"
 }
 ```
+
+8. Создадим ключ в KMS:
+
+```
+resource "yandex_kms_symmetric_key" "key-a" {
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  name              = "key-secure"
+  description       = "KMS Cloud key"
+  default_algorithm = "AES_128"
+  rotation_period   = "8760h"
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+```
+
+и зашифруем содержимое бакета, добавив строки:
+
+
+```
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        kms_master_key_id = yandex_kms_symmetric_key.key-a.id
+        sse_algorithm     = "aws:kms"
+      }
+    }
+  }
+
+```
+
+9. Для создания статической страницы в `Object Storage` воспользуемся инструкцией [ЯО](https://cloud.yandex.ru/docs/tutorials/web/static):
+
+Создадим публичный бакет
+
+![15_3_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_3/15_3_1.png)
+
+и 2 файла - `index.html` и `error.html` с содержимым:
+
+```
+<html>
+  <head>
+    <title>Netology DevOps</title>
+  </head>
+  <body>
+    <h2>Netology DevOps</h2>
+  </body>
+</html>
+```
+
+```
+<html>
+  <head>
+    <title>Netology DevOps</title>
+  </head>
+  <body>
+    <h2>ERROR!!!</h2>
+  </body>
+</html>
+```
+
+Загружаем 2 созданных файла в бакет и в бакете настраиваем хостинг
+
+![15_3_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_3/15_3_2.png)
+
+
+10. Создаем сертификат и проводим его валидацию:
+
+![15_3_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_3/15_3_3.png)
+
+
+11. Настраиваем доступ по HTTPS к статическому сайту:
+
+![15_3_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_3/15_3_4.png)
+
+
+12. Проверка доступности сертификата:
+
+![15_3_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_3/15_3_5.png)
+
+
+Так как ЯО не хотело принимать созданный сетрификат мотивируя:
+
+"У вас пока нет ни одного подходящего сертификата: имя домена из списка доменов в сертификате должно совпадать с именем бакета"
+пришлось создавать бакет с полным доменным именем, только после этого появился выбор сертификата, но при этом статический сайт хоть и видит сертификат, выдает ошибку 404.
 
 
 
