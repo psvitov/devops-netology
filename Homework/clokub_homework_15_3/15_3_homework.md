@@ -197,6 +197,6 @@ resource "yandex_kms_symmetric_key" "key-a" {
 пришлось создавать бакет с полным доменным именем, только после этого появился выбор сертификата, но при этом статический сайт хоть и видит сертификат, выдает ошибку 404.
 
 
-
+Полный файл [main.tf](https://github.com/psvitov/devops-netology/blob/main/Homework/clokub_homework_15_3/main.tf)
 
 
