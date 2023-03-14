@@ -31,6 +31,69 @@
 1. Terraform сконфигурирован и создание инфраструктуры посредством Terraform возможно без дополнительных ручных действий.
 2. Полученная конфигурация инфраструктуры является предварительной, поэтому в ходе дальнейшего выполнения задания возможны изменения.
 
+---
+### Решение:
+---
+
+1. Создадим файл `variables.tf`, пропишем в него основные переменные, используемые при работе с `Yandex.Cloud`:
+
+```
+variables.tf
+
+variable "yc_token" {
+    description = "OAuth-token Yandex.Cloud"
+    default = "AQAAAAAARMfEA***************kcys-7P6_1k"
+}
+
+variable "yc_cloud_id" {
+    description = "ID Yandex.Cloud"
+    default = "b1g8************rdt7"
+}
+
+variable "yc_region" {
+    description = "Region Zone"
+    default = "ru-central1-a"
+}
+```
+2. Создадим файл `main.tf`, добавим в него настройка облачного провайдера, создание каталога и сервисного аккаунта с ролью `editor`:
+
+```
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+      version = "0.61.0"
+    }
+  }
+  required_version = ">= 0.13"
+}
+
+provider "yandex" {
+  token     = var.yc_token
+  cloud_id  = var.yc_cloud_id
+  zone      = var.yc_region
+}
+
+resource "yandex_resourcemanager_folder" "folder1" {
+  cloud_id    = var.yc_cloud_id
+  name        = "Diplom"
+  description = "Diploma workshop"
+}
+
+resource "yandex_iam_service_account" "sa" {
+  name = "ds-account"
+}
+
+resource "yandex_resourcemanager_folder_iam_member" "editor" {
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  role      = "editor"
+  member    = "serviceAccount:${yandex_iam_service_account.sa.id}"
+}
+
+```
+
+
+
 ## 2 этап выполнения
 
 ---
