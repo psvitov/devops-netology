@@ -50,12 +50,22 @@ variable "yc_cloud_id" {
     default = "b1g8************rdt7"
 }
 
-variable "yc_region" {
-    description = "Region Zone"
+variable "yc_region_a" {
+    description = "Region Zone A"
     default = "ru-central1-a"
 }
+
+variable "yc_region_b" {
+    description = "Region Zone B"
+    default = "ru-central1-b"
+}
+
+variable "yc_region_c" {
+    description = "Region Zone C"
+    default = "ru-central1-c"
+}
 ```
-2. Создадим файл `main.tf`, добавим в него настройка облачного провайдера, создание каталога и сервисного аккаунта с ролью `editor`:
+2. Создадим файл `main.tf`, добавим в него настройки облачного провайдера, создание каталога и сервисного аккаунта с ролью `editor`:
 
 ```
 terraform {
@@ -147,7 +157,71 @@ terraform {
 
 ![diplom_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_4.png)
 
+7. Создадим файл `network.tf` для каждого `workspace` с описанием сети и подсетей в разных зонах доступности:
 
+```
+## network.tf
+
+resource "yandex_vpc_network" "stage-net" {
+  name = "stage-network"
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+}
+
+resource "yandex_vpc_subnet" "stage-subnet-a" {
+  v4_cidr_blocks = ["10.0.10.0/24"]
+  zone           = var.yc_region_a
+  name           = "stage-a"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.stage-net.id}"
+}
+
+resource "yandex_vpc_subnet" "stage-subnet-b" {
+  v4_cidr_blocks = ["10.0.20.0/24"]
+  zone           = var.yc_region_b
+  name           = "stage-b"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.stage-net.id}"
+}
+
+resource "yandex_vpc_subnet" "stage-subnet-c" {
+  v4_cidr_blocks = ["10.0.30.0/24"]
+  zone           = var.yc_region_c
+  name           = "stage-c"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.stage-net.id}"
+```
+
+```
+## network.tf
+
+resource "yandex_vpc_network" "prod-net" {
+  name = "prod-network"
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+}
+
+resource "yandex_vpc_subnet" "prod-subnet-a" {
+  v4_cidr_blocks = ["10.1.10.0/24"]
+  zone           = var.yc_region_a
+  name           = "prod-a"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.prod-net.id}"
+}
+
+resource "yandex_vpc_subnet" "prod-subnet-b" {
+  v4_cidr_blocks = ["10.1.20.0/24"]
+  zone           = var.yc_region_b
+  name           = "prod-b"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.prod-net.id}"
+}
+
+resource "yandex_vpc_subnet" "prod-subnet-c" {
+  v4_cidr_blocks = ["10.1.30.0/24"]
+  zone           = var.yc_region_c
+  name           = "prod-c"
+  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
+  network_id     = "${yandex_vpc_network.prod-net.id}"
+```
 
 
 
