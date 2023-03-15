@@ -92,6 +92,65 @@ resource "yandex_resourcemanager_folder_iam_member" "editor" {
 
 ```
 
+3. Подготовим `backend` с использованием `Terraform Cloud`:
+
+- Создадим в `Terraform Cloud` API токен
+- Добавим созданный API токен в `/.terraformrc` для использования файла `backend.tf`
+
+4. Создадим 2 папки пока с одинаковым содержимым:
+
+![diplom_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_1.png)
+
+5. В файлы `backend` для создания разных `workspaces` добавим содержимое:
+
+```
+#vpc-stage
+
+terraform {
+
+  backend "remote" {
+    organization = "psvitov"
+
+    workspaces {
+      name = "vpc-stage"
+    }
+  }
+}
+```
+```
+#vpc-prod
+
+terraform {
+
+  backend "remote" {
+    organization = "psvitov"
+
+    workspaces {
+      name = "vpc-prod"
+    }
+  }
+}
+```
+Эти файлы при выполнении команды `terraform init` создадут `workspace`, каждый для своего рабочего пространства.
+
+6. Протестируем работу созданных файлов командой `terraform init`:
+
+Первоначальное состояние `Terraform Cloud`:
+
+![diplom_1_2.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_2.png)
+
+Выполнение команд:
+
+![diplom_1_3.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_3.png)
+
+Состояние `Terraform Cloud` после выполнения комманд:
+
+![diplom_1_4.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_4.png)
+
+
+
+
+
 
 
 ## 2 этап выполнения
