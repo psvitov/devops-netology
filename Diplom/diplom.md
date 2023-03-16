@@ -350,11 +350,11 @@ resource "yandex_compute_instance_group" "stage-ig" {
 
 ![diplom_1_10.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_10.png)
 
-### Versiom Control vpc-prod
+### Version Control vpc-prod
 
 ![diplom_1_11.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_11.png)
 
-### Versiom Control vpc-stage
+### Version Control vpc-stage
 
 ![diplom_1_12.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_12.png)
 
@@ -380,6 +380,8 @@ resource "yandex_compute_instance_group" "stage-ig" {
 
 Cсылка на папку [terraform](https://github.com/psvitov/devops-netology/tree/main/Diplom/terraform) с содержимым файлов `.tf`
 
+
+---
 
 ## 2 этап выполнения
 
