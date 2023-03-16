@@ -319,7 +319,33 @@ resource "yandex_compute_instance_group" "stage-ig" {
 }
 ```
 Для создания одинаковых инстанстов можно использовать группы, при этом их можно расположить в одной или разных зонах доступности, в зависимости от поставленных задач.
-Аналогичный файл создадим и для `vpc-prod`.
+
+Аналогичный файл создадим и в папке `vpc-prod`.
+
+9. Проверим работу комманд `terraform plan`, `terraform apply`, `terraform destroy` в воркспейсе `vpc-stage`:
+
+#### terraform plan
+
+![diplom_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_5.png)
+
+#### terraform apply
+
+![diplom_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_6.png)
+
+#### result terraform apply
+
+![diplom_1_7.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_7.png)
+
+#### terraform destroy
+
+![diplom_1_8.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_8.png)
+
+#### result terraform destroy
+
+![diplom_1_9.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_9.png)
+
+
+
 
 
 ## 2 этап выполнения
