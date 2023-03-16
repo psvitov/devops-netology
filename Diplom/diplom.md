@@ -43,11 +43,13 @@ variables.tf
 variable "yc_token" {
     description = "OAuth-token Yandex.Cloud"
     default = "AQAAAAAARMfEA***************kcys-7P6_1k"
+    sensitive = true
 }
 
 variable "yc_cloud_id" {
     description = "ID Yandex.Cloud"
     default = "b1g8************rdt7"
+    sensitive = true
 }
 
 variable "yc_region_a" {
@@ -68,6 +70,8 @@ variable "yc_region_c" {
 2. Создадим файл `main.tf`, добавим в него настройки облачного провайдера, создание каталога и сервисного аккаунта с ролью `editor`:
 
 ```
+### vpc-stage
+
 terraform {
   required_providers {
     yandex = {
@@ -81,17 +85,55 @@ terraform {
 provider "yandex" {
   token     = var.yc_token
   cloud_id  = var.yc_cloud_id
-  zone      = var.yc_region
+  zone      = var.yc_region_a
 }
 
 resource "yandex_resourcemanager_folder" "folder1" {
   cloud_id    = var.yc_cloud_id
-  name        = "Diplom"
+  name        = "diplom-stage"
   description = "Diploma workshop"
 }
 
 resource "yandex_iam_service_account" "sa" {
-  name = "ds-account"
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  name = "s-stage-account"
+}
+
+resource "yandex_resourcemanager_folder_iam_member" "editor" {
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  role      = "editor"
+  member    = "serviceAccount:${yandex_iam_service_account.sa.id}"
+}
+
+```
+Аналогичный файл будет и для `vpc-prod`, отличия будут только в имени создаваемой папки и имени сервисного аккаунта:
+
+```
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+      version = "0.61.0"
+    }
+  }
+  required_version = ">= 0.13"
+}
+
+provider "yandex" {
+  token     = var.yc_token
+  cloud_id  = var.yc_cloud_id
+  zone      = var.yc_region_a
+}
+
+resource "yandex_resourcemanager_folder" "folder1" {
+  cloud_id    = var.yc_cloud_id
+  name        = "diplom-prod"
+  description = "Diploma workshop"
+}
+
+resource "yandex_iam_service_account" "sa" {
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  name = "s-prod-account"
 }
 
 resource "yandex_resourcemanager_folder_iam_member" "editor" {
@@ -189,6 +231,7 @@ resource "yandex_vpc_subnet" "stage-subnet-c" {
   name           = "stage-c"
   folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
   network_id     = "${yandex_vpc_network.stage-net.id}"
+}
 ```
 
 ```
@@ -221,10 +264,62 @@ resource "yandex_vpc_subnet" "prod-subnet-c" {
   name           = "prod-c"
   folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
   network_id     = "${yandex_vpc_network.prod-net.id}"
+}
 ```
 
+8. Создадим VPC с подсетями в разных зонах доступности
 
+В папке `vpc-stage` создадим файл `vpc.tf` с содержимым:
 
+```
+resource "yandex_compute_instance_group" "stage-ig" {
+  name               = "vpc-stage-ig"
+  folder_id          = "${yandex_resourcemanager_folder.folder1.id}"
+  service_account_id = "${yandex_iam_service_account.sa.id}"
+  depends_on          = [yandex_resourcemanager_folder_iam_member.editor]
+  instance_template {
+    platform_id = "standard-v1"
+    resources {
+      memory = 2
+      cores  = 2
+    }
+
+    boot_disk {
+      mode = "READ_WRITE"
+      initialize_params {
+        image_id = "fd8jvcoeij6u9se84dt5"
+      }
+    }
+
+    network_interface {
+      network_id = "${yandex_vpc_network.stage-net.id}"
+      subnet_ids = ["${yandex_vpc_subnet.stage-subnet-a.id}", "${yandex_vpc_subnet.stage-subnet-b.id}", "${yandex_vpc_subnet.stage-subnet-c.id}"]
+      nat = "true"
+    }
+
+    metadata = {
+      ssh-keys = "devops:ssh-rsa AAAAB3NzaC1yc2E*************************************HZlVbTVaFNOPIOVRgNc7mRRQ4+3CbJIwYTumH0pJal7Rc6CeTXFEb35HeMoO0eyEzan4TSOfXvS4Q5Wutq8CRAbbdG7UwrUGcMeK0U6XAQguuxVcY5C7bGJ8c2y2In19fM0TpheLA1c1LZeX2BXJbIXTJM52Fsfo0s0t6pXPDLXx/2PkdeFdrMhUybJ5202SQXfbsElgDsVCfaEkWMm8gJfsIzMqLWEHrheFtfcbLIRzpBvEs2OZbK6Fofo7akYy5zkjvOrGaVy4u9YoFStkD2uCGOp8D8q3ADULYEunI+INVTdg/JtBRjYBw60ZH devops@DevOps"
+    }
+  }
+
+  scale_policy {
+    fixed_scale {
+      size = 3
+    }
+  }
+
+  allocation_policy {
+    zones = [var.yc_region_a, var.yc_region_b, var.yc_region_c]
+  }
+
+  deploy_policy {
+    max_unavailable = 1
+    max_expansion = 0
+  }
+}
+```
+Для создания одинаковых инстанстов можно использовать группы, при этом их можно расположить в одной или разных зонах доступности, в зависимости от поставленных задач.
+Аналогичный файл создадим и для `vpc-prod`.
 
 
 ## 2 этап выполнения
