@@ -344,8 +344,41 @@ resource "yandex_compute_instance_group" "stage-ig" {
 
 ![diplom_1_9.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_9.png)
 
+10. Для проверки работы `Terraform Cloud` создадим приватный репозиторий, поместим туда ранее созданные файлы, настроим `Terraform Cloud` на работу с созданным репозиторием и в каждом созданном `workspace` добавим путь до расположения наших файлов:
 
+### Create repository
 
+![diplom_1_10.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_10.png)
+
+### Versiom Control vpc-prod
+
+![diplom_1_11.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_11.png)
+
+### Versiom Control vpc-stage
+
+![diplom_1_12.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_12.png)
+
+Проверим работу `Terraform Cloud` в воркспейсе `vpc-prod`:
+
+### Primary state
+
+![diplom_1_13.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_13.png)
+
+### Plan finished
+
+![diplom_1_14.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_14.png)
+
+### Apply finished
+
+![diplom_1_15.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_15.png)
+
+Результат работы `Terraform Cloud` в `Яндекс.Облако`:
+
+![diplom_1_16.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_16.png)
+
+Удалить созданные ресурсы также можно через `Terraform Cloud`, выбрав в настройках `workspace` раздел `Destruction and Deletion` нажав на кнопку `Queue destroy plan`.
+
+Cсылка на папку [terraform](https://github.com/psvitov/devops-netology/tree/main/Diplom/terraform) с содержимым файлов `.tf`
 
 
 ## 2 этап выполнения
