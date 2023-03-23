@@ -909,7 +909,7 @@ CMD systemctl restart nginx
 ![diplom_3_4.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_3_4.png)
 ---
 
-5. загрузим созданный образ в `Docker Hub`:
+5. Загрузим созданный образ в `Docker Hub`:
 
 ---
 ![diplom_3_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_3_5.png)
