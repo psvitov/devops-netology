@@ -839,7 +839,10 @@ ansible-playbook ~/kuberspray/cluster.yml -i ~/k8s/sample/k8s.ini --diff
 ![diplom_2_8.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_8.png)
 ---
 ![diplom_2_9.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_9.png)
+---
 
+
+Cсылка на папку [k8s](https://github.com/psvitov/devops-netology/tree/main/Diplom/k8s)
 
 ----
 ## 3 этап выполнения
