@@ -806,15 +806,42 @@ resource "null_resource" "cluster" {
 
 9. В итоге получается список файлов:
 
+![diplom_2_2.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_2.png)
 
+10. Запускаем последовательно комманды `terraform init`, `terraform plan` и `terraform apply`:
 
+Результат работы:
+![diplom_2_3.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_3.png)
 
+11. Проверяем созданную инфраструктуру в ЯО:
 
+---
+![diplom_2_4.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_4.png)
+---
+![diplom_2_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_5.png)
+---
 
+11. Подключаемся к master-ноде и проверяем работу `ansible`:
+
+![diplom_2_6.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_6.png)
+
+12. Запускаем на master-ноде создание кластера `Kubernetes` через `Kuberspray`:
+
+```
+ansible-playbook ~/kuberspray/cluster.yml -i ~/k8s/sample/k8s.ini --diff
+```
+
+13. Результат работы:
+
+---
+![diplom_2_7.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_7.png)
+---
+![diplom_2_8.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_8.png)
+---
+![diplom_2_9.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_9.png)
 
 
 ----
-   
 ## 3 этап выполнения
 
 ### Создание тестового приложения
