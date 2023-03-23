@@ -873,12 +873,51 @@ Cсылка на папку [k8s](https://github.com/psvitov/devops-netology/tre
 ### Решение
 ---
 
+1. Создадим отдельный репозиторий, в который поместим конфиг [`nginx`](https://github.com/psvitov/nginx/blob/main/default) и файлы для статического веб-сайта:
 
+---
+![diplom_3_1.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_3_1.png)
+---
 
+2. Создадим [`Dockerfile`](https://github.com/psvitov/nginx/blob/main/Dockerfile) с содержимым:
 
+```
+FROM centos:7
+RUN yum install epel-release -y
+RUN yum install nginx -y
+CMD systemctl start nginx
+CMD systemctl enable nginx
+RUN mkdir -p /var/www/html/default/images
+COPY index.html /var/www/html/default/
+COPY red.png /var/www/html/default/images/
+COPY blue.jpg /var/www/html/default/images/
+COPY default /etc/nginx/sites-available/
+CMD systemctl restart nginx
+```
 
+3. Создадим образ `nginx-stage` с помощью команды `docker build . -t nginx-stage`:
 
+---
+![diplom_3_2.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_3_2.png)
+---
 
+4. Проверим созданный образ:
+
+---
+![diplom_3_3.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_3_3.png)
+---
+![diplom_3_4.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_3_4.png)
+---
+
+5. загрузим созданный образ в `Docker Hub`:
+
+---
+![diplom_3_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_3_5.png)
+---
+
+Ссылка на загруженный образ в `Docker Hub`: [psvitov/nginx-stage](https://hub.docker.com/repository/docker/psvitov/nginx-stage/general)
+
+Ссылка на репозиторий [`nginx`](https://github.com/psvitov/nginx)
 
 
 ----
