@@ -704,6 +704,7 @@ host_key_checking = False
         ansible.builtin.git:
           repo: 'https://github.com/kubernetes-sigs/kubespray.git'
           dest: /root/kuberspray
+          version: release-2.20
 
       - name: Istall requests
         ansible.builtin.pip:
@@ -956,7 +957,21 @@ CMD systemctl restart nginx
 ### Решение
 ---
 
+1. Скачаем репозиторий `kube-prometeus release-0.11`:
 
+![diplom_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_1.png)
+
+2. Создадим пространство имен и `CRD`:
+
+---
+![diplom_4_2.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_2.png)
+---
+![diplom_4_3.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_3.png)
+---
+
+3. Проверяем созданные ресурсы:
+
+![diplom_4_4.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_4.png)
 
 
 
