@@ -961,6 +961,78 @@ CMD systemctl restart nginx
 
 ![diplom_4_1.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_1.png)
 
+Так как нам необходимо организовать HTTP-доступ к web интерфейсу `Grafana`, перед установкой `kube-prometeus` изменим настройки сервиса `Grafana` и настройки сети `Grafana`:
+
+Изменим в `grafana-service.yaml` тип сетевого сервиса с `ClusterIP` на `NodePort` и укажем конкретный порт из диапазона 30000-32767
+
+```
+## grafana-service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: grafana
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 9.3.2
+  name: grafana
+  namespace: monitoring
+spec:
+  ports:
+  - name: http
+    port: 3000
+    targetPort: http
+    nodePort: 30003
+  type: NodePort
+  selector:
+    app.kubernetes.io/component: grafana
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/part-of: kube-prometheus
+```
+
+Ссылка на измененый [grafana-service.yaml](https://github.com/psvitov/devops-netology/blob/main/Diplom/kube-prometheus/grafana-service.yaml)
+
+Отключим в `grafana-networkPolicy.yaml` настройки ingress:
+
+```
+## grafana-networkPolicy.yaml
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/component: grafana
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 9.3.2
+  name: grafana
+  namespace: monitoring
+spec:
+  egress:
+  - {}
+  ingress:
+  - {}
+#  - from:
+#    - podSelector:
+#        matchLabels:
+#          app.kubernetes.io/name: prometheus
+#    ports:
+#    - port: 3000
+#      protocol: TCP
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: grafana
+      app.kubernetes.io/name: grafana
+      app.kubernetes.io/part-of: kube-prometheus
+  policyTypes:
+  - Egress
+  - Ingress
+```
+
+Ссылка на измененый [grafana-networkPolicy.yaml](https://github.com/psvitov/devops-netology/blob/main/Diplom/kube-prometheus/grafana-networkPolicy.yaml)
+
+
 2. Создадим пространство имен и `CRD`:
 
 ---
@@ -974,8 +1046,10 @@ CMD systemctl restart nginx
 ![diplom_4_4.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_4.png)
 
 
+4. Проверяем работу сервса `Grafana`:
 
 
+![diplom_4_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_5.png)
 
 
 
