@@ -1,0 +1,149 @@
+---
+  - name: Setting master-node
+    hosts: master
+    become: yes
+    tasks:
+
+      - name: Swapoff
+        ansible.builtin.command: swapoff -a
+
+      - name: Create SSH key
+        become_user: root
+        user:
+          name: root
+          generate_ssh_key: yes
+          ssh_key_bits: 2048
+          ssh_key_file: .ssh/id_rsa
+
+      - name: Read key file
+        become_user: root
+        shell: cat ~/.ssh/id_rsa.pub
+        register: key_content
+
+      - name: Add authorized_keys
+        become_user: root
+        lineinfile:
+          path: "~/.ssh/authorized_keys"
+          line: "{{ key_content.stdout }}"
+
+      - name: Copy authorized_keys
+        become_user: root
+        ansible.builtin.fetch:
+          src: ~/.ssh/authorized_keys
+          dest: ./ansible/tmp/
+          flat: yes
+
+      - name: Install EPEL
+        ansible.builtin.yum:
+          name: epel-release
+          state: latest
+
+      - name: Upgrade all packages
+        ansible.builtin.yum:
+          name: '*'
+          state: latest
+
+      - name: Install packages
+        ansible.builtin.yum:
+          name:
+            - python36
+            - git
+          state: present
+
+      - name: Install and upgrade pip
+        pip:
+          name: pip
+          extra_args: --upgrade
+          executable: pip3
+
+      - name: Add usr/local/bin in $PATH
+        become_user: root
+        lineinfile:
+          path: "~/.bashrc"
+          line: "export PATH=$PATH:/usr/local/bin"
+
+      - name: Create a directory
+        become_user: root
+        ansible.builtin.file:
+          path: ~/k8s
+          state: directory
+          mode: '0755'
+
+      - name: Copy config Kuberspray
+        become_user: root
+        ansible.builtin.command:
+          cmd: cp -R ~/kuberspray/inventory/sample ~/k8s
+
+      - name: Copy k8s.ini
+        become_user: root
+        ansible.builtin.copy:
+          src: ./ansible/k8s.ini
+          dest: ~/k8s/sample
+
+      - name: Rename cluster name
+        become_user: root
+        replace:
+          path: "~/k8s/sample/group_vars/k8s_cluster/k8s-cluster.yml"
+          regexp: '^cluster_name: cluster.local$'
+          replace: 'cluster_name: k8s.local'
+  - name: Install Qbec
+    hosts: master
+    become: yes
+    tasks:
+
+      - name: Create a directory golang
+        become_user: root
+        ansible.builtin.file:
+          path: ~/golang
+          state: directory
+          mode: '0755'
+
+      - name: Create a directory qbec
+        become_user: root
+        ansible.builtin.file:
+          path: ~/qbec
+          state: directory
+          mode: '0755'
+
+      - name: Download Golang
+        ansible.builtin.get_url:
+          url: https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
+          dest: /root/golang/go1.19.7.linux-amd64.tar.gz
+
+      - name: Download Qbec
+        ansible.builtin.get_url:
+          url: https://github.com/splunk/qbec/releases/download/v0.15.2/qbec-linux-amd64.tar.gz
+          dest: /root/qbec/qbec-linux-amd64.tar.gz
+
+      - name: Extract Golang
+        ansible.builtin.unarchive:
+          src: /root/golang/go1.19.7.linux-amd64.tar.gz
+          dest: /usr/local
+          remote_src: yes
+
+      - name: Extract Qbec
+        ansible.builtin.unarchive:
+          src: /root/qbec/qbec-linux-amd64.tar.gz
+          dest: /usr/local/bin
+          remote_src: yes
+
+      - name: Add usr/local/go/bin in $PATH
+        become_user: root
+        lineinfile:
+          path: "~/.bashrc"
+          line: "export PATH=$PATH:/usr/local/go/bin"
+
+
+  - name: Settings worker nodes
+    hosts: nodes
+    become: yes
+    tasks:
+
+      - name: Swapoff
+        ansible.builtin.command: swapoff -a
+
+      - name: Copy authorized_keys
+        become_user: root
+        ansible.builtin.copy:
+          src: ./ansible/tmp/authorized_keys
+          dest: ~/.ssh/
