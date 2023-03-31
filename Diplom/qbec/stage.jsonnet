@@ -7,7 +7,7 @@ local prefix = 'stage';
     apiVersion: 'apps/v1',
     kind: 'Deployment',
     metadata: {
-      name: 'diplom-' + perfix,
+      name: 'diplom-' + prefix,
     },
     spec: {
       replicas: 3,
