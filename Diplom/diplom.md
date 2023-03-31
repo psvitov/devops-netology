@@ -1147,7 +1147,7 @@ local prefix = 'stage';
           containers: [
             {
               name: 'front-' + prefix,
-              image: 'hub.docker.com/r/psvitov/nginx-stage:latest',
+              image: 'docker.io/psvitov/nginx-stage:latest',
               imagePullPolicy: 'Always',
             },
           ],
@@ -1212,13 +1212,13 @@ local prefix = 'prod';
   components: {
     prod: {
       replicas: 3,
-      image: 'hub.docker.com/r/psvitov/nginx-stage:latest',
+      image: 'docker.io/psvitov/nginx-stage:latest',
     },
   },
 }
 ```
 
-Создадим 2 `namespace` в кластере `Kubernetes`:
+Создадим  `namespace` qbec в кластере `Kubernetes`:
 
 ![diplom_4_8.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_8.png)
 
