@@ -1051,15 +1051,64 @@ spec:
 
 ![diplom_4_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_5.png)
 
-5. для деплоя тестового приложения, созданного на 3-м этапе используем `Qbec`
+5. Для деплоя тестового приложения, созданного на 3-м этапе используем `Qbec`
 
-Добавим в первоначальный манифест `Ansible`, который использовали для предварительной настройки ВМ кластера установку пакета wget, установку golang  и установку qbec.
+Добавим в первоначальный манифест `Ansible`, который использовали для предварительной настройки ВМ кластера установку Qbec.
 
 ```
-добавить 
+  - name: Install Qbec
+    hosts: master
+    become: yes
+    tasks:
+
+      - name: Create a directory golang
+        become_user: root
+        ansible.builtin.file:
+          path: ~/golang
+          state: directory
+          mode: '0755'
+
+      - name: Create a directory qbec
+        become_user: root
+        ansible.builtin.file:
+          path: ~/qbec
+          state: directory
+          mode: '0755'
+
+      - name: Download Golang
+        ansible.builtin.get_url:
+          url: https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
+          dest: /root/golang/go1.19.7.linux-amd64.tar.gz
+
+      - name: Download Qbec
+        ansible.builtin.get_url:
+          url: https://github.com/splunk/qbec/releases/download/v0.15.2/qbec-linux-amd64.tar.gz
+          dest: /root/qbec/qbec-linux-amd64.tar.gz
+
+      - name: Extract Golang
+        ansible.builtin.unarchive:
+          src: /root/golang/go1.19.7.linux-amd64.tar.gz
+          dest: /usr/local
+          remote_src: yes
+
+      - name: Extract Qbec
+        ansible.builtin.unarchive:
+          src: /root/qbec/qbec-linux-amd64.tar.gz
+          dest: /usr/local/bin
+          remote_src: yes
+
+      - name: Add usr/local/go/bin in $PATH
+        become_user: root
+        lineinfile:
+          path: "~/.bashrc"
+          line: "export PATH=$PATH:/usr/local/go/bin"
 ```
 
+Применяем измененный манифест и проверяем установку необходимого ПО:
 
+![diplom_4_6.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_6.png)
+
+Предварительный вариант файла [`kuberspray.yml](https://github.com/psvitov/devops-netology/blob/main/Diplom/kube-prometheus/kuberspray.yml)
 
 
 
