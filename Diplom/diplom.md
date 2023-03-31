@@ -1110,6 +1110,142 @@ spec:
 
 Предварительный вариант файла [`kuberspray.yml](https://github.com/psvitov/devops-netology/blob/main/Diplom/kube-prometheus/kuberspray.yml)
 
+6. Создадим конфигурацию `qbec-stage`:
+
+![diplom_4_7.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_7.png)
+
+7. Cоздадим 2 окружения: `stage` с явным указанием параметров в файле и `prod` с подключением файла `prod.libsonnet`
+
+```
+## stage.jsonnet
+
+local prefix = 'stage';
+
+[
+  {
+    apiVersion: 'apps/v1',
+    kind: 'Deployment',
+    metadata: {
+      name: 'diplom-' + prefix,
+    },
+    spec: {
+      replicas: 3,
+      selector: {
+        matchLabels: {
+          app: 'app-' + prefix,
+          tier: prefix
+        },
+      },
+      template: {
+        metadata: {
+          labels: {
+            app: 'app-' + prefix,
+            tier: prefix
+          },
+        },
+        spec: {
+          containers: [
+            {
+              name: 'front-' + prefix,
+              image: 'hub.docker.com/r/psvitov/nginx-stage:latest',
+              imagePullPolicy: 'Always',
+            },
+          ],
+        },
+      },
+    },
+  },
+]
+```
+---
+
+```
+## prod.jsonnet
+
+local p = import '../params.libsonnet';
+local params = p.components.prod;
+local prefix = 'prod';
+
+[
+  {
+    apiVersion: 'apps/v1',
+    kind: 'Deployment',
+    metadata: {
+      name: 'diplom-' + prefix,
+    },
+    spec: {
+      replicas: params.replicas,
+      selector: {
+        matchLabels: {
+          app: 'app-' + prefix,
+          tier: prefix
+        },
+      },
+      template: {
+        metadata: {
+          labels: {
+            app: 'app-' + prefix,
+            tier: prefix
+          },
+        },
+        spec: {
+          containers: [
+            {
+              name: 'front-' + prefix,
+              image: params.image,
+              imagePullPolicy: 'Always',
+            },
+          ],
+        },
+      },
+    },
+  },
+]
+```
+---
+
+```
+## prod.libsonnet
+
+// this file has the baseline default parameters
+{
+  components: {
+    prod: {
+      replicas: 3,
+      image: 'hub.docker.com/r/psvitov/nginx-stage:latest',
+    },
+  },
+}
+```
+
+Создадим 2 `namespace` в кластере `Kubernetes`:
+
+![diplom_4_8.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_8.png)
+
+Изменим файл `qbec.yaml` добавим созданные ранее `namespace`:
+
+```
+## qbec.yaml
+
+apiVersion: qbec.io/v1alpha1
+kind: App
+metadata:
+  name: qbec-stage
+spec:
+  environments:
+    qbec:
+      defaultNamespace: qbec
+      server: https://127.0.0.1:6443
+  vars: {}
+```
+
+8. Проверим созданные файлы на валидацию и развернем окружение:
+
+
+
+
+
+
 
 
 
