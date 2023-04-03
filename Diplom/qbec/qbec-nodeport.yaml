@@ -1,0 +1,16 @@
+## qbec-nodeport.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-stage
+  labels:
+    name: nginx-stage-nodeport-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 30180
+      name: http
+  selector:
+    name: nginx-stage
