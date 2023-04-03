@@ -1179,6 +1179,8 @@ spec:
 9. Пробросим через `NodePort` развернутое приложение:
 
 ```
+## qbec-nodeport.yaml
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -1195,9 +1197,16 @@ spec:
     name: nginx-stage
 ```
 
+Ссылка на [qbec-nodeport.yaml](https://github.com/psvitov/devops-netology/blob/main/Diplom/qbec/qbec-nodeport.yaml)
 
 
+10. Проверяем доступность статического сайта:
 
+---
+![diplom_4_11.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_11.png)
+---
+![diplom_4_12.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_12.png)
+---
 
 ----
 
