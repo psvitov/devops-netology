@@ -1103,7 +1103,7 @@ spec:
 
 ![diplom_4_7.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_7.png)
 
-7. Cоздадим 2 окружения: `stage` с явным указанием параметров в файле и `prod` с подключением файла `prod.libsonnet`
+7. Cоздадим окружение: `stage` с явным указанием параметров в файле:
 
 ```
 ## stage.jsonnet
@@ -1118,7 +1118,7 @@ local prefix = 'stage';
       name: 'diplom-' + prefix,
     },
     spec: {
-      replicas: 3,
+      replicas: 1,
       selector: {
         matchLabels: {
           app: 'app-' + prefix,
@@ -1136,7 +1136,7 @@ local prefix = 'stage';
           containers: [
             {
               name: 'front-' + prefix,
-              image: 'docker.io/psvitov/nginx-stage:latest',
+              image: 'docker.io/psvitov/nginx-stage',
               imagePullPolicy: 'Always',
             },
           ],
@@ -1145,66 +1145,6 @@ local prefix = 'stage';
     },
   },
 ]
-```
----
-
-```
-## prod.jsonnet
-
-local p = import '../params.libsonnet';
-local params = p.components.prod;
-local prefix = 'prod';
-
-[
-  {
-    apiVersion: 'apps/v1',
-    kind: 'Deployment',
-    metadata: {
-      name: 'diplom-' + prefix,
-    },
-    spec: {
-      replicas: params.replicas,
-      selector: {
-        matchLabels: {
-          app: 'app-' + prefix,
-          tier: prefix
-        },
-      },
-      template: {
-        metadata: {
-          labels: {
-            app: 'app-' + prefix,
-            tier: prefix
-          },
-        },
-        spec: {
-          containers: [
-            {
-              name: 'front-' + prefix,
-              image: params.image,
-              imagePullPolicy: 'Always',
-            },
-          ],
-        },
-      },
-    },
-  },
-]
-```
----
-
-```
-## prod.libsonnet
-
-// this file has the baseline default parameters
-{
-  components: {
-    prod: {
-      replicas: 3,
-      image: 'docker.io/psvitov/nginx-stage:latest',
-    },
-  },
-}
 ```
 
 Создадим  `namespace` qbec в кластере `Kubernetes`:
@@ -1222,7 +1162,7 @@ metadata:
   name: qbec-stage
 spec:
   environments:
-    qbec:
+    stage:
       defaultNamespace: qbec
       server: https://127.0.0.1:6443
   vars: {}
@@ -1230,9 +1170,30 @@ spec:
 
 8. Проверим созданные файлы на валидацию и развернем окружение:
 
+![diplom_4_9.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_9.png)
 
+Результат выполнения:
 
+![diplom_4_10.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_10.png)
 
+9. Пробросим через `NodePort` развернутое приложение:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-stage
+  labels:
+    name: nginx-stage-nodeport-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 30180
+      name: http
+  selector:
+    name: nginx-stage
+```
 
 
 
