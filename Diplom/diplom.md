@@ -1174,7 +1174,11 @@ spec:
 
 Результат выполнения:
 
+---
 ![diplom_4_10.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_10.png)
+---
+![diplom_4_10_2.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_10_2.png)
+---
 
 9. Пробросим через `NodePort` развернутое приложение:
 
