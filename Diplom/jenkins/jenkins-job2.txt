@@ -1,0 +1,113 @@
+Started by GitHub push by psvitov
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/nginx-stage
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/nginx-stage/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/psvitov/nginx.git # timeout=10
+Fetching upstream changes from https://github.com/psvitov/nginx.git
+ > git --version # timeout=10
+ > git --version # 'git version 1.8.3.1'
+ > git fetch --tags --progress https://github.com/psvitov/nginx.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 95d5a3ed66a270d4689735f1004b068387bea1eb (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 95d5a3ed66a270d4689735f1004b068387bea1eb # timeout=10
+Commit message: "Update index.html"
+ > git rev-list --no-walk 76fcb6f96b98656211daaf840cb96bb5f35a73cb # timeout=10
+[nginx-stage] $ /bin/sh -xe /tmp/jenkins8435603011067665057.sh
++ echo '--- START ---'
+--- START ---
++ cat index.html
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>NGINX</title>
+  </head>
+  <body>
+  <h1 align=center color=green>Выбери таблетку</h1>
+    <h2 align=left color=red><a href="images/red.png">КРАСНАЯ</a></h2>
+    <h2 align=center color=green><a href="images/green.png">ЗЕЛЕНАЯ</a></h2>
+    <h2 align=right color=blue><a href="images/blue.jpg">СИНЯЯ</a></h2>  
+  </body>
+</html>
++ sudo docker build . -t psvitov/nginx-stage
+#1 [internal] load .dockerignore
+#1 transferring context: 2B done
+#1 DONE 0.1s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 325B done
+#2 DONE 0.1s
+
+#3 [auth] library/nginx:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/nginx:latest
+#4 DONE 1.0s
+
+#5 [1/6] FROM docker.io/library/nginx:latest@sha256:2ab30d6ac53580a6db8b657abf0f68d75360ff5cc1670a85acb5bd85ba1b19c0
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 790B done
+#6 DONE 0.0s
+
+#7 [2/6] RUN rm -rf /usr/share/nginx/html/*
+#7 CACHED
+
+#8 [3/6] RUN mkdir -p /usr/share/nginx/html/
+#8 CACHED
+
+#9 [4/6] COPY index.html /usr/share/nginx/html/
+#9 DONE 0.3s
+
+#10 [5/6] COPY ./images/red.png /usr/share/nginx/html/images/
+#10 DONE 0.2s
+
+#11 [6/6] COPY ./images/blue.jpg /usr/share/nginx/html/images/
+#11 DONE 0.2s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.2s done
+#12 writing image sha256:22389f7046ba8867cca6a23d7a44edb96eaf1b4641c7938b04d7e9e25032a86b done
+#12 naming to docker.io/psvitov/nginx-stage done
+#12 DONE 0.2s
++ sudo docker push psvitov/nginx-stage
+Using default tag: latest
+The push refers to repository [docker.io/psvitov/nginx-stage]
+a63ed64f03cb: Preparing
+a346215eee5f: Preparing
+2274859d83b8: Preparing
+22b11fd06e4d: Preparing
+12d6b25c295d: Preparing
+ff4557f62768: Preparing
+4d0bf5b5e17b: Preparing
+95457f8a16fd: Preparing
+a0b795906dc1: Preparing
+af29ec691175: Preparing
+3af14c9a24c9: Preparing
+ff4557f62768: Waiting
+95457f8a16fd: Waiting
+a0b795906dc1: Waiting
+af29ec691175: Waiting
+3af14c9a24c9: Waiting
+4d0bf5b5e17b: Waiting
+22b11fd06e4d: Layer already exists
+12d6b25c295d: Layer already exists
+ff4557f62768: Layer already exists
+4d0bf5b5e17b: Layer already exists
+95457f8a16fd: Layer already exists
+a0b795906dc1: Layer already exists
+3af14c9a24c9: Layer already exists
+af29ec691175: Layer already exists
+2274859d83b8: Pushed
+a346215eee5f: Pushed
+a63ed64f03cb: Pushed
+latest: digest: sha256:988d1963216b95d154f3cd7c415013840fcc3cc24d45bbf4cf0f2bdfe6f23b00 size: 2609
++ echo '--- FINISH ---'
+--- FINISH ---
+Finished: SUCCESS
