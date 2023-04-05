@@ -1242,9 +1242,63 @@ spec:
 ### Решение
 ---
 
+1. Для автоматической сборки docker image и деплоя приложения при изменении кода развернем в ЯО сервер `Jenkins` агентом.
 
+2. Сформируем манифест `Terraform` для создания инфраструктуры и воспользуемся манифестом `Ansible` для развертывания самого сервиса `Jenkins`
 
+Ссылка на основные файлы манифестов для разворачивания: [`Jenkins`](https://github.com/psvitov/devops-netology/tree/main/Diplom/jenkins)
 
+3. После развертывания инфраструктуры настраиваем сам сервер `Jenkins`  и настраиваем новый `Pipeline` для сборки и отправки в регистр Docker образа на основе репозитория с тестовым приложением:
+
+---
+![diplom_5_1.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_1.png)
+---
+
+Так как нам необходимо, чтобы при каждом коммите происходила сборка образа, то указываем созданный на 2-м этапе репозиторий в пунктах `GitHub project` и  Управление конфигурацией`Git`, проверяем основную ветку репозитория, а так же отмечаем пункт `GitHub hook trigger for GITScm polling`
+
+Шаг сборки добавляем `Выполнить команду shell` и добавим тестовый скрипт:
+
+---
+![diplom_5_2.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_2.png)
+---
+
+Для того, чтобы происходило отслеживание в репозитории, необходимо настроить `webhook` в самом репозитории:
+
+---
+![diplom_5_3.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_3.png)
+---
+
+4. Первую сборку необходимо провести вручную. Проверяем тестовый скрипт:
+
+---
+![diplom_5_4.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_4.png)
+---
+
+5. Изменим скрипт: пропишем в нем создание Docker-образа из Dockerfile, а так же отправим Docker-образ на `DockerHub`:
+
+---
+![diplom_5_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_5.png)
+---
+
+Результат выполнения: [Jenkins Job 1](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/jenkins-job.txt)
+
+6. Проверим запись образа в DockerHub:
+
+---
+![diplom_5_6.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_6.png)
+---
+
+7. Внесем изменения в файл `index.html` для проверки автоматической сборки:
+
+---
+![diplom_5_7.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_7.png)
+---
+![diplom_5_8.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_8.png)
+---
+
+Происходит автоматический запуск сборки и размещения образа в `DockerHub`
+
+Результат выполнения: [Jenkins Job 2](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/jenkins-job2.txt)
 
 
 
