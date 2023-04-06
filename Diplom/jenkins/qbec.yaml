@@ -1,0 +1,15 @@
+## qbec.yaml
+
+apiVersion: qbec.io/v1alpha1
+kind: App
+metadata:
+  name: qbec-stage
+spec:
+  environments:
+    stage:
+      defaultNamespace: qbec
+      server: https://127.0.0.1:6443
+  vars:
+    external:
+      - name: image_tag
+        default: latest
