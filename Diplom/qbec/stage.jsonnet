@@ -10,7 +10,7 @@ local prefix = 'stage';
       name: 'diplom-' + prefix,
     },
     spec: {
-      replicas: 3,
+      replicas: 1,
       selector: {
         matchLabels: {
           app: 'app-' + prefix,
@@ -28,7 +28,7 @@ local prefix = 'stage';
           containers: [
             {
               name: 'front-' + prefix,
-              image: 'hub.docker.com/r/psvitov/nginx-stage:latest',
+              image: 'docker.io/psvitov/nginx-stage',
               imagePullPolicy: 'Always',
             },
           ],
