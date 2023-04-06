@@ -1,8 +1,8 @@
 #cloud-config
 users:
-  - name: devops
+  - name: au000846
     groups: sudo
     shell: /bin/bash
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGWX4BpA5AR6cKFDJ9uznV6ZmvLH3Z+3H0o9NHH4iIs devops@DevOps
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIsu5UXbJgGpJyz8ogXK4AzEZEGT0VVZX17D/9LF127y au000846@terraform.ru-central1.internal

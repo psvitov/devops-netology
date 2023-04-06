@@ -104,6 +104,41 @@
           regexp: '^cluster_name: cluster.local$'
           replace: 'cluster_name: k8s.local'
 
+  - name: Settings Kube-prometheus
+    hosts: master
+    become: yes
+    tasks:
+
+      - name: Download repo Kube-prometheus
+        become_user: root
+        ansible.builtin.git:
+          repo: 'https://github.com/prometheus-operator/kube-prometheus.git'
+          dest: /root/kube-prometheus
+          version: release-0.11
+
+      - name: Create a directory
+        become_user: root
+        ansible.builtin.file:
+          path: ~/monitoring
+          state: directory
+          mode: '0755'
+
+      - name: Copy config Kube-prometheus
+        become_user: root
+        ansible.builtin.command:
+          cmd: cp -R ~/kube-prometheus ~/monitoring
+
+      - name: Copy grafana-service.yaml
+        become_user: root
+        ansible.builtin.copy:
+          src: ../monitoring/grafana-service.yaml
+          dest: ~/monitoring/manifests
+
+      - name: grafana-networkPolicy.yaml
+        become_user: root
+        ansible.builtin.copy:
+          src: ../monitoring/grafana-networkPolicy.yaml
+          dest: ~/monitoring/manifests
 
   - name: Install Qbec
     hosts: master
@@ -202,5 +237,71 @@
           dest: ./ansible/jenkins/
           flat: yes
 
-      - name: Expand keys
-        ansible.builtin.command: cat ./ansible/tmp/authorized_keys >> ./ansible/jenkins/authorized_keys
+      - name: Install packages
+        ansible.builtin.yum:
+          name:
+            - yum-utils
+          state: present
+
+      - name: Install packages
+        ansible.builtin.yum:
+          name:
+            - yum-utils
+          state: present
+
+      - name: Add docker repository
+        ansible.builtin.get_url:
+          url: https://download.docker.com/linux/centos/docker-ce.repo
+          dest: /etc/yum.repos.d/docer-ce.repo
+
+      - name: Install docker
+        ansible.builtin.yum:
+          name:
+            - docker-ce 
+            - docker-ce-cli
+            - containerd.io 
+            - docker-buildx-plugin 
+            - docker-compose-plugin
+          state: present
+
+      - name: Enable docker.service
+        ansible.builtin.systemd:
+          name: docker.service
+          enabled: true
+          masked: no
+
+      - name: Start docker service
+        ansible.builtin.systemd:
+          state: started
+          name: docker
+  
+  - name: Join keys
+    hosts: localhost
+    become: yes
+    tasks:
+
+      - name: Read key file
+        shell: cat ./ansible/tmp/authorized_keys
+        register: local_content
+
+      - name: Add authorized_keys
+        lineinfile:
+          path: "./ansible/jenkins/authorized_keys"
+          line: "{{ local_content.stdout }}"
+
+  - name: Setting master-01
+    hosts: master
+    become: yes
+    tasks:
+
+      - name: Create a directory
+        become_user: jenkins
+        ansible.builtin.file:
+          path: ~/.ssh
+          state: directory
+
+      - name: Copy authorized_keys
+        become_user: jenkins
+        ansible.builtin.copy:
+          src: ./ansible/jenkins/authorized_keys
+          dest: ~/.ssh/
