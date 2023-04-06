@@ -1147,6 +1147,8 @@ local prefix = 'stage';
 ]
 ```
 
+Ссылка на [stage.jsonnet](https://github.com/psvitov/devops-netology/blob/main/Diplom/qbec/stage.jsonnet)
+
 Создадим  `namespace` qbec в кластере `Kubernetes`:
 
 ![diplom_4_8.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_4_8.png)
@@ -1167,6 +1169,8 @@ spec:
       server: https://127.0.0.1:6443
   vars: {}
 ```
+
+Ссылка на [qbec.yaml](https://github.com/psvitov/devops-netology/blob/main/Diplom/qbec/qbec.yaml)
 
 8. Проверим созданные файлы на валидацию и развернем окружение:
 
