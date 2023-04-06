@@ -1302,6 +1302,85 @@ spec:
 
 Результат выполнения: [Jenkins Job 2](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/jenkins-job2.txt)
 
+8.Для автоматического деплоя нового docker образа на основе тега доработаем конфигурационныей файлы `Qbec`.
+
+Определим внешнюю переменную `image_tag` в файле `qbec.yaml`:
+
+```
+## qbec.yaml
+
+apiVersion: qbec.io/v1alpha1
+kind: App
+metadata:
+  name: qbec-stage
+spec:
+  environments:
+    stage:
+      defaultNamespace: qbec
+      server: https://127.0.0.1:6443
+  vars:
+    external:
+      - name: image_tag
+        default: latest
+```
+
+Измененный [qbec.yaml](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/qbec.yaml)
+
+
+Добавим в конфигурацию `stage.jsonnet` внешнюю переменную для определения тега :
+
+```
+## stage.jsonnet
+
+local prefix = 'stage';
+local imageTag = std.extVar('image_tag');
+
+[
+  {
+    apiVersion: 'apps/v1',
+    kind: 'Deployment',
+    metadata: {
+      name: 'diplom-' + prefix,
+    },
+    spec: {
+      replicas: 1,
+      selector: {
+        matchLabels: {
+          app: 'app-' + prefix,
+          tier: prefix
+        },
+      },
+      template: {
+        metadata: {
+          labels: {
+            app: 'app-' + prefix,
+            tier: prefix
+          },
+	},
+	spec: {
+          containers: [
+            {
+              name: 'front-' + prefix,
+              image: 'docker.io/psvitov/nginx-stage:' + imageTag,
+              imagePullPolicy: 'Always',
+            },
+          ],
+	},
+      },
+    },
+  },
+]
+```
+
+Измененный [stage.jsonnet](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/stage.jsonnet)
+
+9. В `Jenkins` к нашему основному заданию добавим создание тегов и задачу тестовой проверки:
+
+---
+![diplom_5_9.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_9.png)
+---
+
+Так же добавим, при положительном тестировании, а именно при необходимом нам теге деплой приложения в кластер `Kubernetes`:
 
 
 
