@@ -1411,7 +1411,8 @@ local imageTag = std.extVar('image_tag');
 ---
 ![diplom_5_14.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_14.png)
 ---
-
+![diplom_5_15.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_15.png)
+---
 
 
 
