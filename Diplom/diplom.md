@@ -1458,7 +1458,7 @@ local imageTag = std.extVar('image_tag');
 
 В итоге должно получится 6 виртуальных машин и 3 файла конфигурации
   
-Далее после создания всех ВМ последовательно запустятся манфесты `Ansible`:
+Далее после создания всех ВМ последовательно запустятся манфесты `Ansible` с помощью файла [terraform/ansible.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/ansible.tf):
   
 - [terraform/kuberspray.yml](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/kuberspray.yml): настройка SSH-ключей, установка пакетов, скачивание репозиториев;
 - [jenkins/site.yml](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/jenkins/site.yml): установка и настройка Jenkins
