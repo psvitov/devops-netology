@@ -1439,7 +1439,7 @@ local imageTag = std.extVar('image_tag');
 В файлах [terraform/jenkins.txt](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.txt) и [terraform/meta.txt](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/meta.txt)
 
 - `name: <user>`: указать пользователя, от имени которого будет производиться установка и настройка инфраструктуры
-- `<ssh_key>`: публичный SSH-ключ из файлов `*.pub` домашней папки `~/.ssh/` ([Документация](https://cloud.yandex.ru/docs/compute/operations/vm-connect/ssh))
+- `<ssh_key>`: публичный SSH-ключ пользователя, от имени которого будет производиться установка и настройка инфраструктуры из файлов `*.pub` домашней папки `~/.ssh/` ([Документация](https://cloud.yandex.ru/docs/compute/operations/vm-connect/ssh))
 
 В файле [terraform/backend.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/backend.tf)
 
@@ -1465,23 +1465,94 @@ local imageTag = std.extVar('image_tag');
   
 После отработки манифестов `terraform` и `ansible` будет создана инфраструктура для развертывания кластера `Kubernetes` и начальная инфраструктура `Jenkins
 
+3. Для развертывания кластера `Kubernetes` необходимо подключитья к созданной master-ноде и запустить уже созданный на этапе подготовки манифест `ansible`:
 
+```
+ansible-playbook ~/kuberspray/cluster.yml -i ~/k8s/sample/k8s.ini --diff
+```
 
+Далее необходимо дождаться окончания работы плейбука и после проверить созданный кластер на работоспособность:
 
+```
+kubectl get nodes
+```
 
+Должен появиться список ранее созданных master-ноды и 3-x worker-нод
 
+4. Создадим тестовое приложение:
 
+В папке [Dockerfile](https://github.com/psvitov/devops-netology/tree/main/Diplom/final/Dockerfile) находится файл `Dockerfile` и статический веб ресурс
 
+Подключаемся к DockerHub командой `docker login`, переходим в папку `Dockerfile`, запускаем создание docker-образа:
 
+```
+docker build . -t <login/repository>
+```
 
+Можно провести проверку созданного образа и после проверки загрузить его на DockerHub:
 
+```
+docker push <login/repository>
+```
 
+5. Переходим к разворачиванию мониторинга.
 
+Необходимо подключиться к master-ноде, переключиться на пользователя `root`, перейти в папку /root/monitoring/kube-prometheus/ и последовательно запустить команды с интервалом между ними в 2-3 минуты:
 
+```
+kubectl apply --server-side -f manifests/setup
+```
+```
+kubectl wait \
+	--for condition=Established \
+	--all CustomResourceDefinition \
+	--namespace=monitoring
+```
+```
+kubectl apply -f manifests/
+```
 
+После настройки мониторинга можно подключиться к веб-интерфесу `Grafana` по адресу: `http://<ip-адрес master-ноды>:30003/
 
+Порт при необходимости можно поменять, заменив порт в файле /root/monitoring/kube-prometheus/manifests/grafana-service.yaml и перезапустить сервис с новым портом командой:
 
+```
+kubctl apply -f grafana-service.yaml
+```
 
+6. Создаем проект `Qbec` с произвольным именем:
+
+```
+qbec init <имя проекта>
+```
+
+Копируем файл [qbec/stage.jsonnet](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/qbec/stage.jsonnet) в папку `components` проекта
+
+Заменяем файл `qbec.yaml` файлом [qbec/qbec.yaml](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/qbec/qbec.yaml)
+
+Заполняем необходимые данные в этих файлах на основе ранее созданного проекта `Qbec` и ранее созданного docker-образа
+
+Разворачиваем созданнео приложение в кластере:
+
+```
+qbec apply stage
+```
+
+Пробрасываем NodePort для доступа к веб ресурсу извне с помощью файла [qbec/qbec-nodeport.yaml](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/qbec/qbec-nodeport.yaml) командой:
+
+```
+kubectl apply -f qbec-nodeport.yaml
+```
+Порт при необходимости можно поменять, заменив порт в файле [qbec/qbec-nodeport.yaml](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/qbec/qbec-nodeport.yaml) перед его применением
+
+Проверяем доступ к веб-ресурсу из Интернета
+
+7. Настраиваем процессы `CI/CD` 
+
+- подключаемся к `jenkins-master-01` по внешнему адресу http://<ip-адрес>:8080
+- предварительно производим настройки `Jenkins`
+- создаем задачу для создания docker-образа на основе git-репозитория и файлов из папки [Dockerfile](https://github.com/psvitov/devops-netology/tree/main/Diplom/final/Dockerfile), поместив данные файлы в отдельный git-репозиторий и настроив webhook на сервис Jenkins
+- в процессе изменения git-репозитория, настариваем использование тегов для деплоя изменений в под кластера `Kubernetes`
 
 ----
 <details>
