@@ -1,10 +1,10 @@
 terraform {
 
   backend "remote" {
-    organization = "psvitov"
+    organization = "<login_TC>"
 
     workspaces {
-      name = "diplom"
+      name = "<name>"
     }
   }
 }
