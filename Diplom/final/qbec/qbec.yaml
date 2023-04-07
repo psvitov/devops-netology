@@ -3,11 +3,11 @@
 apiVersion: qbec.io/v1alpha1
 kind: App
 metadata:
-  name: qbec-stage
+  name: <имя проекта Qbec>
 spec:
   environments:
     stage:
-      defaultNamespace: qbec
+      defaultNamespace: <имя namespace>
       server: https://127.0.0.1:6443
   vars:
     external:
