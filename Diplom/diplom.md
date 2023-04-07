@@ -1428,23 +1428,23 @@ local imageTag = std.extVar('image_tag');
 
 В файле [terraform/variables.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/variables.tf)
 
-- "<OAuth-токен Яндекс Облако>": токен для авторизации в Yandex Cloud ([Документация](https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token))
-- "<Идентификатора облака ЯО>": Идентификатор облака ([Документация](https://cloud.yandex.ru/docs/resource-manager/operations/cloud/get-id))
-- "<Зона доступности>": Инфраструктура внутри датацентра, в котором размещается платформа ЯО ([Документация](https://cloud.yandex.ru/docs/overview/concepts/geo-scope))
+- `"<OAuth-токен Яндекс Облако>"`: токен для авторизации в Yandex Cloud ([Документация](https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token))
+- `"<Идентификатора облака ЯО>"`: Идентификатор облака ([Документация](https://cloud.yandex.ru/docs/resource-manager/operations/cloud/get-id))
+- `"<Зона доступности>"`: Инфраструктура внутри датацентра, в котором размещается платформа ЯО ([Документация](https://cloud.yandex.ru/docs/overview/concepts/geo-scope))
 
 В файле [terraform/jenkins.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.tf)
 
-- ansible_user: <user>: указать пользователя, от имени которого будет производиться установка и настройка инфраструктуры
+- `ansible_user: <user>`: указать пользователя, от имени которого будет производиться установка и настройка инфраструктуры
 
 В файлах [terraform/jenkins.txt](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.txt) и [terraform/meta.txt](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/meta.txt)
 
-- name: <user>: указать пользователя, от имени которого будет производиться установка и настройка инфраструктуры
-- <ssh_key>: публичный SSH-ключ из файлов `*.pub` домашней папки `~/.ssh/` ([Документация](https://cloud.yandex.ru/docs/compute/operations/vm-connect/ssh))
+- `name: <user>`: указать пользователя, от имени которого будет производиться установка и настройка инфраструктуры
+- `<ssh_key>`: публичный SSH-ключ из файлов `*.pub` домашней папки `~/.ssh/` ([Документация](https://cloud.yandex.ru/docs/compute/operations/vm-connect/ssh))
 
 В файле [terraform/backend.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/backend.tf)
 
-- "<login_TC>": указать логин Terraform Cloud
-- "<name>": указать имя workspace
+- `"<login_TC>"`: указать логин Terraform Cloud
+- `"<name>"`: указать имя workspace
 
 2. Перейти в папку `terraform` и последовательно запустить команды `terraform init`, `terraform plan`, `terraform apply`
   
