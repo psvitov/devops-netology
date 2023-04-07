@@ -63,12 +63,12 @@
           dest: /root/kuberspray
           version: release-2.20
 
-      - name: Istall requests
+      - name: Install requests
         ansible.builtin.pip:
           name: requests==2.23.0
           executable: pip3
 
-      - name: Istall requirements        
+      - name: Install requirements        
         ansible.builtin.pip:
           requirements: /root/kuberspray/requirements-2.11.txt
           executable: pip3
@@ -134,7 +134,7 @@
           src: ../monitoring/grafana-service.yaml
           dest: ~/monitoring/kube-prometheus/manifests
 
-      - name: grafana-networkPolicy.yaml
+      - name: Copy grafana-networkPolicy.yaml
         become_user: root
         ansible.builtin.copy:
           src: ../monitoring/grafana-networkPolicy.yaml
@@ -236,12 +236,6 @@
           src: ~/.ssh/authorized_keys
           dest: ./ansible/jenkins/
           flat: yes
-
-      - name: Install packages
-        ansible.builtin.yum:
-          name:
-            - yum-utils
-          state: present
 
       - name: Install packages
         ansible.builtin.yum:
