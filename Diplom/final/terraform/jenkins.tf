@@ -1,4 +1,4 @@
-## inventory.tf
+## jenkins.tf
 
 resource "local_file" "jenkins" {
   content = <<-DOC
@@ -20,7 +20,7 @@ all:
               jenkins-agent-01:
   vars:
     ansible_connection_type: paramiko
-    ansible_user: au000846
+    ansible_user: <user>
      DOC
   filename = "../jenkins/inventory/cicd/hosts.yml"
 
