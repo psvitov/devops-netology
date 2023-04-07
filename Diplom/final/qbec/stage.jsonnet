@@ -8,7 +8,7 @@ local imageTag = std.extVar('image_tag');
     apiVersion: 'apps/v1',
     kind: 'Deployment',
     metadata: {
-      name: 'diplom-' + prefix,
+      name: '<имя проекта>' + prefix,
     },
     spec: {
       replicas: 1,
@@ -29,7 +29,7 @@ local imageTag = std.extVar('image_tag');
           containers: [
             {
               name: 'front-' + prefix,
-              image: 'docker.io/psvitov/nginx-stage:' + imageTag,
+              image: 'docker.io/<login/repository>:' + imageTag,
               imagePullPolicy: 'Always',
             },
           ],
