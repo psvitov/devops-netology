@@ -132,13 +132,13 @@
         become_user: root
         ansible.builtin.copy:
           src: ../monitoring/grafana-service.yaml
-          dest: ~/monitoring/manifests
+          dest: ~/monitoring/kube-prometheus/manifests
 
       - name: grafana-networkPolicy.yaml
         become_user: root
         ansible.builtin.copy:
           src: ../monitoring/grafana-networkPolicy.yaml
-          dest: ~/monitoring/manifests
+          dest: ~/monitoring/kube-prometheus/manifests
 
   - name: Install Qbec
     hosts: master
