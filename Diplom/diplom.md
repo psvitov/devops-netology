@@ -1414,10 +1414,79 @@ local imageTag = std.extVar('image_tag');
 ![diplom_5_15.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_15.png)
 ---
 
+# Итог:
+
+В итоге все необходимые файлы для развертывания инфраструктуры и работы с ней собраны в отдельной папке [`Final`](https://github.com/psvitov/devops-netology/tree/main/Diplom/final).
+
+Структура папки:
+
+
+
+## Алгоритм работы и пояснения:
+
+1. Перед созданием инфраструктуры необходимо в файлы внести необходиму информацию для корректной работы манифестов:
+
+В файле [terraform/variables.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/variables.tf)
+
+- "<OAuth-токен Яндекс Облако>": токен для авторизации в Yandex Cloud ([Документация](https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token))
+- "<Идентификатора облака ЯО>": Идентификатор облака ([Документация](https://cloud.yandex.ru/docs/resource-manager/operations/cloud/get-id))
+- "<Зона доступности>": Инфраструктура внутри датацентра, в котором размещается платформа ЯО ([Документация](https://cloud.yandex.ru/docs/overview/concepts/geo-scope))
+
+В файле [terraform/jenkins.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.tf)
+
+- ansible_user: <user>: указать пользователя, от имени которого будет производиться установка и настройка инфраструктуры
+
+В файлах [terraform/jenkins.txt](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.txt) и [terraform/meta.txt](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/meta.txt)
+
+- name: <user>: указать пользователя, от имени которого будет производиться установка и настройка инфраструктуры
+- <ssh_key>: публичный SSH-ключ из файлов `*.pub` домашней папки `~/.ssh/` ([Документация](https://cloud.yandex.ru/docs/compute/operations/vm-connect/ssh))
+
+В файле [terraform/backend.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/backend.tf)
+
+- "<login_TC>": указать логин Terraform Cloud
+- "<name>": указать имя workspace
+
+2. Перейти в папку `terraform` и последовательно запустить команды `terraform init`, `terraform plan`, `terraform apply`
+  
+В процессе работы манифестов `terraform` создадутся ресурсы и файлы инвентаризации:
+
+- мастер-нода и 3 воркер-ноды для последующего разворачивания кластера Kubernetes на основе `Kuberspray`
+- сервер и агент `Jenkins`
+- файл инвентаризации манифеста `Ansible` для настройки вирутальных машин: [terraform/inventory.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/inventory.tf)
+- файл инвентаризации манифеста `Ansible` для установки `Jenkins`: [terraform/jenkins.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.tf)
+- файл инвентаризации манифеста `Ansible` для разворачивания кластера Kubernetes `Kuberspray`: [terraform/k8s.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/k8s.tf)
+
+В итоге должно получится 6 виртуальных машин и 3 файла конфигурации
+  
+Далее после создания всех ВМ последовательно запустятся манфесты `Ansible`:
+  
+- [terraform/kuberspray.yml](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/kuberspray.yml): настройка SSH-ключей, установка пакетов, скачивание репозиториев;
+- [jenkins/site.yml](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/jenkins/site.yml): установка и настройка Jenkins
+  
+После отработки манифестов `terraform` и `ansible` будет создана инфраструктура для развертывания кластера `Kubernetes` и начальная инфраструктура `Jenkins
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ----
-
+<details>
+   <summary><b>Что необходимо для сдачи задания?</b></summary>
+	
 ## Что необходимо для сдачи задания?
 
 1. Репозиторий с конфигурационными файлами Terraform и готовность продемонстрировать создание всех ресурсов с нуля.
@@ -1427,3 +1496,5 @@ local imageTag = std.extVar('image_tag');
 5. Репозиторий с конфигурацией Kubernetes кластера.
 6. Ссылка на тестовое приложение и веб интерфейс Grafana с данными доступа.
 7. Все репозитории рекомендуется хранить на одном ресурсе (github, gitlab)
+
+</details>
