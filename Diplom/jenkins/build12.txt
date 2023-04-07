@@ -1,0 +1,153 @@
+Started by GitHub push by psvitov
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/nginx-stage
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/nginx-stage/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/psvitov/nginx.git # timeout=10
+Fetching upstream changes from https://github.com/psvitov/nginx.git
+ > git --version # timeout=10
+ > git --version # 'git version 1.8.3.1'
+ > git fetch --tags --progress https://github.com/psvitov/nginx.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 1269345f9135cfa23f4d7e344a6aa3eeeb5d0f9e (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 1269345f9135cfa23f4d7e344a6aa3eeeb5d0f9e # timeout=10
+Commit message: "Update index.html"
+ > git rev-list --no-walk 5b6607a00a7ed7d354b0b4b1319c0c17a7bbfd40 # timeout=10
+[nginx-stage] $ /bin/sh -xe /tmp/jenkins13105105457440582619.sh
++ echo '--- START ---'
+--- START ---
++ cat index.html
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>NGINX</title>
+  </head>
+  <body bgcolor="#c0c0c0">
+  <h1 align=center color=green>Выбери таблетку</h1>
+    <h2 align=left color=red><a href="images/red.png">КРАСНАЯ</a></h2>
+    <h2 align=center color=green><a href="images/red.png">ЗЕЛЕНАЯ</a></h2>
+    <h2 align=right color=blue><a href="images/blue.jpg">СИНЯЯ</a></h2>  
+  </body>
+</html>
++ tag=v0.1.12
++ sudo docker build . -t psvitov/nginx-stage:v0.1.12
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 325B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/nginx:latest
+#3 DONE 0.5s
+
+#4 [1/6] FROM docker.io/library/nginx:latest@sha256:2ab30d6ac53580a6db8b657abf0f68d75360ff5cc1670a85acb5bd85ba1b19c0
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 806B done
+#5 DONE 0.1s
+
+#6 [2/6] RUN rm -rf /usr/share/nginx/html/*
+#6 CACHED
+
+#7 [3/6] RUN mkdir -p /usr/share/nginx/html/
+#7 CACHED
+
+#8 [4/6] COPY index.html /usr/share/nginx/html/
+#8 DONE 0.3s
+
+#9 [5/6] COPY ./images/red.png /usr/share/nginx/html/images/
+#9 DONE 0.2s
+
+#10 [6/6] COPY ./images/blue.jpg /usr/share/nginx/html/images/
+#10 DONE 0.2s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 0.2s done
+#11 writing image sha256:43e03d3a6ac5d88d738eb8b882eea894ca65cf238a7bc5cd53195be7462907e3 0.0s done
+#11 naming to docker.io/psvitov/nginx-stage:v0.1.12 done
+#11 DONE 0.2s
++ sudo docker push psvitov/nginx-stage:v0.1.12
+The push refers to repository [docker.io/psvitov/nginx-stage]
+56c3ae9dbd02: Preparing
+456764ab1b4e: Preparing
+ba4b3ad6230e: Preparing
+fcf0db737ae8: Preparing
+796be3fec88b: Preparing
+ff4557f62768: Preparing
+4d0bf5b5e17b: Preparing
+95457f8a16fd: Preparing
+a0b795906dc1: Preparing
+af29ec691175: Preparing
+3af14c9a24c9: Preparing
+ff4557f62768: Waiting
+4d0bf5b5e17b: Waiting
+95457f8a16fd: Waiting
+a0b795906dc1: Waiting
+af29ec691175: Waiting
+3af14c9a24c9: Waiting
+796be3fec88b: Layer already exists
+fcf0db737ae8: Layer already exists
+ff4557f62768: Layer already exists
+4d0bf5b5e17b: Layer already exists
+95457f8a16fd: Layer already exists
+a0b795906dc1: Layer already exists
+af29ec691175: Layer already exists
+3af14c9a24c9: Layer already exists
+ba4b3ad6230e: Pushed
+56c3ae9dbd02: Pushed
+456764ab1b4e: Pushed
+v0.1.12: digest: sha256:1c3d33f679bc3a89c3d3ec80fed4dd5436973fc9ed0cc2575dc041f3248c5672 size: 2609
++ echo '--- FINISH ---'
+--- FINISH ---
+[nginx-stage] $ /bin/sh -xe /tmp/jenkins17974251316034667809.sh
++ echo '--- START Test---'
+--- START Test---
++ tag=v0.1.12
++ echo v0.1.12
+v0.1.12
++ '[' v0.1.12 = v0.1.12 ']'
++ echo 'Test Passed'
+Test Passed
++ echo '--- FINISH Test---'
+--- FINISH Test---
+[nginx-stage] $ /bin/sh -xe /tmp/jenkins17680051541692230904.sh
++ echo '--- START Deploy---'
+--- START Deploy---
++ tag=v0.1.12
++ ssh -T root@51.250.92.162 'qbec apply stage --vm:ext-str image_tag=v0.1.12 --yes'
+setting cluster to k8s.local
+setting context to kubernetes-admin@k8s.local
+cluster metadata load took 43ms
+1 components evaluated in 3ms
+
+will synchronize 1 object(s)
+
+1 components evaluated in 1ms
+---
+stats:
+  updated:
+  - deployments diplom-stage -n qbec (source stage)
+
+update deployments diplom-stage -n qbec (source stage)
+server objects load took 216ms
+waiting for readiness of 1 objects
+  - deployments diplom-stage -n qbec
+
+  0s    : deployments diplom-stage -n qbec :: waiting for spec update to be observed
+  0s    : deployments diplom-stage -n qbec :: 0 out of 1 new replicas have been updated
+  0s    : deployments diplom-stage -n qbec :: 1 old replicas are pending termination
+✓ 5s    : deployments diplom-stage -n qbec :: successfully rolled out (0 remaining)
+
+✓ 5s: rollout complete
+command took 5.6s
++ echo '--- FINISH Deploy---'
+--- FINISH Deploy---
+Finished: SUCCESS
