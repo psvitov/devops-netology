@@ -1302,7 +1302,7 @@ spec:
 
 Результат выполнения: [Jenkins Job 2](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/jenkins-job2.txt)
 
-8.Для автоматического деплоя нового docker образа на основе тега доработаем конфигурационныей файлы `Qbec`.
+8. Для автоматического деплоя нового docker образа на основе тега доработаем конфигурационныей файлы `Qbec`.
 
 Определим внешнюю переменную `image_tag` в файле `qbec.yaml`:
 
@@ -1380,8 +1380,37 @@ local imageTag = std.extVar('image_tag');
 ![diplom_5_9.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_9.png)
 ---
 
-Так же добавим, при положительном тестировании, а именно при необходимом нам теге деплой приложения в кластер `Kubernetes`:
+Так же добавим, при положительном тестировании, а именно при необходимом нам теге, деплой приложения в кластер `Kubernetes`:
 
+---
+![diplom_5_10.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_10.png)
+---
+
+10. Проведем тестирование с условием, что при теге `v0.1.12` произойдет деплой приложения в кластер `Kubernetes`:
+
+Дважды запустили задачу вручную, 9-я и 10-я сборка завершились неудачно, потому что не прошли тест:
+
+---
+![diplom_5_11.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_11.png)
+---
+
+Ссылка на [10-ю сборку](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/build10.txt)
+
+11-я и 12-я сборка пройдет в автоматическом режиме - дважды изменим файл `index.html` в репозитории:
+
+---
+![diplom_5_12.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_12.png)
+---
+
+Ссылка на [12-ю сборку](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/build12.txt)
+
+11. Проверим под в кластере `Kubernetes` и веб-страницу:
+
+---
+![diplom_5_13.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_13.png)
+---
+![diplom_5_14.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_14.png)
+---
 
 
 
