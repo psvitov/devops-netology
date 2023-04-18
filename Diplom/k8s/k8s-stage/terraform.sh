@@ -23,7 +23,7 @@ done
 
 cat << EOF >> inventory.tf
 
-    [node]
+    [nodes]
 EOF
 
 for (( i=1; i <= $nodes; i++ ))
