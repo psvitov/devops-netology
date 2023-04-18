@@ -1,0 +1,10 @@
+## meta.txt
+
+#cloud-config
+users:
+  - name: au000846
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI*************************ogXK4AzEZEGT0VVZX17D/9LF127y au000846@terraform.ru-central1.internal
