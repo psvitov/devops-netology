@@ -158,6 +158,21 @@ resource "yandex_resourcemanager_folder_iam_member" "editor" {
 
 ![diplom_1_1.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_1.png)
 
+В каждой папке создадим новый файл `meta.txt` для создания на развертываемой инфраструктуре необходимых пользователей и пробрасывания SSH ключей:
+
+```
+## meta.txt
+
+#cloud-config
+users:
+  - name: au000846
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI*************************ogXK4AzEZEGT0VVZX17D/9LF127y au000846@terraform.ru-central1.internal
+```
+
 5. В файлы `backend` для создания разных `workspaces` добавим содержимое:
 
 ```
@@ -364,10 +379,16 @@ resource "yandex_compute_instance" "vpc" {
 
 #### terraform plan
 
+Результат работы команды [terraform plan](https://github.com/psvitov/devops-netology/blob/main/Diplom/terraform/tplan.txt)
+
+Скриншот работы:
 ![diplom_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_5.png)
 
 #### terraform apply
 
+Результат работы команды [terraform apply](https://github.com/psvitov/devops-netology/blob/main/Diplom/terraform/tapply.txt)
+
+Скриншот работы:
 ![diplom_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_6.png)
 
 #### result terraform apply
@@ -456,52 +477,22 @@ Cсылка на папку [terraform](https://github.com/psvitov/devops-netolo
 
 ![diplom_2_1.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_2_1.png)
 
-2. Внесем правки в ранее созданные файлы - `backend.tf`, `network.tf`, `variables.tf`, :
+2. Возьмем базовое значение создаваемых виртуальных машин из расчета 1 мастер-нода и 3 воркер ноды, но манифесты предполагают создание любого количества инстансов для разворачивания кластера Kubernetes:
 
-```
-## backend.tf
-
-terraform {
-
-  backend "remote" {
-    organization = "psvitov"
-
-    workspaces {
-      name = "k8s-stage"
-    }
-  }
-}
-```
-
-```
-## network.tf
-
-resource "yandex_vpc_network" "stage-net" {
-  name = "stage-network"
-  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
-}
-
-resource "yandex_vpc_subnet" "stage-subnet-a" {
-  v4_cidr_blocks = ["10.0.10.0/24"]
-  zone           = var.yc_region_a
-  name           = "stage-a"
-  folder_id      = "${yandex_resourcemanager_folder.folder1.id}"
-  network_id     = "${yandex_vpc_network.stage-net.id}"
-}
-```
-
+В файл `variables.tf` изменим название 2-х переменных `vpc` и `vpc_count` на `master` и `masters_count`: они будут использоваться при создании мастер-ноды,
+а так же внесем еще 2 переменные `node` и `nodes_count`: они будут использоваться при создании воркер-нод.
 ```
 ## variables.tf
 
 variable "yc_token" {
     description = "ID Yandex.Token"
-    default = "y0_AgAAAAA********************2gMMEnMpiR9uptV4Qe44EV5sWrMw"
+    default = "******"
     sensitive = true
 }
 
 variable "yc_cloud_id" {
     description = "ID Yandex.Cloud"
-    default = "b1g**********euurdt7"
+    default = "*********"
     sensitive = true
 }
 
@@ -509,37 +500,49 @@ variable "yc_region_a" {
     description = "Region Zone A"
     default = "ru-central1-a"
 }
+
+variable "yc_region_b" {
+    description = "Region Zone B"
+    default = "ru-central1-b"
+}
+
+variable "yc_region_c" {
+    description = "Region Zone C"
+    default = "ru-central1-c"
+}
+
+variable "master" {
+    description = "Initial Master-node name"
+    default = "master"
+}
+
+variable "masters_count" {
+    description = "Quantity of master-node"
+    default = 1
+}
+
+variable "node" {
+    description = "Initial Worker-node name"
+    default = "node"
+}
+
+variable "nodes_count" {
+    description = "Quantity of worker-node"
+    default = 3
+}
 ```
 
-3. Создадим новый файл `meta.txt` для создания на развертываемой инфраструктуре необходимых пользователей и пробрасывания SSH ключей:
+3. Переименуем файл `vpc.tf` на `masters.tf` для удобочитаемости и понимания, за что отвечает данный файл:
 
 ```
-## meta.txt
+## masters.tf
 
-#cloud-config
-users:
-  - name: au000846
-    groups: sudo
-    shell: /bin/bash
-    sudo: ['ALL=(ALL) NOPASSWD:ALL']
-    ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI*************************ogXK4AzEZEGT0VVZX17D/9LF127y au000846@terraform.ru-central1.internal
-```
-
-4. Вместо файла `vpc.tf` опишем необходимую для развертывания инфраструктуру в отдельных файлах
-
-`master01.tf` - master-нода, где будет разворачиваться `Kuberspray`
-
-`node01...node03` - worker-ноды для размещения подов
-
-```
-## master01.tf
-
-resource "yandex_compute_instance" "master01" {
+resource "yandex_compute_instance" "master" {
+  count = var.masters_count
   folder_id = "${yandex_resourcemanager_folder.folder1.id}"
-  name = "master01"
+  name = "${var.master}-${count.index+1}"
   zone = var.yc_region_a
-  hostname = "master01.ru-central1.internal"
+  hostname = "${var.master}-${count.index+1}.ru-central1.internal"
 
   resources {
     cores  = 2
@@ -562,15 +565,20 @@ resource "yandex_compute_instance" "master01" {
     user-data = "${file("./meta.txt")}"
   }
 }
-
 ```
 
+4. Создадим файл `nodes.tf` для создания worker-нод кластера
+
+
 ```
-resource "yandex_compute_instance" "node01" {
+## nodes.tf
+
+resource "yandex_compute_instance" "node" {
+  count = var.nodes_count
   folder_id = "${yandex_resourcemanager_folder.folder1.id}"
-  name = "node01"
-  zone = var.yc_region_a
-  hostname = "node01.ru-central1.internal"
+  name = "${var.node}-${count.index+1}"
+  zone = "ru-central1-a"
+  hostname = "${var.node}-${count.index+1}.ru-central1.internal"
 
   resources {
     cores  = 2
@@ -590,61 +598,119 @@ resource "yandex_compute_instance" "node01" {
   }
 
   metadata = {
-    user-data = "${file("./meta.txt")}" 
+    user-data = "${file("./meta.txt")}"
   }
 }
 ```
 
-5. Создадим папку `ansible`, файлы `inventory.tf` для создания файла инвентаризации для `Ansible` и файл `k8s.tf` для создания файла инвентаризации для `Kuberspray`:
+5. Создадим папку `ansible` - в ней будет размещаться служебная информация для работы плейбуков `Ansible`. 
+Так как планируется создавать произвольное количество инстансов для кластера, шаблоны файлов `inventory.tf` для создания файла инвентаризации для `Ansible` и  `k8s.tf` для создания файла инвентаризации для `Kuberspray` будем создавать с помошью bash-скрипта:
 
 ```
+#!/bin/bash
+## terraform.sh
+
+masters=1
+nodes=3
+
 ## inventory.tf
 
+cat << EOF > inventory.tf
 resource "local_file" "inventory" {
   content = <<-DOC
     # Ansible inventory containing variable values from Terraform.
     # Generated by Terraform.
     [master]
-    master01.ru-central1.internal ansible_host=${yandex_compute_instance.master01.network_interface.0.nat_ip_address}
- 
-    [nodes]
-    node01.ru-central1.internal ansible_host=${yandex_compute_instance.node01.network_interface.0.nat_ip_address}
-    node02.ru-central1.internal ansible_host=${yandex_compute_instance.node02.network_interface.0.nat_ip_address}
-    node03.ru-central1.internal ansible_host=${yandex_compute_instance.node03.network_interface.0.nat_ip_address}
+EOF
+
+for (( i=1; i <= $masters; i++ ))
+do
+
+echo "    master-$i.ru-central1.internal ansible_host=\${yandex_compute_instance.master[$((i-1))].network_interface.0.nat_ip_address}" >> inventory.tf
+
+done
+
+cat << EOF >> inventory.tf
+    [node]
+EOF
+
+for (( i=1; i <= $nodes; i++ ))
+do
+
+echo "    node-$i.ru-central1.internal ansible_host=\${yandex_compute_instance.node[$((i-1))].network_interface.0.nat_ip_address}" >> inventory.tf
+
+done
+
+cat << EOF >> inventory.tf
     DOC
   filename = "./ansible/inventory.ini"
-
   depends_on = [
-    yandex_compute_instance.master01,
-    yandex_compute_instance.node01,
-    yandex_compute_instance.node02,
-    yandex_compute_instance.node03
+    yandex_compute_instance.master,
+    yandex_compute_instance.node
   ]
 }
-```
+EOF
 
-```
+
 ## k8s.tf
 
+cat << EOF > k8s.tf
 resource "local_file" "k8s" {
   content = <<-DOC
- 
     # ## Configure 'ip' variable to bind kubernetes services on a
     # ## different ip than the default iface
     # ## We should set etcd_member_name for etcd cluster. The node that is not a etcd member do not need to set the value, or can set the empty$
     [all]
-    master01.ru-central1.internal ansible_host=${yandex_compute_instance.master01.network_interface.0.ip_address} ip=${yandex_compute_instance.master01.network_interface.0.ip_address}
-    node01.ru-central1.internal ansible_host=${yandex_compute_instance.node01.network_interface.0.ip_address} ip=${yandex_compute_instance.node01.network_interface.0.ip_address}
-    node02.ru-central1.internal ansible_host=${yandex_compute_instance.node02.network_interface.0.ip_address} ip=${yandex_compute_instance.node02.network_interface.0.ip_address}
-    node03.ru-central1.internal ansible_host=${yandex_compute_instance.node03.network_interface.0.ip_address} ip=${yandex_compute_instance.node03.network_interface.0.ip_address}
+EOF
+
+for (( i=1; i <= $masters; i++ ))
+do
+
+echo "    master-$i.ru-central1.internal ansible_host=\${yandex_compute_instance.master[$((i-1))].network_interface.0.ip_address} ip=\${yandex_compute_instance.master[$((i-1))].network_interface.0.ip_address}" >> k8s.tf
+
+done
+
+for (( i=1; i <= $nodes; i++ ))
+do
+
+echo "    node-$i.ru-central1.internal ansible_host=\${yandex_compute_instance.node[$((i-1))].network_interface.0.ip_address} ip=\${yandex_compute_instance.node[$((i-1))].network_interface.0.ip_address}" >> k8s.tf
+
+done
+
+cat << EOF >> k8s.tf
     [kube_control_plane]
-    master01.ru-central1.internal
+EOF
+
+for (( i=1; i <= $masters; i++ ))
+do
+
+echo "    master-$i.ru-central1.internal" >> k8s.tf
+
+done
+
+cat << EOF >> k8s.tf
     [etcd]
-    master01.ru-central1.internal
+EOF
+
+for (( i=1; i <= $masters; i++ ))
+do
+
+echo "    master-$i.ru-central1.internal" >> k8s.tf
+
+done
+
+cat << EOF >> k8s.tf
     [kube_node]
-    node01.ru-central1.internal
-    node02.ru-central1.internal
-    node03.ru-central1.internal
+EOF
+
+for (( i=1; i <= $nodes; i++ ))
+do
+
+echo "    node-$i.ru-central1.internal" >> k8s.tf
+
+done
+
+cat << EOF >> k8s.tf
     [calico_rr]
     [k8s_cluster:children]
     kube_control_plane
@@ -652,15 +718,17 @@ resource "local_file" "k8s" {
     calico_rr
     DOC
   filename = "./ansible/k8s.ini"
-
   depends_on = [
-    yandex_compute_instance.master01,
-    yandex_compute_instance.node01,
-    yandex_compute_instance.node02,
-    yandex_compute_instance.node03
+    yandex_compute_instance.master,
+    yandex_compute_instance.node
   ]
 }
+EOF
 ```
+
+Данный скрипт создаст 2 файла `terraform` для формирования файлов инвентаризации
+
+Ссылка на [terraform.sh](https://github.com/psvitov/devops-netology/blob/main/Diplom/k8s/k8s-stage/terraform.sh)
 
 6. Создадим конфигурационный файл `ansible.cfg`:
 
@@ -816,7 +884,7 @@ host_key_checking = False
 - Отключение свопа
 - Копирование SSH ключа master-ноды в `authorized_keys`
 
-8. Для запуска `ansible` через `terraform` создадим файл `ansible.tf`:
+8. Для запуска `ansible-playbook` через `terraform` создадим файл `ansible.tf`:
 
 ```
 resource "null_resource" "wait" {
