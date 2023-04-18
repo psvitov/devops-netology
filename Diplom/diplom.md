@@ -285,7 +285,7 @@ variable "vpc" {
 
 variable "vpc_count" {
     description = "Quantity of VPC"
-    default = 4
+    default = 3
 }
 ```
 Переменная `vpc` будет использоваться в имени виртуальной машины, переменная `vpc_count` будет определять количество создаваемых виртуальных машин
