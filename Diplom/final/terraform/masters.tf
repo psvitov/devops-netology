@@ -25,6 +25,6 @@ resource "yandex_compute_instance" "master" {
   }
 
   metadata = {
-    user-data = "${file("./meta.txt")}"
+    user-data = "${file("./jenkins.txt")}"
   }
 }
