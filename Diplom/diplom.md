@@ -1555,7 +1555,69 @@ local imageTag = std.extVar('image_tag');
 
 Структура папки:
 
+```
+.
+├── Dockerfile
+│   ├── Dockerfile
+│   ├── images
+│   │   ├── blue.jpg
+│   │   └── red.png
+│   ├── index.html
+│   └── README.md
+├── jenkins
+│   ├── files
+│   │   ├── CentOS-Base.repo
+│   │   └── pg_hba.conf
+│   ├── inventory
+│   │   └── cicd
+│   │       ├── group_vars
+│   │       │   └── jenkins.yml
+│   │       └── hosts.yml
+│   └── site.yml
+├── monitoring
+│   ├── grafana-networkPolicy.yaml
+│   └── grafana-service.yaml
+├── qbec
+│   ├── qbec-nodeport.yaml
+│   ├── qbec.yaml
+│   └── stage.jsonnet
+├── README.md
+└── terraform
+    ├── ansible
+    │   └── README.md
+    ├── ansible.cfg
+    ├── ansible.tf
+    ├── backend.tf
+    ├── inventory.tf
+    ├── jenkinsagent.tf
+    ├── jenkinsmaster.tf
+    ├── jenkins.tf
+    ├── jenkins.txt
+    ├── k8s.tf
+    ├── kuberspray.yml
+    ├── main.tf
+    ├── masters.tf
+    ├── meta.txt
+    ├── network.tf
+    ├── nodes.tf
+    ├── terraform.sh
+    └── variables.tf
+```
 
+## Предварительная подготовка
+
+Для создания облачной инфраструктуры и последующей работой с ней необходимо на локальный компьютер с ОС `Linux` установить следующее программное обеспечение:
+
+- Git ([Документация](https://git-scm.com/download/linux))
+- Docker ([Документация](https://docs.docker.com/engine/install/))
+- Ansible ([Документация](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html))
+- Terraform ([Документация](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli))
+
+Так же необходимо пройти регистрацию на следующих веб-ресурсах:
+
+- [Git Hub](https://github.com/)
+- [Docker Hub](https://hub.docker.com/)
+- [Terraform Cloud](https://app.terraform.io/)
 
 ## Алгоритм работы и пояснения:
 
