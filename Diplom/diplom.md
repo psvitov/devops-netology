@@ -1379,9 +1379,13 @@ spec:
 
 2. Сформируем манифест `Terraform` для создания инфраструктуры и воспользуемся манифестом `Ansible` для развертывания самого сервиса `Jenkins`
 
+Чтобы предварительно настроить и сервер и агент, добавим их в инвентори-файл `inventory.ini` через ранее созданный скрипт `terraform.sh`
+
+Ссылка на измененный скрипт: [terraform.sh](https://github.com/psvitov/devops-netology/blob/main/Diplom/jenkins/terraform.sh)
+
 Ссылка на основные файлы манифестов для разворачивания: [`Jenkins`](https://github.com/psvitov/devops-netology/tree/main/Diplom/jenkins)
 
-3. После развертывания инфраструктуры настраиваем сам сервер `Jenkins`  и настраиваем новый `Pipeline` для сборки и отправки в регистр Docker образа на основе репозитория с тестовым приложением:
+3. После создания инфраструктуры настраиваем сам сервер `Jenkins`  и настраиваем новый `Pipeline` для сборки и отправки в регистр Docker образа на основе репозитория с тестовым приложением:
 
 ---
 ![diplom_5_1.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_1.png)
@@ -1545,7 +1549,7 @@ local imageTag = std.extVar('image_tag');
 ![diplom_5_15.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_5_15.png)
 ---
 
-# Итог:
+# Итоги:
 
 В итоге все необходимые файлы для развертывания инфраструктуры и работы с ней собраны в отдельной папке [`Final`](https://github.com/psvitov/devops-netology/tree/main/Diplom/final).
 
@@ -1561,7 +1565,15 @@ local imageTag = std.extVar('image_tag');
 
 - `"<OAuth-токен Яндекс Облако>"`: токен для авторизации в Yandex Cloud ([Документация](https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token))
 - `"<Идентификатора облака ЯО>"`: Идентификатор облака ([Документация](https://cloud.yandex.ru/docs/resource-manager/operations/cloud/get-id))
-- `"<Зона доступности>"`: Инфраструктура внутри датацентра, в котором размещается платформа ЯО ([Документация](https://cloud.yandex.ru/docs/overview/concepts/geo-scope))
+- `"<имя master-ноды>"`: указать имя master-ноды
+- `"<количество master-нод>"`: указать необходимое количество master-нод
+- `"<имя worker-ноды>"`: указать имя worker-ноды
+- `"<количество worker-нод>"`: указать необходимое количество worker-нод
+
+В файл `[terraform/terraform.sh](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/terraform.sh)
+
+- `"masters=<количество master-нод>"`: указать необходимое количество master-нод, аналогично файлу [terraform/variables.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/variables.tf)
+- `"nodes=<количество worker-нод>"`: указать необходимое количество worker-нод, аналогично файлу [terraform/variables.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/variables.tf)
 
 В файле [terraform/jenkins.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.tf)
 
@@ -1577,17 +1589,32 @@ local imageTag = std.extVar('image_tag');
 - `"<login_TC>"`: указать логин Terraform Cloud
 - `"<name>"`: указать имя workspace
 
-2. Перейти в папку `terraform` и последовательно запустить команды `terraform init`, `terraform plan`, `terraform apply`
-  
+2. Перейти в папку `terraform` и последовательно запустить команды:
+
+```
+bash terraform.sh
+```
+```
+terraform init
+```
+```
+terraform plan
+```
+```
+terraform apply
+```
+В процессе работы скрипта `terraform.sh` создадутся шаблоны файлов для файлов инвентаризации `ansible-playbook`
+
 В процессе работы манифестов `terraform` создадутся ресурсы и файлы инвентаризации:
 
-- мастер-нода и 3 воркер-ноды для последующего разворачивания кластера Kubernetes на основе `Kuberspray`
+- указанное ранее количество мастер-нод и воркер-нод для последующего разворачивания кластера Kubernetes на основе `Kuberspray`
 - сервер и агент `Jenkins`
-- файл инвентаризации манифеста `Ansible` для настройки вирутальных машин: [terraform/inventory.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/inventory.tf)
-- файл инвентаризации манифеста `Ansible` для установки `Jenkins`: [terraform/jenkins.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.tf)
-- файл инвентаризации манифеста `Ansible` для разворачивания кластера Kubernetes `Kuberspray`: [terraform/k8s.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/k8s.tf)
+- файл инвентаризации манифеста `Ansible` для настройки вирутальных машин на основе файла: [terraform/inventory.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/inventory.tf)
+- файл инвентаризации манифеста `Ansible` для установки `Jenkins`на основе файла: [terraform/jenkins.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/jenkins.tf)
+- файл инвентаризации манифеста `Ansible` для разворачивания кластера Kubernetes `Kuberspray` на основе файла: [terraform/k8s.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/k8s.tf)
+- файлы инвентаризации манифеста `inventory.ini`,`k8s.ini` будут находиться в папке `/terraform/ansible`, файл инвентаризации манифеста `site.yml` будет находиться в папке `/jenkins/inventory/cicd/hosts.yml`
 
-В итоге должно получится 6 виртуальных машин и 3 файла конфигурации
+В итоге должно получится указанное количество мастер-нод, воркер-нод и 3 файла конфигурации
   
 Далее после создания всех ВМ последовательно запустятся манфесты `Ansible` с помощью файла [terraform/ansible.tf](https://github.com/psvitov/devops-netology/blob/main/Diplom/final/terraform/ansible.tf):
   
@@ -1608,7 +1635,7 @@ ansible-playbook ~/kuberspray/cluster.yml -i ~/k8s/sample/k8s.ini --diff
 kubectl get nodes
 ```
 
-Должен появиться список ранее созданных master-ноды и 3-x worker-нод
+Должен появиться список ранее созданных master-нод и worker-нод
 
 4. Создадим тестовое приложение:
 
