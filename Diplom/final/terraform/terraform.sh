@@ -1,8 +1,11 @@
 #!/bin/bash
 ## terraform.sh
 
-masters=1
-nodes=3
+# masters: количество создаваемых master-нод
+masters=<количество master-нод>
+
+# nodes: количество создаваемых worker-нод
+nodes=<количество worker-нод>
 
 ## inventory.tf
 
