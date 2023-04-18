@@ -629,7 +629,10 @@ resource "yandex_compute_instance" "node" {
 #!/bin/bash
 ## terraform.sh
 
+# masters: количество создаваемых марстер-нод
 masters=1
+
+# nodes: количество создаваемых воркер-нод
 nodes=3
 
 ## inventory.tf
@@ -745,9 +748,15 @@ cat << EOF >> k8s.tf
 EOF
 ```
 
-Данный скрипт создаст 2 файла `terraform` для формирования файлов инвентаризации
+Данный скрипт после запуск командой `bash terraform.sh` создаст 2 файла `terraform` для формирования файлов инвентаризации:
+
+- inventory.tf
+- k8s.tf
 
 Ссылка на [terraform.sh](https://github.com/psvitov/devops-netology/blob/main/Diplom/k8s/k8s-stage/terraform.sh)
+
+Для изменения количества создаваемых инстансов мастер-нод и воркер-нод, необходимо в самом скрипте указать необходимое количество в перменных masters и nodes, после чего запустить скрипт заново.
+
 
 6. Создадим конфигурационный файл `ansible.cfg`:
 
