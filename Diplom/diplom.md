@@ -1,5 +1,22 @@
 # Дипломный практикум в Yandex.Cloud
 
+## Подготовительные работы:
+
+Для создания облачной инфраструктуры и последующей работой с ней необходимо на локальный компьютер с ОС `Linux` установить следующее программное обеспечение:
+
+- Git ([Документация](https://git-scm.com/download/linux))
+- Docker ([Документация](https://docs.docker.com/engine/install/))
+- Ansible ([Документация](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html))
+- Terraform ([Документация](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli))
+
+Так же необходимо пройти регистрацию на следующих веб-ресурсах:
+
+- [Git Hub](https://github.com/)
+- [Docker Hub](https://hub.docker.com/)
+- [Terraform Cloud](https://app.terraform.io/)
+
+
+
 ## 1 этап выполнения
 
 
