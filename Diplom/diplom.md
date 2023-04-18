@@ -41,7 +41,7 @@
 1. Создадим файл `variables.tf`, пропишем в него основные переменные, используемые при работе с `Yandex.Cloud`:
 
 ```
-variables.tf
+## variables.tf
 
 variable "yc_token" {
     description = "OAuth-token Yandex.Cloud"
@@ -73,7 +73,7 @@ variable "yc_region_c" {
 2. Создадим файл `main.tf`, добавим в него настройки облачного провайдера, создание каталога и сервисного аккаунта с ролью `editor`:
 
 ```
-### vpc-stage
+## vpc-stage
 
 terraform {
   required_providers {
@@ -112,6 +112,8 @@ resource "yandex_resourcemanager_folder_iam_member" "editor" {
 Аналогичный файл будет и для `vpc-prod`, отличия будут только в имени создаваемой папки и имени сервисного аккаунта:
 
 ```
+## vpc-prod
+
 terraform {
   required_providers {
     yandex = {
@@ -159,7 +161,7 @@ resource "yandex_resourcemanager_folder_iam_member" "editor" {
 5. В файлы `backend` для создания разных `workspaces` добавим содержимое:
 
 ```
-#vpc-stage
+## vpc-stage
 
 terraform {
 
@@ -205,7 +207,7 @@ terraform {
 7. Создадим файл `network.tf` для каждого `workspace` с описанием сети и подсетей в разных зонах доступности:
 
 ```
-## network.tf
+## network stage
 
 resource "yandex_vpc_network" "stage-net" {
   name = "stage-network"
@@ -238,7 +240,7 @@ resource "yandex_vpc_subnet" "stage-subnet-c" {
 ```
 
 ```
-## network.tf
+## network-prod
 
 resource "yandex_vpc_network" "prod-net" {
   name = "prod-network"
@@ -270,60 +272,93 @@ resource "yandex_vpc_subnet" "prod-subnet-c" {
 }
 ```
 
-8. Создадим VPC с подсетями в разных зонах доступности
+8. Создадим  произвольное количество виртуальных машин с подсетями в разных зонах доступности:
+
+Количество создаваемых ресурсов будем регулировать параметром `count`, который задаим в ранее созданном файле `variables.tf`
+Добавим в файл `variables.tf` следующие строки:
+
+```
+variable "vpc" {
+    description = "Initial VPC name"
+    default = "vpc"
+}
+
+variable "vpc_count" {
+    description = "Quantity of VPC"
+    default = 4
+}
+```
+Переменная `vpc` будет использоваться в имени виртуальной машины, переменная `vpc_count` будет определять количество создаваемых виртуальных машин
 
 В папке `vpc-stage` создадим файл `vpc.tf` с содержимым:
 
 ```
-resource "yandex_compute_instance_group" "stage-ig" {
-  name               = "vpc-stage-ig"
-  folder_id          = "${yandex_resourcemanager_folder.folder1.id}"
-  service_account_id = "${yandex_iam_service_account.sa.id}"
-  depends_on          = [yandex_resourcemanager_folder_iam_member.editor]
-  instance_template {
-    platform_id = "standard-v1"
-    resources {
-      memory = 2
-      cores  = 2
-    }
+## vpc-stage
 
-    boot_disk {
-      mode = "READ_WRITE"
-      initialize_params {
-        image_id = "fd8jvcoeij6u9se84dt5"
-      }
-    }
+resource "yandex_compute_instance" "vpc" {
+  count = var.vpc_count
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  name = "${var.vpc}-${count.index+1}"
+  zone = var.yc_region_a
+  hostname = "${var.vpc}-${count.index+1}.ru-central1.internal"
 
-    network_interface {
-      network_id = "${yandex_vpc_network.stage-net.id}"
-      subnet_ids = ["${yandex_vpc_subnet.stage-subnet-a.id}", "${yandex_vpc_subnet.stage-subnet-b.id}", "${yandex_vpc_subnet.stage-subnet-c.id}"]
-      nat = "true"
-    }
+  resources {
+    cores  = 2
+    memory = 2
+  }
 
-    metadata = {
-      ssh-keys = "devops:ssh-rsa AAAAB3NzaC1yc2E*************************************HZlVbTVaFNOPIOVRgNc7mRRQ4+3CbJIwYTumH0pJal7Rc6CeTXFEb35HeMoO0eyEzan4TSOfXvS4Q5Wutq8CRAbbdG7UwrUGcMeK0U6XAQguuxVcY5C7bGJ8c2y2In19fM0TpheLA1c1LZeX2BXJbIXTJM52Fsfo0s0t6pXPDLXx/2PkdeFdrMhUybJ5202SQXfbsElgDsVCfaEkWMm8gJfsIzMqLWEHrheFtfcbLIRzpBvEs2OZbK6Fofo7akYy5zkjvOrGaVy4u9YoFStkD2uCGOp8D8q3ADULYEunI+INVTdg/JtBRjYBw60ZH devops@DevOps"
+  boot_disk {
+    initialize_params {
+      image_id = "fd8jvcoeij6u9se84dt5"
+      size = "10"
     }
   }
 
-  scale_policy {
-    fixed_scale {
-      size = 3
-    }
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.stage-subnet-a.id}"
+    nat = true
   }
 
-  allocation_policy {
-    zones = [var.yc_region_a, var.yc_region_b, var.yc_region_c]
-  }
-
-  deploy_policy {
-    max_unavailable = 1
-    max_expansion = 0
+  metadata = {
+    user-data = "${file("./meta.txt")}"
   }
 }
 ```
-Для создания одинаковых инстанстов можно использовать группы, при этом их можно расположить в одной или разных зонах доступности, в зависимости от поставленных задач.
+Аналогичный файл создадим и в папке `vpc-prod`:
 
-Аналогичный файл создадим и в папке `vpc-prod`.
+```
+## vpc-prod
+
+resource "yandex_compute_instance" "vpc" {
+  count = var.vpc_count
+  folder_id = "${yandex_resourcemanager_folder.folder1.id}"
+  name = "${var.vpc}-${count.index+1}"
+  zone = var.yc_region_a
+  hostname = "${var.vpc}-${count.index+1}.ru-central1.internal"
+
+  resources {
+    cores  = 2
+    memory = 2
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "fd8jvcoeij6u9se84dt5"
+      size = "10"
+    }
+  }
+
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.stage-subnet-b.id}"
+    nat = true
+  }
+
+  metadata = {
+    user-data = "${file("./meta.txt")}"
+  }
+}
+```
+
 
 9. Проверим работу комманд `terraform plan`, `terraform apply`, `terraform destroy` в воркспейсе `vpc-stage`:
 
