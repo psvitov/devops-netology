@@ -399,6 +399,7 @@ resource "yandex_compute_instance" "vpc" {
 Результат работы команды [terraform plan](https://github.com/psvitov/devops-netology/blob/main/Diplom/terraform/tplan.txt)
 
 Скриншот работы:
+
 ![diplom_1_5.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_5.png)
 
 #### terraform apply
@@ -406,6 +407,7 @@ resource "yandex_compute_instance" "vpc" {
 Результат работы команды [terraform apply](https://github.com/psvitov/devops-netology/blob/main/Diplom/terraform/tapply.txt)
 
 Скриншот работы:
+
 ![diplom_1_6.png](https://github.com/psvitov/devops-netology/blob/main/Diplom/diplom_1_6.png)
 
 #### result terraform apply
