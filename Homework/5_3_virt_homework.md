@@ -55,6 +55,7 @@ Hey, Netology
 
 ### Команды:
 
+```
 docker run -d -it --name centos-docker -v /home/data:/data centos <p>
 docker run -d -it --name debian-docker -v /home/data:/data debian
 
@@ -63,20 +64,28 @@ docker ps -a
 CONTAINER ID   IMAGE                   COMMAND                  CREATED              STATUS                      PORTS     NAMES <p>
 5baa1df4d9f2   debian                  "bash"                   About a minute ago   Up About a minute                     debian-docker<p>
 6dea6cc44862   centos                  "/bin/bash"              4 minutes ago        Up 4 minutes                          centos-docker<p>
+```
 
 #### Добавляем первый файл в первом контейнере:
+
+```
 docker exec -it centos-docker /bin/bash
   
 echo "bla-bla-bla" > /data/first-file.md
   
 exit
+```
 
 #### Добавляем файл на хостовой машине:
+
+```
 echo "Bla-Bla-Bla" > /home/data/second-file.md
+```
 
 #### Листинг /data во втором контейнере:
 
-root@DevOps:/home/psvitov# docker exec -it debian-docker /bin/bash
+```
+docker exec -it debian-docker /bin/bash
   
 root@5baa1df4d9f2:/# cd /data
   
@@ -88,3 +97,4 @@ total 8
   
 -rw-r--r-- 1 root root 12 May  6 17:24 second-file.md
  
+```
