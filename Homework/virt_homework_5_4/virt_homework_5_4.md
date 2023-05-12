@@ -11,9 +11,9 @@
 После установки `Packer` произведем создание образа через утилиту Яндекс.Облако `yc` и проверим его создание:
 
 ---
-[1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/1_1.png)
+![1_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/1_1.png)
 ---
-[1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/1_2.png)
+![1_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/1_2.png)
 ---
 
 ## Задача 2
@@ -25,9 +25,9 @@
 На основе ранее созданного образа создадим виртуальную машину:
 
 ---
-[2_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/2_1.png)
+![2_1.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/2_1.png)
 ---
-[2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/2_2.png)
+![2_2.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/2_2.png)
 ---
 
 ## Задача 3
@@ -40,9 +40,9 @@
 Настроим систему мониторинга на созданной виртуальной машине:
 
 ---
-[add_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/add_3.png)
+![add_3.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/add_3.png)
 ---
-[add_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/add_4.png)
+![add_4.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/add_4.png)
 ---
 
 ## Задача 4
@@ -56,4 +56,4 @@
 
 Скриншот интерфейса развернутого мониторинга:
 
-[add_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/add_5.png)
+![add_5.png](https://github.com/psvitov/devops-netology/blob/main/Homework/virt_homework_5_4/add_5.png)
