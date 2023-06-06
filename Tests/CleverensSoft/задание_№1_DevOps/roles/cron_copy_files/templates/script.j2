@@ -1,0 +1,16 @@
+#!/bin/bash
+
+expration_DATE=$(date -d "{{date_shift}}" +%s)
+search_dir={{search_dir}}
+
+for entry in "$search_dir"/*
+do
+  file_date=$(echo "$entry" | sed '{{sed_regex}}')
+  test=$(date -d "$file_date" +%s)
+
+  if [ $expration_DATE -ge $test ];
+  then
+      mv "$entry" {{target_dir}}
+  fi
+
+done

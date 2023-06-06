@@ -1,0 +1,7 @@
+[allservers]
+test1		    ansible_host=10.2.0.18          ansible_user=superuser need_tls=true domain_name=test.noname.ru
+stats 			ansible_host=10.2.0.19 		    ansible_user=superuser need_tls=true domain_name=vm-01.noname.local
+
+[cloud_client]
+test1
+

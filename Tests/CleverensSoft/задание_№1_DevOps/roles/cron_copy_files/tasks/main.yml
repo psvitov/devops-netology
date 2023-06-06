@@ -1,0 +1,14 @@
+---
+# tasks file
+
+- name: Copy script in place.
+  template:
+    src: script.j2
+    dest: /usr/local/sbin/transfer_backup_{{profile_name}}.sh
+    mode: 00750
+
+- name: set cron job tranfer file
+  cron: name="copy files {{profile_name}}"
+    job="transfer_backup_{{profile_name}}.sh"
+    minute="35"
+    hour="4"

@@ -1,0 +1,20 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: apt update
+      apt:
+        update_cache: yes
+
+    - name: create the 'superuser' user
+      user: name=superuser append=yes state=present createhome=yes shell=/bin/bash
+
+    - name: allow 'superuser' to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        line: 'superuser ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+
+    - name: set up authorized keys for the superuser user
+      authorized_key: user=superuser key="{{item}}"
+      with_file:
+        - ~/.ssh/id_rsa.pub
