@@ -10,6 +10,8 @@
 
 ### Решение:
 
+Создадим простой манифест Ansible с указанием хоста, но в случае распространения на несколько серверов, лучше использовать отдельный файл hosts и доработать манифест, разделив зал\дачи на роли:
+
 ```
 ---
 - name: Install OpenLDAP Server
@@ -178,3 +180,7 @@
 # Изменение конфигурации LDAP-сервера
     - name: Update LDAP server
       ansible.builtin.command: ldapmodify -a -xZZWD cn=admin,dc=<MY-DOMAIN>,dc=<COM> -W -f /home/users.ldif
+```
+
+В самом манифесте необходимо заменить переменные `<MY-HOSTNAME>, <MY-DOMAIN>, <COM>`, либо вынести их в отдельный файл переменных `variables`
+
